@@ -9,7 +9,7 @@ processes=("1" "2" "4" "8" "16" "32" "64" "128" "256")
 bin_dir=${PWD}"/"
 
 # profile.* は不要なので削除
-rm profile.*
+# rm profile.*
 
 for benchmark in ${benchmarks[@]}
 do
