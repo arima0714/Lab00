@@ -22,8 +22,10 @@ do
 			# プロセス数ごとにジョブを投入するので、そのためのループ
 			for process in ${processes[@]}
 			do
-				# JobScriptファイルをベンチマークを実行するたびに作成する
+				# ジョブスクリプト用のプロセス数などに関する記述
 				AllProcess=$process
+				# pprof_*.txt のファイル名を格納する
+				pprof_s_FileName="pprof_${benchmark}${class}${process}.txt"
 				if [ `expr $process` -le 4 ]; then
 					ProcessPerNode=$process
 					NumResource=1
@@ -32,16 +34,13 @@ do
 					NumResource=`expr $process / 4`
 				fi
 
-				# 既にプロファイルが存在しなければジョブを投入する
-				if [ -e "pprof_${benchmark}${class}${process}.txt" ]; then
-					echo pprof_"${benchmark}${class}${process}".txt
-				else
-					echo "該当するファイルはありませんでした"
+				# pprof_*.txt が存在するときに行う処理 
+				if [ -e ${pprof_s_FileName} ]; then
+					echo ${pprof_s_FileName}
+					cat ${pprof_s_FileName} | sed -n '/mean/,$p'| sed -e 's/char /char_/g' | sed -e 's/void /void_/g' | sed -e 's/double /double_/g' | sed -e 's/int /int_/g' | sed -e 's/.TAU application/.TAU_application/g' | sed -e 's/, /_/g' | sed "4,5d" | sed "1,2d" | awk -v OFS=, '{print $7, $4}'
 				fi
 			done
 		fi
 	done
 done
-
-
 
