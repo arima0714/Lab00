@@ -1,0 +1,14 @@
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0       0.0075        2,611           1           1    2611865 .TAU application
+100.0        1,624        2,611           1          10    2611858 EMBAR 
+ 20.8          542          542           1           0     542492 MPI_Init() 
+ 16.4          428          428           1           0     428519 MPI_Finalize() 
+  0.6           15           15           4           0       3761 MPI_Allreduce() 
+  0.0        0.649        0.649           1           0        649 MPI_Bcast() 
+  0.0        0.178        0.178           1           0        178 MPI_Barrier() 
+  0.0        0.003        0.003           1           0          3 MPI_Comm_rank() 
+  0.0       0.0005       0.0005           1           0          0 MPI_Comm_size() 

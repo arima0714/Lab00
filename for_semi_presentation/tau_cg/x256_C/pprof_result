@@ -1,0 +1,57 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0            1    11:23.078         256         256    2668277 .TAU application
+100.0          361    11:23.076         256      254976    2668269 CG 
+ 52.2     2:10.971     5:56.394       19456 1.97284E+07      18318 CONJ_GRAD 
+ 20.0           13     2:16.744         256        1024     534159 INITIALIZE_MPI 
+ 20.0     2:16.582     2:16.582         256           0     533524 MPI_Init() 
+ 18.0     2:03.122     2:03.122 6.65395E+06           0         19 MPI_Wait() 
+ 17.0     1:56.174     1:56.174         256           0     453808 MPI_Finalize() 
+ 14.6     1:39.882     1:39.882 6.65395E+06           0         15 MPI_Send() 
+ 10.7       26,289     1:12.834         256 5.12008E+07     284511 MAKEA 
+  6.0       37,020       41,236 2.56003E+07 2.56003E+07          2 SPRNVC [THROTTLED]
+  0.6        4,216        4,216 2.56003E+07           0          0 ICNVRT [THROTTLED]
+  0.6        3,938        3,938 2.56003E+07           0          0 VECSET [THROTTLED]
+  0.4        2,588        2,588 6.65395E+06           0          0 MPI_Irecv() 
+  0.2        1,370        1,370         256           0       5355 SPARSE 
+  0.0          294          294         256           0       1150 ALLOC_SPACE 
+  0.0          149          149         256           0        583 MPI_Bcast() 
+  0.0           91           91         256           0        358 MPI_Barrier() 
+  0.0           11           11         256           0         43 MPI_Reduce() 
+  0.0        0.122        0.122         256           0          0 MPI_Comm_size() 
+  0.0        0.115        0.115         256           0          0 SETUP_SUBMATRIX_INFO 
+  0.0        0.071        0.071         256           0          0 SETUP_PROC_INFO 
+  0.0         0.07         0.07         256           0          0 MPI_Comm_rank() 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0       0.0073        2,668           1           1    2668277 .TAU application
+100.0            1        2,668           1         996    2668269 CG 
+ 52.2          511        1,392          76       77064      18318 CONJ_GRAD 
+ 20.0       0.0515          534           1           4     534159 INITIALIZE_MPI 
+ 20.0          533          533           1           0     533524 MPI_Init() 
+ 18.0          480          480       25992           0         19 MPI_Wait() 
+ 17.0          453          453           1           0     453808 MPI_Finalize() 
+ 14.6          390          390       25992           0         15 MPI_Send() 
+ 10.7          102          284           1      200003     284511 MAKEA 
+  6.0          144          161      100001      100001          2 SPRNVC [THROTTLED]
+  0.6           16           16      100001           0          0 ICNVRT [THROTTLED]
+  0.6           15           15      100001           0          0 VECSET [THROTTLED]
+  0.4           10           10       25992           0          0 MPI_Irecv() 
+  0.2            5            5           1           0       5355 SPARSE 
+  0.0            1            1           1           0       1150 ALLOC_SPACE 
+  0.0        0.583        0.583           1           0        583 MPI_Bcast() 
+  0.0        0.358        0.358           1           0        358 MPI_Barrier() 
+  0.0       0.0435       0.0435           1           0         43 MPI_Reduce() 
+  0.0     0.000477     0.000477           1           0          0 MPI_Comm_size() 
+  0.0     0.000449     0.000449           1           0          0 SETUP_SUBMATRIX_INFO 
+  0.0     0.000277     0.000277           1           0          0 SETUP_PROC_INFO 
+  0.0     0.000273     0.000273           1           0          0 MPI_Comm_rank() 

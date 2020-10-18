@@ -1,0 +1,29 @@
+#!/bin/sh
+# カレントディレクトリでジョブを実行する
+#$ -cwd
+
+# 資源タイプC4 1ノードを使用
+#$ -l q_core=1
+# 実行時間を指定
+#$ -l h_rt=0:09:30
+
+# Moduleコマンドの初期化
+. /etc/profile.d/modules.sh
+# CUDA環境の読込
+module load cuda
+# OpenMPI環境の読込
+module load openmpi
+# PAPI環境の読み込み
+module load papi
+# gcc環境の読み込み
+module load gcc
+
+export PATH="$PATH:/home/9/20IA1328/tau-2.29/x86_64/bin"
+export TAU_MAKEFILE=/home/9/20IA1328/tau-2.29/x86_64/lib/Makefile.tau-papi-mpi-pdt
+export TAU_OPTIONS=-optRevert
+export PATH="$PATH:/home/9/20IA1328/pdtoolkit-3.25.1/x86_64//bin"
+
+# 実行
+# ノードあたり4プロセスMPI全4 プロセスを使用
+mpirun -npernode 4 -n 4 -x LD_LIBRARY_PATH ft.A.x
+

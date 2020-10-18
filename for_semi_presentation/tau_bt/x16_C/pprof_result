@@ -1,0 +1,137 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.085    20:34.955          16          16   77184740 .TAU application
+100.0            5    20:34.955          16        3569   77184735 MPBT 
+ 98.5           13    20:16.651        3216       16080     378312 ADI 
+ 33.6           61     6:55.386        3216      122208     129163 Y_SOLVE 
+ 33.4           62     6:52.071        3216      122208     128132 Z_SOLVE 
+ 30.2     6:13.047     6:13.067       12864       12864      29001 Y_SOLVE_CELL 
+ 30.2     6:12.601     6:12.620       12864       12864      28966 Z_SOLVE_CELL 
+ 23.4           51     4:49.254        3216      122208      89942 X_SOLVE 
+ 19.7     4:02.768     4:02.789       12864       12864      18874 X_SOLVE_CELL 
+  7.6        5,362     1:33.310        3232       45248      28871 COPY_FACES 
+  6.4     1:18.917     1:18.917        3232           0      24417 COMPUTE_RHS 
+  3.6       43,853       43,853      115776           0        379 MPI_Wait() 
+  2.4       29,572       29,572       12864           0       2299 X_BACKSUBSTITUTE 
+  1.8       22,726       22,726       12864           0       1767 Y_BACKSUBSTITUTE 
+  1.7       20,949       20,949       12864           0       1629 Z_BACKSUBSTITUTE 
+  0.7        8,172        8,172        3232           0       2529 MPI_Waitall() 
+  0.6        7,113        7,113          16           0     444599 MPI_Finalize() 
+  0.6        7,042        7,042        3216           0       2190 ADD 
+  0.5        0.412        6,153          16          80     384621 SETUP_MPI 
+  0.5        6,142        6,142          16           0     383881 MPI_Init() 
+  0.4        4,875        4,875        9648           0        505 X_UNPACK_SOLVE_INFO 
+  0.2        2,749        3,021          32 1.60002E+06      94426 INITIALIZE 
+  0.1        1,172        1,172        9648           0        121 Y_UNPACK_SOLVE_INFO 
+  0.1        1,124        1,148        9648        9648        119 X_SEND_SOLVE_INFO 
+  0.1        1,019        1,019        9648           0        106 Z_UNPACK_SOLVE_INFO 
+  0.1          972          972       77280           0         13 MPI_Isend() 
+  0.1          898          898          16           0      56187 EXACT_RHS 
+  0.1          789          828        9648        9648         86 Y_SEND_SOLVE_INFO 
+  0.1          749          784        9648        9648         81 Z_SEND_SOLVE_INFO 
+  0.1        0.351          674          16          48      42175 VERIFY 
+  0.0          272          272 1.60002E+06           0          0 EXACT_SOLUTION [THROTTLED]
+  0.0          270          270          16           0      16883 LHSINIT 
+  0.0          215          235        9648        9648         24 X_SEND_BACKSUB_INFO 
+  0.0          181          221          16          16      13839 ERROR_NORM 
+  0.0          181          181        9648           0         19 Z_UNPACK_BACKSUB_INFO 
+  0.0          177          177        9648           0         18 Y_UNPACK_BACKSUB_INFO 
+  0.0          136          167        9648        9648         17 Y_SEND_BACKSUB_INFO 
+  0.0          119          152        9648        9648         16 Z_SEND_BACKSUB_INFO 
+  0.0          149          149       77280           0          2 MPI_Irecv() 
+  0.0          101          101        9648           0         11 X_UNPACK_BACKSUB_INFO 
+  0.0           91           91          16           0       5731 ALLOC_SPACE 
+  0.0           62           62          32           0       1952 MPI_Barrier() 
+  0.0           59           59       38592           0          2 LHSABINIT 
+  0.0           46           46          32           0       1450 MPI_Allreduce() 
+  0.0            5           25        9648        9648          3 X_RECEIVE_SOLVE_INFO 
+  0.0           18           24          16          16       1547 RHS_NORM 
+  0.0            5           19        9648        9648          2 Y_RECEIVE_SOLVE_INFO 
+  0.0            5           17        9648        9648          2 Z_RECEIVE_BACKSUB_INFO 
+  0.0            5           17        9648        9648          2 Z_RECEIVE_SOLVE_INFO 
+  0.0            5           17        9648        9648          2 X_RECEIVE_BACKSUB_INFO 
+  0.0            5           16        9648        9648          2 Y_RECEIVE_BACKSUB_INFO 
+  0.0           11           11          32           0        357 MPI_Comm_dup() 
+  0.0           11           11          96           0        118 MPI_Bcast() 
+  0.0         0.19         0.19          16           0         12 MPI_Reduce() 
+  0.0        0.031        0.031          16           0          2 SET_CONSTANTS 
+  0.0        0.017        0.017          16           0          1 MAKE_SET 
+  0.0        0.012        0.012          16           0          1 COMPUTE_BUFFER_SIZE 
+  0.0         0.01         0.01          16           0          1 MPI_Comm_size() 
+  0.0        0.004        0.004          16           0          0 SETUP_BTIO 
+  0.0        0.003        0.003          16           0          0 MPI_Comm_rank() 
+  0.0        0.002        0.002          16           0          0 BTIO_CLEANUP 
+  0.0            0            0           1           0          0 SET_CLASS 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0      0.00531     1:17.184           1           1   77184740 .TAU application
+100.0        0.345     1:17.184           1     223.062   77184735 MPBT 
+ 98.5         0.83     1:16.040         201        1005     378312 ADI 
+ 33.6            3       25,961         201        7638     129163 Y_SOLVE 
+ 33.4            3       25,754         201        7638     128132 Z_SOLVE 
+ 30.2       23,315       23,316         804         804      29001 Y_SOLVE_CELL 
+ 30.2       23,287       23,288         804         804      28966 Z_SOLVE_CELL 
+ 23.4            3       18,078         201        7638      89942 X_SOLVE 
+ 19.7       15,173       15,174         804         804      18874 X_SOLVE_CELL 
+  7.6          335        5,831         202        2828      28871 COPY_FACES 
+  6.4        4,932        4,932         202           0      24417 COMPUTE_RHS 
+  3.6        2,740        2,740        7236           0        379 MPI_Wait() 
+  2.4        1,848        1,848         804           0       2299 X_BACKSUBSTITUTE 
+  1.8        1,420        1,420         804           0       1767 Y_BACKSUBSTITUTE 
+  1.7        1,309        1,309         804           0       1629 Z_BACKSUBSTITUTE 
+  0.7          510          510         202           0       2529 MPI_Waitall() 
+  0.6          444          444           1           0     444599 MPI_Finalize() 
+  0.6          440          440         201           0       2190 ADD 
+  0.5       0.0257          384           1           5     384621 SETUP_MPI 
+  0.5          383          383           1           0     383881 MPI_Init() 
+  0.4          304          304         603           0        505 X_UNPACK_SOLVE_INFO 
+  0.2          171          188           2      100001      94426 INITIALIZE 
+  0.1           73           73         603           0        121 Y_UNPACK_SOLVE_INFO 
+  0.1           70           71         603         603        119 X_SEND_SOLVE_INFO 
+  0.1           63           63         603           0        106 Z_UNPACK_SOLVE_INFO 
+  0.1           60           60        4830           0         13 MPI_Isend() 
+  0.1           56           56           1           0      56187 EXACT_RHS 
+  0.1           49           51         603         603         86 Y_SEND_SOLVE_INFO 
+  0.1           46           49         603         603         81 Z_SEND_SOLVE_INFO 
+  0.1       0.0219           42           1           3      42175 VERIFY 
+  0.0           17           17      100001           0          0 EXACT_SOLUTION [THROTTLED]
+  0.0           16           16           1           0      16883 LHSINIT 
+  0.0           13           14         603         603         24 X_SEND_BACKSUB_INFO 
+  0.0           11           13           1           1      13839 ERROR_NORM 
+  0.0           11           11         603           0         19 Z_UNPACK_BACKSUB_INFO 
+  0.0           11           11         603           0         18 Y_UNPACK_BACKSUB_INFO 
+  0.0            8           10         603         603         17 Y_SEND_BACKSUB_INFO 
+  0.0            7            9         603         603         16 Z_SEND_BACKSUB_INFO 
+  0.0            9            9        4830           0          2 MPI_Irecv() 
+  0.0            6            6         603           0         11 X_UNPACK_BACKSUB_INFO 
+  0.0            5            5           1           0       5731 ALLOC_SPACE 
+  0.0            3            3           2           0       1952 MPI_Barrier() 
+  0.0            3            3        2412           0          2 LHSABINIT 
+  0.0            2            2           2           0       1450 MPI_Allreduce() 
+  0.0        0.333            1         603         603          3 X_RECEIVE_SOLVE_INFO 
+  0.0            1            1           1           1       1547 RHS_NORM 
+  0.0         0.34            1         603         603          2 Y_RECEIVE_SOLVE_INFO 
+  0.0        0.351            1         603         603          2 Z_RECEIVE_BACKSUB_INFO 
+  0.0        0.339            1         603         603          2 Z_RECEIVE_SOLVE_INFO 
+  0.0        0.335            1         603         603          2 X_RECEIVE_BACKSUB_INFO 
+  0.0        0.346            1         603         603          2 Y_RECEIVE_BACKSUB_INFO 
+  0.0        0.714        0.714           2           0        357 MPI_Comm_dup() 
+  0.0         0.71         0.71           6           0        118 MPI_Bcast() 
+  0.0       0.0119       0.0119           1           0         12 MPI_Reduce() 
+  0.0      0.00194      0.00194           1           0          2 SET_CONSTANTS 
+  0.0      0.00106      0.00106           1           0          1 MAKE_SET 
+  0.0      0.00075      0.00075           1           0          1 COMPUTE_BUFFER_SIZE 
+  0.0     0.000625     0.000625           1           0          1 MPI_Comm_size() 
+  0.0      0.00025      0.00025           1           0          0 SETUP_BTIO 
+  0.0     0.000188     0.000188           1           0          0 MPI_Comm_rank() 
+  0.0     0.000125     0.000125           1           0          0 BTIO_CLEANUP 
+  0.0            0            0      0.0625           0          0 SET_CLASS 

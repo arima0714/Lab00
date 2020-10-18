@@ -1,0 +1,7 @@
+Name,#Call
+.TAU,1
+int,1
+MPI_Finalize(),1
+MPI_Init(),1
+MPI_Comm_rank(),1
+MPI_Comm_size(),1

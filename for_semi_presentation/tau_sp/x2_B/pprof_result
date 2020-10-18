@@ -1,0 +1,29 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.009        1,029           2           2     514781 .TAU application
+100.0        0.025        1,029           2           2     514776 MPSP 
+100.0        0.131        1,029           2          10     514764 SETUP_MPI 
+100.0        1,029        1,029           2           0     514626 MPI_Init() 
+  0.0        0.142        0.142           2           0         71 MPI_Bcast() 
+  0.0        0.002        0.002           2           0          1 MPI_Comm_size() 
+  0.0        0.001        0.001           2           0          0 MPI_Abort() 
+  0.0            0            0           2           0          0 MPI_Comm_rank() 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0       0.0045          514           1           1     514781 .TAU application
+100.0       0.0125          514           1           1     514776 MPSP 
+100.0       0.0655          514           1           5     514764 SETUP_MPI 
+100.0          514          514           1           0     514626 MPI_Init() 
+  0.0        0.071        0.071           1           0         71 MPI_Bcast() 
+  0.0        0.001        0.001           1           0          1 MPI_Comm_size() 
+  0.0       0.0005       0.0005           1           0          0 MPI_Abort() 
+  0.0            0            0           1           0          0 MPI_Comm_rank() 
