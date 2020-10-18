@@ -1,0 +1,41 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.004          550           1           1     550572 .TAU application
+100.0        0.014          550           1           4     550568 APPLU 
+ 99.8        0.046          549           1           3     549718 INIT_COMM 
+ 99.8          549          549           1           0     549671 MPI_Init() 
+  0.1        0.782        0.798           1           2        798 READ_INPUT 
+  0.0        0.035        0.035           1           1         35 ALLOC_SPACE 
+  0.0        0.012        0.016           1          10         16 BCAST_INPUTS 
+  0.0        0.004        0.004          10           0          0 MPI_Bcast() 
+  0.0        0.003        0.003           1           1          3 PROC_GRID 
+  0.0        0.001        0.001           1           0          1 MPI_Comm_rank() 
+  0.0            0            0           1           0          0 ISQRT2 
+  0.0            0            0           1           0          0 MPI_Abort() 
+  0.0            0            0           1           0          0 MPI_Comm_size() 
+  0.0            0            0           1           0          0 SET_CLASS 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.004          550           1           1     550572 .TAU application
+100.0        0.014          550           1           4     550568 APPLU 
+ 99.8        0.046          549           1           3     549718 INIT_COMM 
+ 99.8          549          549           1           0     549671 MPI_Init() 
+  0.1        0.782        0.798           1           2        798 READ_INPUT 
+  0.0        0.035        0.035           1           1         35 ALLOC_SPACE 
+  0.0        0.012        0.016           1          10         16 BCAST_INPUTS 
+  0.0        0.004        0.004          10           0          0 MPI_Bcast() 
+  0.0        0.003        0.003           1           1          3 PROC_GRID 
+  0.0        0.001        0.001           1           0          1 MPI_Comm_rank() 
+  0.0            0            0           1           0          0 ISQRT2 
+  0.0            0            0           1           0          0 MPI_Abort() 
+  0.0            0            0           1           0          0 MPI_Comm_size() 
+  0.0            0            0           1           0          0 SET_CLASS 

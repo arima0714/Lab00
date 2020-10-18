@@ -1,0 +1,89 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.005        7,146           1           1    7146261 .TAU application
+100.0        0.164        7,146           1          18    7146256 APPLU 
+ 90.6        6,471        6,471           1           0    6471883 MPI_Finalize() 
+  8.9        0.045          637           1           3     637657 INIT_COMM 
+  8.9          637          637           1           0     637611 MPI_Init() 
+  0.4            2           31           2       22501      15742 SSOR 
+  0.1            5            5        5100           0          1 JACLD 
+  0.1            5            5          53         106        113 RHS 
+  0.1            5            5        5100           0          1 JACU 
+  0.1            5            5        5100           0          1 BLTS 
+  0.1            5            5        5100           0          1 BUTS 
+  0.0            1            3           2       12000       1542 SETIV 
+  0.0            2            2       14728           0          0 EXACT 
+  0.0        0.675        0.693           1           2        693 READ_INPUT 
+  0.0        0.186        0.505           2        1728        252 SETBV 
+  0.0         0.33        0.332           1           2        332 ERHS 
+  0.0        0.269        0.269        2040           0          0 EXCHANGE_1 
+  0.0        0.115        0.266           1        1001        266 ERROR 
+  0.0         0.15         0.15           1           0        150 VERIFY 
+  0.0        0.014        0.046           4           4         12 L2NORM 
+  0.0        0.036        0.036          10           0          4 MPI_Allreduce() 
+  0.0        0.023        0.023           1           0         23 ALLOC_SPACE 
+  0.0        0.021        0.021         108           0          0 EXCHANGE_3 
+  0.0        0.012        0.017           1          10         17 BCAST_INPUTS 
+  0.0        0.011        0.013           1           8         13 PINTGR 
+  0.0        0.005        0.005          10           0          0 MPI_Bcast() 
+  0.0        0.003        0.003           2           0          2 MPI_Barrier() 
+  0.0        0.001        0.001           1           0          1 MPI_Comm_rank() 
+  0.0        0.001        0.001           1           0          1 NEIGHBORS 
+  0.0        0.001        0.001           1           1          1 PROC_GRID 
+  0.0        0.001        0.001           1           0          1 SET_CLASS 
+  0.0            0            0           1           0          0 EXCHANGE_4 
+  0.0            0            0           2           0          0 EXCHANGE_5 
+  0.0            0            0           2           0          0 EXCHANGE_6 
+  0.0            0            0           1           0          0 ISQRT2 
+  0.0            0            0           1           0          0 MPI_Comm_size() 
+  0.0            0            0           1           0          0 SETCOEFF 
+  0.0            0            0           1           0          0 SUBDOMAIN 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.005        7,146           1           1    7146261 .TAU application
+100.0        0.164        7,146           1          18    7146256 APPLU 
+ 90.6        6,471        6,471           1           0    6471883 MPI_Finalize() 
+  8.9        0.045          637           1           3     637657 INIT_COMM 
+  8.9          637          637           1           0     637611 MPI_Init() 
+  0.4            2           31           2       22501      15742 SSOR 
+  0.1            5            5        5100           0          1 JACLD 
+  0.1            5            5          53         106        113 RHS 
+  0.1            5            5        5100           0          1 JACU 
+  0.1            5            5        5100           0          1 BLTS 
+  0.1            5            5        5100           0          1 BUTS 
+  0.0            1            3           2       12000       1542 SETIV 
+  0.0            2            2       14728           0          0 EXACT 
+  0.0        0.675        0.693           1           2        693 READ_INPUT 
+  0.0        0.186        0.505           2        1728        252 SETBV 
+  0.0         0.33        0.332           1           2        332 ERHS 
+  0.0        0.269        0.269        2040           0          0 EXCHANGE_1 
+  0.0        0.115        0.266           1        1001        266 ERROR 
+  0.0         0.15         0.15           1           0        150 VERIFY 
+  0.0        0.014        0.046           4           4         12 L2NORM 
+  0.0        0.036        0.036          10           0          4 MPI_Allreduce() 
+  0.0        0.023        0.023           1           0         23 ALLOC_SPACE 
+  0.0        0.021        0.021         108           0          0 EXCHANGE_3 
+  0.0        0.012        0.017           1          10         17 BCAST_INPUTS 
+  0.0        0.011        0.013           1           8         13 PINTGR 
+  0.0        0.005        0.005          10           0          0 MPI_Bcast() 
+  0.0        0.003        0.003           2           0          2 MPI_Barrier() 
+  0.0        0.001        0.001           1           0          1 MPI_Comm_rank() 
+  0.0        0.001        0.001           1           0          1 NEIGHBORS 
+  0.0        0.001        0.001           1           1          1 PROC_GRID 
+  0.0        0.001        0.001           1           0          1 SET_CLASS 
+  0.0            0            0           1           0          0 EXCHANGE_4 
+  0.0            0            0           2           0          0 EXCHANGE_5 
+  0.0            0            0           2           0          0 EXCHANGE_6 
+  0.0            0            0           1           0          0 ISQRT2 
+  0.0            0            0           1           0          0 MPI_Comm_size() 
+  0.0            0            0           1           0          0 SETCOEFF 
+  0.0            0            0           1           0          0 SUBDOMAIN 

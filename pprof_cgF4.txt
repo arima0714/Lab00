@@ -1,0 +1,33 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0         0.02        2,318           4           4     579636 .TAU application
+100.0        0.034        2,318           4          12     579631 CG 
+100.0         0.74        2,318           4          16     579593 INITIALIZE_MPI 
+ 99.9        2,315        2,315           4           0     578932 MPI_Init() 
+  0.1            1            1           4           0        475 MPI_Bcast() 
+  0.0        0.116        0.117           4           4         29 ALLOC_SPACE 
+  0.0        0.004        0.004           4           0          1 MPI_Comm_size() 
+  0.0        0.001        0.001           4           0          0 MPI_Abort() 
+  0.0            0            0           4           0          0 MPI_Comm_rank() 
+  0.0            0            0           4           0          0 SETUP_PROC_INFO 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.005          579           1           1     579636 .TAU application
+100.0       0.0085          579           1           3     579631 CG 
+100.0        0.185          579           1           4     579593 INITIALIZE_MPI 
+ 99.9          578          578           1           0     578932 MPI_Init() 
+  0.1        0.475        0.475           1           0        475 MPI_Bcast() 
+  0.0        0.029       0.0293           1           1         29 ALLOC_SPACE 
+  0.0        0.001        0.001           1           0          1 MPI_Comm_size() 
+  0.0      0.00025      0.00025           1           0          0 MPI_Abort() 
+  0.0            0            0           1           0          0 MPI_Comm_rank() 
+  0.0            0            0           1           0          0 SETUP_PROC_INFO 
