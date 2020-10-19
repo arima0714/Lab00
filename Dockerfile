@@ -1,5 +1,4 @@
-FROM jupyter/base-notebook
+FROM jupyter/scipy-notebook
 
-ARG project_dir=/home/jovyan
-WORKDIR $project_dir
+RUN export JUPYTER_RUNTIME_DIR=/tmp
 
