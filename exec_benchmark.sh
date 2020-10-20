@@ -6,10 +6,6 @@ classes=("S" "W" "A" "B" "C" "D" "E" "F")
 processes=("1" "2" "4" "8" "16" "32" "64" "128" "256")
 bin_dir=${PWD}"/"
 
-# 今回はCG , LU , SPのみで行う
-benchmarks=("cg" "sp" "lu")
-processes=("1" "2" "4" "8")
-
 for benchmark in ${benchmarks[@]}
 do
 	for class in ${classes[@]}
