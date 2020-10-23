@@ -1,0 +1,31 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.528  1:00:43.163          64          64   56924425 .TAU application
+100.0    55:44.872  1:00:43.162          64         640   56924416 EMBAR 
+  6.0     3:37.931     3:37.931         256           0     851295 MPI_Allreduce() 
+  1.2       42,950       42,950          64           0     671094 MPI_Finalize() 
+  1.0       37,320       37,320          64           0     583137 MPI_Init() 
+  0.0           54           54          64           0        850 MPI_Bcast() 
+  0.0           33           33          64           0        522 MPI_Barrier() 
+  0.0        0.181        0.181          64           0          3 MPI_Comm_rank() 
+  0.0        0.018        0.018          64           0          0 MPI_Comm_size() 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0      0.00825       56,924           1           1   56924425 .TAU application
+100.0       52,263       56,924           1          10   56924416 EMBAR 
+  6.0        3,405        3,405           4           0     851295 MPI_Allreduce() 
+  1.2          671          671           1           0     671094 MPI_Finalize() 
+  1.0          583          583           1           0     583137 MPI_Init() 
+  0.0         0.85         0.85           1           0        850 MPI_Bcast() 
+  0.0        0.522        0.522           1           0        522 MPI_Barrier() 
+  0.0      0.00283      0.00283           1           0          3 MPI_Comm_rank() 
+  0.0     0.000281     0.000281           1           0          0 MPI_Comm_size() 

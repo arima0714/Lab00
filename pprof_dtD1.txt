@@ -1,0 +1,25 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.006        7,690           1           1    7690914 .TAU application
+100.0        0.045        7,690           1           4    7690908 int main(int, char **) C 
+ 93.0        7,151        7,151           1           0    7151688 MPI_Finalize() 
+  7.0          539          539           1           0     539175 MPI_Init() 
+  0.0            0            0           1           0          0 MPI_Comm_rank() 
+  0.0            0            0           1           0          0 MPI_Comm_size() 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.006        7,690           1           1    7690914 .TAU application
+100.0        0.045        7,690           1           4    7690908 int main(int, char **) C 
+ 93.0        7,151        7,151           1           0    7151688 MPI_Finalize() 
+  7.0          539          539           1           0     539175 MPI_Init() 
+  0.0            0            0           1           0          0 MPI_Comm_rank() 
+  0.0            0            0           1           0          0 MPI_Comm_size() 
