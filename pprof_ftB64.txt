@@ -1,0 +1,77 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.362     2:49.358          64          64    2646222 .TAU application
+100.0            7     2:49.357          64        4608    2646216 FT 
+ 49.8            4     1:24.297        1408        5632      59871 FFT 
+ 23.3       39,443       39,443          64           0     616299 MPI_Finalize() 
+ 21.9            4       37,119          64         705     579995 SETUP 
+ 21.7       36,807       36,807          64           0     575117 MPI_Init() 
+ 20.5        1,352       34,760      450560 3.69459E+06         77 CFFTZ 
+ 19.7       33,407       33,407 3.69459E+06           0          9 FFTZ2 
+ 18.1        6,427       30,671        2816      273152      10892 CFFTS1 
+ 18.0            2       30,506        1280        3840      23833 TRANSPOSE_X_YZ 
+ 15.0            2       25,471        1408        1408      18091 TRANSPOSE2_GLOBAL 
+ 15.0       25,468       25,468        1408           0      18089 MPI_Alltoall() 
+  8.7        4,236       14,754        1408      181632      10479 CFFTS2 
+  5.2        8,745        8,745        1408           0       6211 TRANSPOSE2_LOCAL 
+  4.9        0.905        8,361         128         384      65322 TRANSPOSE_XY_Z 
+  2.7        4,647        4,647        1408           0       3300 TRANSPOSE2_FINISH 
+  2.4        4,059        4,059        1280           0       3172 EVOLVE 
+  1.7        2,834        2,834         128           0      22144 COMPUTE_INDEXMAP 
+  0.4            7          691        1280        1280        541 CHECKSUM 
+  0.4          684          684        1280           0        535 MPI_Reduce() 
+  0.3          587          587          64           0       9183 MPI_Barrier() 
+  0.2          307          307         128         256       2400 COMPUTE_INITIAL_CONDITIONS 
+  0.1          141          141         128           0       1109 MPI_Comm_split() 
+  0.1          102          102          64           0       1604 ALLOC_SPACE 
+  0.0           62           62         320           0        197 MPI_Bcast() 
+  0.0            8            8         128         128         69 FFT_INIT 
+  0.0            1            1        4352           0          0 ILOG2 
+  0.0        0.107        0.107         256           0          0 IPOW46 
+  0.0        0.031        0.031          64           0          0 MPI_Comm_size() 
+  0.0        0.023        0.023          64           0          0 VERIFY 
+  0.0        0.011        0.011          64           0          0 MPI_Comm_rank() 
+  0.0            0            0           1           0          0 SET_CLASS 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0      0.00566        2,646           1           1    2646222 .TAU application
+100.0        0.113        2,646           1          72    2646216 FT 
+ 49.8       0.0727        1,317          22          88      59871 FFT 
+ 23.3          616          616           1           0     616299 MPI_Finalize() 
+ 21.9       0.0735          579           1     11.0156     579995 SETUP 
+ 21.7          575          575           1           0     575117 MPI_Init() 
+ 20.5           21          543        7040       57728         77 CFFTZ 
+ 19.7          521          521       57728           0          9 FFTZ2 
+ 18.1          100          479          44        4268      10892 CFFTS1 
+ 18.0       0.0407          476          20          60      23833 TRANSPOSE_X_YZ 
+ 15.0       0.0457          397          22          22      18091 TRANSPOSE2_GLOBAL 
+ 15.0          397          397          22           0      18089 MPI_Alltoall() 
+  8.7           66          230          22        2838      10479 CFFTS2 
+  5.2          136          136          22           0       6211 TRANSPOSE2_LOCAL 
+  4.9       0.0141          130           2           6      65322 TRANSPOSE_XY_Z 
+  2.7           72           72          22           0       3300 TRANSPOSE2_FINISH 
+  2.4           63           63          20           0       3172 EVOLVE 
+  1.7           44           44           2           0      22144 COMPUTE_INDEXMAP 
+  0.4        0.116           10          20          20        541 CHECKSUM 
+  0.4           10           10          20           0        535 MPI_Reduce() 
+  0.3            9            9           1           0       9183 MPI_Barrier() 
+  0.2            4            4           2           4       2400 COMPUTE_INITIAL_CONDITIONS 
+  0.1            2            2           2           0       1109 MPI_Comm_split() 
+  0.1            1            1           1           0       1604 ALLOC_SPACE 
+  0.0        0.984        0.984           5           0        197 MPI_Bcast() 
+  0.0        0.138        0.138           2           2         69 FFT_INIT 
+  0.0       0.0181       0.0181          68           0          0 ILOG2 
+  0.0      0.00167      0.00167           4           0          0 IPOW46 
+  0.0     0.000484     0.000484           1           0          0 MPI_Comm_size() 
+  0.0     0.000359     0.000359           1           0          0 VERIFY 
+  0.0     0.000172     0.000172           1           0          0 MPI_Comm_rank() 
+  0.0            0            0    0.015625           0          0 SET_CLASS 
