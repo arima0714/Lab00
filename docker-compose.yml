@@ -12,4 +12,8 @@ services:
       - ./:/home/jovyan/work
     command:
       start-notebook.sh --NotebookApp.token=''
+    deploy:
+      resources:
+        limits:
+          memory: 5G
 
