@@ -1,17 +1,13 @@
-version: '3'
+version: "3"
 services:
-  jupyterlab:
-    build: .
-    user: root
-    environment:
-      NB_UID: 1000
-      NB_GID: 100
-      GRANT_SUDO: "yes"
-    volumes:
-      - "./:/home/jovyan"
-    privileged: true
+  notebook:
+    image: jupyter/datascience-notebook
     ports:
       - "8888:8888"
-    restart: unless-stopped
-    command: start.sh jupyter lab --NotebookApp.token=''
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - ./:/home/jovyan/work
+    command:
+      start-notebook.sh --NotebookApp.token=''
 
