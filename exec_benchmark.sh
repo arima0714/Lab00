@@ -29,7 +29,7 @@ do
 				fi
 				# sedコマンドでジョブスクリプトで変更するものを実際に変更する
 				echo "#!/bin/sh" > JobScript
-				echo "# カレントディレクトリでジョブを実行する"
+				echo "# カレントディレクトリでジョブを実行する" > JobScript
 				echo "#$ -cwd" >> JobScript
 				echo "# 実行ファイル名" >> JobScript
 				echo "BenchmarkFileName="${BenchMarkName} >> JobScript
@@ -59,9 +59,10 @@ do
 				echo "# 実行" >> JobScript
 				echo "# ノードあたりAプロセスMPI全B プロセスを使用" >> JobScript
 				echo "mpirun -npernode \$A -n \$B -x LD_LIBRARY_PATH \${BenchmarkFileName}" >> JobScript
-
+				# pprofのサマリを保存する際のファイル名
+				pprof_filename=${bin_dir}"txt_files/pprof_${benchmark}${class}${process}.txt"
 				# 既にプロファイルが存在しなければジョブを投入する
-				if [ ! -e "pprof_${benchmark}${class}${process}.txt" ]; then
+				if [ ! -e "${pprof_filename}" ]; then
 					rm profile.*
 					if [ ${process} -lt 8 ]; then
 						qsub JobScript
@@ -70,7 +71,7 @@ do
 					fi
 					echo ${BenchMarkName}"をキューに投入しました"
 					sleep 15m
-					pprof -s > pprof_"${benchmark}${class}${process}".txt
+					pprof -s > "${pprof_filename}"
 				fi
 			done
 		fi
