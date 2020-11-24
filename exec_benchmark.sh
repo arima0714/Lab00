@@ -2,10 +2,10 @@
 
 # 基本的な配列・変数の宣言
 benchmarks=("bt" "cg" "dt" "ep" "ft" "is" "lu" "mg" "sp")
-classes=("S" "W" "A" "B" "C" "D" "E" "F")
-processes=("1" "2" "4" "8" "16" "32" "64" "128" "256")
 bin_dir=${PWD}"/"
+classes=("S" "W" "A" "B" "C" "D" "E" "F")
 classes=("A" "B" "C" "D")
+processes=("1" "2" "4" "8" "16" "32" "64" "128" "256")
 
 for benchmark in ${benchmarks[@]}
 do
