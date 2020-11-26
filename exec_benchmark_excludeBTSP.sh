@@ -71,7 +71,7 @@ do
 						qsub -g tgh-20IAN JobScript
 					fi
 					echo ${BenchMarkName}"をキューに投入しました"
-					sleep 15m
+					sleep 50m
 					pprof -s > "${pprof_filename}"
 				fi
 			done
