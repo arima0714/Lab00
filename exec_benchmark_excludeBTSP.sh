@@ -20,7 +20,6 @@ do
 			for process in ${processes[@]}
 			do
 				# JobScriptファイルをベンチマークを実行するたびに作成する
-				AllProcess=$process
 				if [ `expr $process` -le 4 ]; then
 					ProcessPerNode=$process
 					NumResource=1
@@ -33,7 +32,7 @@ do
 				# 既にプロファイルが存在しなければジョブを投入する
 				if [ ! -e "${pprof_filename}" ]; then
 					rm profile.*
-					echo "mpirun -n $B -x LD_LIBRARY_PATH ${BenchmarkFileName} && pprof -s > ${pprof_filename}"
+					echo "mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchmarkFileName} && pprof -s > ${pprof_filename}"
 					pprof -s > "${pprof_filename}"
 				fi
 			done
