@@ -6,7 +6,7 @@ bin_dir=${PWD}"/"
 classes=("S" "W" "A" "B" "C" "D" "E" "F")
 classes=("C")
 processes=("1" "2" "4" "8" "16" "32" "64" "128" "256")
-processes=("1" "2" "4" "8" "16")
+processes=("1" "2" "4")
 
 for benchmark in ${benchmarks[@]}
 do
@@ -31,7 +31,7 @@ do
 				pprof_filename=${bin_dir}"txt_files/pprof_${benchmark}${class}${process}.txt"
 				# 既にプロファイルが存在しなければジョブを投入する
 				if [ ! -e "${pprof_filename}" ]; then
-					echo "rm profile.* && mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchmarkFileName} && pprof -s > ${pprof_filename}"
+					eval "rm profile.* && mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchmarkFileName} && pprof -s > ${pprof_filename}"
 				fi
 			done
 		fi
