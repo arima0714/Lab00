@@ -31,8 +31,7 @@ do
 				pprof_filename=${bin_dir}"txt_files/pprof_${benchmark}${class}${process}.txt"
 				# 既にプロファイルが存在しなければジョブを投入する
 				if [ ! -e "${pprof_filename}" ]; then
-					rm profile.*
-					echo "mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchmarkFileName} && pprof -s > ${pprof_filename}"
+					echo "rm profile.* && mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchmarkFileName} && pprof -s > ${pprof_filename}"
 				fi
 			done
 		fi
