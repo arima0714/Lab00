@@ -4,6 +4,7 @@
 benchmarks=("cg" "dt" "ep" "ft" "is" "lu" "mg")
 bin_dir=${PWD}"/"
 classes=("S" "W" "A" "B" "C" "D" "E" "F")
+classes=( "A" "B" "C" "D" "E" "F")
 processes=("1" "2" "4" "8" "16" "32" "64" "128" "256")
 processes=("1" "2" "4")
 
@@ -38,3 +39,6 @@ do
 		fi
 	done
 done
+
+exit
+
