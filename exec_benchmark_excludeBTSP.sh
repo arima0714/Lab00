@@ -32,7 +32,7 @@ do
 				# 既にプロファイルが存在しなければジョブを投入する
 				if [ ! -e "${pprof_filename}" ]; then
 					rm profile.*
-					eval " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchmarkFileName} && pprof -s > ${pprof_filename}"
+					echo " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName} && pprof -s > ${pprof_filename}"
 				fi
 			done
 		fi
