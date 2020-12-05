@@ -21,7 +21,6 @@ do
 				pprof_filename=${bin_dir}"txt_files/pprof_${benchmark}${class}${process}.txt"
 				# プロファイルが存在しなければ、プロファイル名を出力
 				if [ ! -e "${pprof_filename}" ]; then
-					rm profile.*
 					echo "${pprof_filename}"
 				fi
 			done
