@@ -33,7 +33,8 @@ do
 				if [ ! -e "${pprof_filename}" ]; then
 					rm profile.*
 					echo " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName} && pprof -s > ${pprof_filename}"
-					eval " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName} && pprof -s > ${pprof_filename}"
+					eval " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName}"
+					eval "pprof -s > ${pprof_filename}"
 				fi
 			done
 		fi
