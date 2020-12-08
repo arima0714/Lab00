@@ -4,7 +4,7 @@
 benchmarks=("bt" "sp")
 bin_dir=${PWD}"/"
 classes=("S" "W" "A" "B" "C" "D" "E" "F")
-classes=("A" "B" "C" "D)
+classes=("A" "B" "C" "D")
 processes=("9")
 
 for benchmark in ${benchmarks[@]}
