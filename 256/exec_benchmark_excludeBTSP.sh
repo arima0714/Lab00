@@ -28,7 +28,7 @@ do
 					NumResource=`expr $process / 4`
 				fi
 				# pprofのサマリを保存する際のファイル名
-				pprof_filename=${bin_dir}"txt_files/pprof_${benchmark}${class}${process}.txt"
+				pprof_filename=${bin_dir}"pprof_${benchmark}${class}${process}.txt"
 				# 既にプロファイルが存在しなければジョブを投入する
 				if [ ! -e "${pprof_filename}" ]; then
 					rm profile.*
