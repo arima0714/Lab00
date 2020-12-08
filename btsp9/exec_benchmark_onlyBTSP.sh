@@ -64,14 +64,9 @@ do
 				# 既にプロファイルが存在しなければジョブを投入する
 				if [ ! -e "${pprof_filename}" ]; then
 					rm profile.*
-					if [ ${process} -lt 8 ]; then
-						qsub JobScript
-					else
-						qsub -g tgh-20IAN JobScript
-					fi
-					echo ${BenchMarkName}"をキューに投入しました"
-					sleep 15m
-					pprof -s > "${pprof_filename}"
+					echo " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName} && pprof -s > ${pprof_filename}"
+					eval " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName}"
+					eval "pprof -s > ${pprof_filename}"
 				fi
 			done
 		fi
