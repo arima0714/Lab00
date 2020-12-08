@@ -60,7 +60,7 @@ do
 				echo "# ノードあたりAプロセスMPI全B プロセスを使用" >> JobScript
 				echo "mpirun -npernode \$A -n \$B -x LD_LIBRARY_PATH \${BenchmarkFileName}" >> JobScript
 				# pprofのサマリを保存する際のファイル名
-				pprof_filename=${bin_dir}"txt_files/pprof_${benchmark}${class}${process}.txt"
+				pprof_filename=${bin_dir}"pprof_${benchmark}${class}${process}.txt"
 				# 既にプロファイルが存在しなければジョブを投入する
 				if [ ! -e "${pprof_filename}" ]; then
 					rm profile.*
