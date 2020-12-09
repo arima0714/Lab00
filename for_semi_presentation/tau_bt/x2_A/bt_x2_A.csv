@@ -1,9 +1,0 @@
-Name,#Call
-.TAU,1
-MPBT,1
-SETUP_MPI,1
-MPI_Init(),1
-MPI_Bcast(),1
-MPI_Abort(),1
-MPI_Comm_rank(),1
-MPI_Comm_size(),1
