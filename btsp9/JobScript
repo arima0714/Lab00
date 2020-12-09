@@ -20,4 +20,4 @@ export TAU_OPTIONS=-optRevert
 export PATH="$PATH:/home/9/20IA1328/pdtoolkit-3.25.1/x86_64//bin"
 export TAU_THROTTLE=0
 # 実行
-source ./exec_benchmark_excludeBTSP.sh
+source ./exec_benchmark_onlyBTSP.sh
