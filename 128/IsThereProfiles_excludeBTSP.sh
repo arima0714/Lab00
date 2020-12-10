@@ -19,7 +19,7 @@ do
 			for process in ${processes[@]}
 			do
 				# pprofのサマリ(=プロファイル)を保存する際のファイル名
-				pprof_filename=${bin_dir}"txt_files/pprof_${benchmark}${class}${process}.txt"
+				pprof_filename=${bin_dir}"pprof_${benchmark}${class}${process}.txt"
 				# プロファイルが存在しなければ、プロファイル名を出力
 				if [ ! -e "${pprof_filename}" ]; then
 					echo "${pprof_filename}"
