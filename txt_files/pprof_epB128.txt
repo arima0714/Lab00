@@ -5,14 +5,14 @@ FUNCTION SUMMARY (total):
 %Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
               msec   total msec                          usec/call 
 ---------------------------------------------------------------------------------------
-100.0            1     4:31.336         128         128    2119819 .TAU application
-100.0       54,270     4:31.335         128        1280    2119811 EMBAR 
- 31.0     1:24.203     1:24.203         128           0     657839 MPI_Finalize() 
- 28.9     1:18.444     1:18.444         128           0     612850 MPI_Init() 
- 20.0       54,257       54,257         512           0     105971 MPI_Allreduce() 
-  0.0           85           85         128           0        665 MPI_Barrier() 
-  0.0           74           74         128           0        583 MPI_Bcast() 
-  0.0         0.36         0.36         128           0          3 MPI_Comm_rank() 
+100.0        0.934     3:21.329         128         128    1572884 .TAU application
+100.0       53,091     3:21.328         128        1280    1572877 EMBAR 
+ 39.0     1:18.422     1:18.422         128           0     612678 MPI_Init() 
+ 32.3     1:05.006     1:05.006         128           0     507861 MPI_Finalize() 
+  2.3        4,639        4,639         512           0       9061 MPI_Allreduce() 
+  0.1          101          101         128           0        791 MPI_Bcast() 
+  0.0           66           66         128           0        523 MPI_Barrier() 
+  0.0        0.393        0.393         128           0          3 MPI_Comm_rank() 
   0.0        0.027        0.027         128           0          0 MPI_Comm_size() 
 
 FUNCTION SUMMARY (mean):
@@ -20,12 +20,12 @@ FUNCTION SUMMARY (mean):
 %Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
               msec   total msec                          usec/call 
 ---------------------------------------------------------------------------------------
-100.0      0.00816        2,119           1           1    2119819 .TAU application
-100.0          423        2,119           1          10    2119811 EMBAR 
- 31.0          657          657           1           0     657839 MPI_Finalize() 
- 28.9          612          612           1           0     612850 MPI_Init() 
- 20.0          423          423           4           0     105971 MPI_Allreduce() 
-  0.0        0.665        0.665           1           0        665 MPI_Barrier() 
-  0.0        0.583        0.583           1           0        583 MPI_Bcast() 
-  0.0      0.00281      0.00281           1           0          3 MPI_Comm_rank() 
+100.0       0.0073        1,572           1           1    1572884 .TAU application
+100.0          414        1,572           1          10    1572877 EMBAR 
+ 39.0          612          612           1           0     612678 MPI_Init() 
+ 32.3          507          507           1           0     507861 MPI_Finalize() 
+  2.3           36           36           4           0       9061 MPI_Allreduce() 
+  0.1        0.791        0.791           1           0        791 MPI_Bcast() 
+  0.0        0.523        0.523           1           0        523 MPI_Barrier() 
+  0.0      0.00307      0.00307           1           0          3 MPI_Comm_rank() 
   0.0     0.000211     0.000211           1           0          0 MPI_Comm_size() 
