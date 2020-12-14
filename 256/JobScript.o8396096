@@ -1,0 +1,3 @@
+ mpirun -n 256 -x LD_LIBRARY_PATH dt.B.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/256/pprof_dtB256.txt
+ mpirun -n 256 -x LD_LIBRARY_PATH dt.C.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/256/pprof_dtC256.txt
+ mpirun -n 256 -x LD_LIBRARY_PATH dt.D.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/256/pprof_dtD256.txt
