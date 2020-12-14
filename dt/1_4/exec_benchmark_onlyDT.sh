@@ -7,7 +7,7 @@ bin_dir=${PWD}"/"
 classes=("S" "W" "A" "B" "C" "D" "E" "F")
 classes=( "A" "B" "C" "D")
 processes=("1" "2" "4" "8" "16" "32" "64" "128" "256")
-processes=("1" "2" "4"")
+processes=("1" "2" "4")
 
 for benchmark in ${benchmarks[@]}
 do
@@ -34,8 +34,8 @@ do
 				if [ ! -e "${pprof_filename}" ]; then
 					rm profile.*
 					# communication graph として BH を指定
-					echo " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName} BH && pprof -s > ${pprof_filename}"
-					eval " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName} BH"
+					echo " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName} SH && pprof -s > ${pprof_filename}"
+					eval " mpirun -n ${process} -x LD_LIBRARY_PATH ${BenchMarkName} SH"
 					eval "pprof -s > ${pprof_filename}"
 				fi
 			done

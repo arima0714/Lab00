@@ -1,9 +1,9 @@
 # カレントディレクトリでジョブを実行する
 #$ -cwd
-# 資源タイプFを3ノードを使用
-#$ -l f_node=3
+# 資源タイプC4を1ノードを使用
+#$ -l q_core=1
 # 実行時間を指定
-#$ -l h_rt=3:30:30
+#$ -l h_rt=0:9:30
 # moduleコマンドの初期化
 . /etc/profile.d/modules.sh
 # CUDA環境の読み込み
@@ -21,5 +21,5 @@ export PATH="$PATH:/home/9/20IA1328/pdtoolkit-3.25.1/x86_64//bin"
 export TAU_THROTTLE=0
 # 実行
 # ノードあたりAプロセスMPI全B プロセスを使用
-source ./exec_benchmark_excludeBTSP.sh
+source ./exec_benchmark_onlyDT.sh
 

@@ -1,0 +1,12 @@
+ mpirun -n 1 -x LD_LIBRARY_PATH dt.A.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtA1.txt
+ mpirun -n 2 -x LD_LIBRARY_PATH dt.A.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtA2.txt
+ mpirun -n 4 -x LD_LIBRARY_PATH dt.A.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtA4.txt
+ mpirun -n 1 -x LD_LIBRARY_PATH dt.B.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtB1.txt
+ mpirun -n 2 -x LD_LIBRARY_PATH dt.B.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtB2.txt
+ mpirun -n 4 -x LD_LIBRARY_PATH dt.B.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtB4.txt
+ mpirun -n 1 -x LD_LIBRARY_PATH dt.C.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtC1.txt
+ mpirun -n 2 -x LD_LIBRARY_PATH dt.C.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtC2.txt
+ mpirun -n 4 -x LD_LIBRARY_PATH dt.C.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtC4.txt
+ mpirun -n 1 -x LD_LIBRARY_PATH dt.D.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtD1.txt
+ mpirun -n 2 -x LD_LIBRARY_PATH dt.D.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtD2.txt
+ mpirun -n 4 -x LD_LIBRARY_PATH dt.D.x SH && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/dt/1_4/txt_files/pprof_dtD4.txt
