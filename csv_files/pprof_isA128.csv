@@ -17,6 +17,6 @@ MPI_Reduce(),2
 void_alloc_space(void),1
 double_find_my_seed(int_int_long_double_double),1
 MPI_Comm_rank(),1
-MPI_Send(),0.992188
 MPI_Comm_size(),1
+MPI_Send(),0.992188
 MPI_Irecv(),0.992188

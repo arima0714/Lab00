@@ -4,7 +4,7 @@ EMBAR,1
 MPI_Init(),1
 MPI_Finalize(),1
 MPI_Allreduce(),4
-MPI_Barrier(),1
 MPI_Bcast(),1
+MPI_Barrier(),1
 MPI_Comm_rank(),1
 MPI_Comm_size(),1
