@@ -18,3 +18,9 @@ profile.*
 # コンパイルするだけで生成することができる実行ファイルは不要なので
 *.x
 
+.cache/
+.config
+.ipynb_checkpoints
+.jupyter
+.local
+.npm
