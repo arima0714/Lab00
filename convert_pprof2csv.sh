@@ -8,6 +8,9 @@ classes=("S" "W" "A" "B" "C" "D" "E" "F")
 processes=("1" "2" "4" "8" "16" "32" "64" "128" "256")
 bin_dir=${PWD}"/"
 
+txt_files_dir="${bin_dir}txt_files/"
+csv_files_dir="${bin_dir}csv_files/"
+
 # profile.* は不要なので削除
 # rm profile.*
 
@@ -21,7 +24,7 @@ do
 			# ジョブスクリプト用のプロセス数などに関する記述
 			AllProcess=$process
 			# pprof_*.txt のファイル名を格納する
-			pprof_s_FileName="pprof_${benchmark}${class}${process}.txt"
+			pprof_s_FileName="${txt_files_dir}pprof_${benchmark}${class}${process}.txt"
 			if [ `expr $process` -le 4 ]; then
 				ProcessPerNode=$process
 				NumResource=1
@@ -32,7 +35,7 @@ do
 			# pprof_*.txt が存在するときに行う処理 
 			if [ -e ${pprof_s_FileName} ]; then
 				echo ${pprof_s_FileName}
-				cat ${pprof_s_FileName} | sed -n '/mean/,$p'| sed -e 's/char /char_/g' | sed -e 's/void /void_/g' | sed -e 's/double /double_/g' | sed -e 's/int /int_/g' | sed -e 's/.TAU application/.TAU_application/g' | sed -e 's/, /_/g' | sed "4,5d" | sed "1,2d" | awk -v OFS=, '{print $7, $4}' > "pprof_${benchmark}${class}${process}.csv"
+				cat ${pprof_s_FileName} | sed -n '/mean/,$p'| sed -e 's/char /char_/g' | sed -e 's/void /void_/g' | sed -e 's/double /double_/g' | sed -e 's/int /int_/g' | sed -e 's/.TAU application/.TAU_application/g' | sed -e 's/, /_/g' | sed "4,5d" | sed "1,2d" | awk -v OFS=, '{print $7, $4}' > "${csv_files}pprof_${benchmark}${class}${process}.csv"
 			fi
 		done
 	done
