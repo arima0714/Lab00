@@ -3,9 +3,9 @@
 # cat pprof_spC8.txt | sed -n '/mean/,$p'| sed -e 's/char /char_/g' | sed -e 's/void /void_/g' | sed -e 's/double /double_/g' | sed -e 's/int /int_/g' | sed -e 's/.TAU application/.TAU_application/g' | sed -e 's/, /_/g' | sed "4,5d" | sed "1,2d" | awk -v OFS=, '{print $7, $4}'
 
 # 基本的な配列・変数の宣言
-benchmarks=("cg" "dt" "ep" "ft" "is" "lu" "mg")
+benchmarks=("bt" "sp")
 classes=("S" "W" "A" "B" "C" "D" "E" "F")
-processes=("1" "2" "4" "8" "16" "32" "64" "128" "256")
+processes=("1" "4" "9" "16" "25" "36" "49" "64" "81" "100" "121" "144" "169" "196" "225")
 bin_dir=${PWD}"/"
 
 txt_files_dir="${bin_dir}txt_files/"
