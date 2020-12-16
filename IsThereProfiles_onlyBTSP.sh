@@ -11,10 +11,6 @@ for benchmark in ${benchmarks[@]}
 do
 	for class in ${classes[@]}
 	do
-		# BenchMarkNameとは実行ファイル名のこと
-		BenchMarkName=${benchmark}.${class}."x"
-		# 実行ファイルが実際にある時のみ下記の処理を行う条件分岐
-		if [ -e ${bin_dir}${BenchMarkName} ]; then
 			# プロセス数ごとにプロファイルを取得するためのループ
 			for process in ${processes[@]}
 			do
@@ -25,7 +21,6 @@ do
 					echo "${pprof_filename}"
 				fi
 			done
-		fi
 	done
 done
 
