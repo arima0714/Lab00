@@ -25,6 +25,7 @@ do
 			AllProcess=$process
 			# pprof_*.txt のファイル名を格納する
 			pprof_s_FileName="${txt_files_dir}pprof_${benchmark}${class}${process}.txt"
+			csv_FileName="${csv_files_dir}pprof_${benchmark}${class}${process}.csv"
 			if [ `expr $process` -le 4 ]; then
 				ProcessPerNode=$process
 				NumResource=1
@@ -34,8 +35,8 @@ do
 			fi
 			# pprof_*.txt が存在するときに行う処理 
 			if [ -e ${pprof_s_FileName} ]; then
-				echo ${pprof_s_FileName}
-				cat ${pprof_s_FileName} | sed -n '/mean/,$p'| sed -e 's/char /char_/g' | sed -e 's/void /void_/g' | sed -e 's/double /double_/g' | sed -e 's/int /int_/g' | sed -e 's/.TAU application/.TAU_application/g' | sed -e 's/, /_/g' | sed "4,5d" | sed "1,2d" | awk -v OFS=, '{print $7, $4}' > "${csv_files}pprof_${benchmark}${class}${process}.csv"
+				echo ${csv_FileName}
+				cat ${pprof_s_FileName} | sed -n '/mean/,$p'| sed -e 's/char /char_/g' | sed -e 's/void /void_/g' | sed -e 's/double /double_/g' | sed -e 's/int /int_/g' | sed -e 's/.TAU application/.TAU_application/g' | sed -e 's/, /_/g' | sed "4,5d" | sed "1,2d" | awk -v OFS=, '{print $7, $4}' > "${csv_FileName}"
 			fi
 		done
 	done
