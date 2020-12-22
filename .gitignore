@@ -24,3 +24,4 @@ profile.*
 .jupyter
 .local
 .npm
+tmp.md
