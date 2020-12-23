@@ -1,0 +1,9 @@
+ベンチマーク名,線形モデル,対数モデル,反比例モデル,分岐モデル
+bt,"100%(0.0, 94.8)",0%(NoData),0%(NoData),0%(NoData)
+cg,"100%(0.0, 94.8)",0%(NoData),0%(NoData),0%(NoData)
+ep,"100%(0.0, 94.8)",0%(NoData),0%(NoData),0%(NoData)
+ft,"100%(0.0, 94.8)",0%(NoData),0%(NoData),0%(NoData)
+is,"100%(0.0, 94.8)",0%(NoData),0%(NoData),0%(NoData)
+lu,"100%(0.0, 94.8)",0%(NoData),0%(NoData),0%(NoData)
+mg,"100%(0.0, 94.8)",0%(NoData),0%(NoData),0%(NoData)
+sp,"100%(0.0, 94.8)",0%(NoData),0%(NoData),0%(NoData)
