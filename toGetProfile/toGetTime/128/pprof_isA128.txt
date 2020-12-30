@@ -1,0 +1,55 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.712     2:22.344         128         128    1112064 .TAU application
+100.0            6     2:22.343         128        2944    1112059 int main(int, char **) C 
+ 49.2     1:10.055     1:10.055         128           0     547311 MPI_Init() 
+ 37.8       53,805       53,805         128           0     420353 MPI_Finalize() 
+  7.4        4,743       10,467         128 3.35544E+07      81777 void create_seq(double, double) C 
+  5.4          635        7,721        1408        4224       5484 void rank(int) C 
+  4.0        5,724        5,724 3.35578E+07           0          0 double randlc(double *, double *) C 
+  3.5        5,020        5,020        1408           0       3565 MPI_Allreduce() 
+  1.4        1,926        1,926        1408           0       1368 MPI_Alltoallv() 
+  0.1          158          158         128           0       1240 MPI_Comm_dup() 
+  0.1          138          138        1408           0         99 MPI_Alltoall() 
+  0.1           79           90         128         381        707 void full_verify(void) C 
+  0.0           22           22         128           0        172 MPI_Bcast() 
+  0.0           10           10         127           0         83 MPI_Wait() 
+  0.0           10           10         256           0         40 MPI_Reduce() 
+  0.0            3            3         128           0         26 void alloc_space(void) C 
+  0.0        0.673            1         128        3394         10 double find_my_seed(int, int, long, double, double) C 
+  0.0        0.411        0.411         128           0          3 MPI_Comm_rank() 
+  0.0        0.338        0.338         128           0          3 MPI_Comm_size() 
+  0.0        0.275        0.275         127           0          2 MPI_Send() 
+  0.0        0.198        0.198         127           0          2 MPI_Irecv() 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0      0.00556        1,112           1           1    1112064 .TAU application
+100.0       0.0516        1,112           1          23    1112059 int main(int, char **) C 
+ 49.2          547          547           1           0     547311 MPI_Init() 
+ 37.8          420          420           1           0     420353 MPI_Finalize() 
+  7.4           37           81           1      262144      81777 void create_seq(double, double) C 
+  5.4            4           60          11          33       5484 void rank(int) C 
+  4.0           44           44      262171           0          0 double randlc(double *, double *) C 
+  3.5           39           39          11           0       3565 MPI_Allreduce() 
+  1.4           15           15          11           0       1368 MPI_Alltoallv() 
+  0.1            1            1           1           0       1240 MPI_Comm_dup() 
+  0.1            1            1          11           0         99 MPI_Alltoall() 
+  0.1        0.621        0.707           1     2.97656        707 void full_verify(void) C 
+  0.0        0.172        0.172           1           0        172 MPI_Bcast() 
+  0.0       0.0823       0.0823    0.992188           0         83 MPI_Wait() 
+  0.0        0.079        0.079           2           0         40 MPI_Reduce() 
+  0.0       0.0264       0.0264           1           0         26 void alloc_space(void) C 
+  0.0      0.00526       0.0103           1     26.5156         10 double find_my_seed(int, int, long, double, double) C 
+  0.0      0.00321      0.00321           1           0          3 MPI_Comm_rank() 
+  0.0      0.00264      0.00264           1           0          3 MPI_Comm_size() 
+  0.0      0.00215      0.00215    0.992188           0          2 MPI_Send() 
+  0.0      0.00155      0.00155    0.992188           0          2 MPI_Irecv() 

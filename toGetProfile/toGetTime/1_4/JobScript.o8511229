@@ -1,0 +1,10 @@
+ mpirun -n 1 -x LD_LIBRARY_PATH cg.D.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/toGetProfile/toGetTime/1_4/pprof_cgD1.txt
+
+
+ NAS Parallel Benchmarks 3.4 -- CG Benchmark
+
+ Size:    1500000  (class D)
+ Iterations:   100
+ Number of nonzeroes per row:       21
+ Eigenvalue shift:   500.000
+ Total number of processes:      1
