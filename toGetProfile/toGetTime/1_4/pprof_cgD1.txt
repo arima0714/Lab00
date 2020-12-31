@@ -1,0 +1,51 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.009  2:27:02.281           1           1 8822281919 .TAU application
+100.0          643  2:27:02.281           1         109 8822281910 CG 
+ 99.3  2:26:02.601  2:26:02.601         101           0   86758435 CONJ_GRAD 
+  0.6        4,987       52,563           1       3E+06   52563392 MAKEA 
+  0.4       35,334       35,334           1           0   35334404 SPARSE 
+  0.1        6,554       12,023     1.5E+06 4.40472E+07          8 SPRNVC 
+  0.1        5,911        5,911           1           0    5911557 MPI_Finalize() 
+  0.1        5,468        5,468 4.40472E+07           0          0 ICNVRT 
+  0.0        0.441          555           1           4     555728 INITIALIZE_MPI 
+  0.0          555          555           1           0     555281 MPI_Init() 
+  0.0          218          218     1.5E+06           0          0 VECSET 
+  0.0            5            5           1           0       5720 ALLOC_SPACE 
+  0.0        0.044        0.044           1           0         44 MPI_Reduce() 
+  0.0        0.005        0.005           1           0          5 MPI_Bcast() 
+  0.0        0.003        0.003           1           0          3 MPI_Barrier() 
+  0.0        0.001        0.001           1           0          1 MPI_Comm_size() 
+  0.0            0            0           1           0          0 MPI_Comm_rank() 
+  0.0            0            0           1           0          0 SETUP_PROC_INFO 
+  0.0            0            0           1           0          0 SETUP_SUBMATRIX_INFO 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.009  2:27:02.281           1           1 8822281919 .TAU application
+100.0          643  2:27:02.281           1         109 8822281910 CG 
+ 99.3  2:26:02.601  2:26:02.601         101           0   86758435 CONJ_GRAD 
+  0.6        4,987       52,563           1       3E+06   52563392 MAKEA 
+  0.4       35,334       35,334           1           0   35334404 SPARSE 
+  0.1        6,554       12,023     1.5E+06 4.40472E+07          8 SPRNVC 
+  0.1        5,911        5,911           1           0    5911557 MPI_Finalize() 
+  0.1        5,468        5,468 4.40472E+07           0          0 ICNVRT 
+  0.0        0.441          555           1           4     555728 INITIALIZE_MPI 
+  0.0          555          555           1           0     555281 MPI_Init() 
+  0.0          218          218     1.5E+06           0          0 VECSET 
+  0.0            5            5           1           0       5720 ALLOC_SPACE 
+  0.0        0.044        0.044           1           0         44 MPI_Reduce() 
+  0.0        0.005        0.005           1           0          5 MPI_Bcast() 
+  0.0        0.003        0.003           1           0          3 MPI_Barrier() 
+  0.0        0.001        0.001           1           0          1 MPI_Comm_size() 
+  0.0            0            0           1           0          0 MPI_Comm_rank() 
+  0.0            0            0           1           0          0 SETUP_PROC_INFO 
+  0.0            0            0           1           0          0 SETUP_SUBMATRIX_INFO 
