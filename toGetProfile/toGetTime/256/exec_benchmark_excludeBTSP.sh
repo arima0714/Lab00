@@ -2,6 +2,7 @@
 
 # 基本的な配列・変数の宣言
 benchmarks=("bt" "cg" "dt" "ep" "ft" "is" "lu" "mg" "sp")
+benchmarks=("cg" "dt" "ep" "ft" "is" "lu" "mg")
 bin_dir=${PWD}"/"
 classes=("S" "W" "A" "B" "C" "D" "E" "F")
 classes=( "A" "B" "C" "D")
