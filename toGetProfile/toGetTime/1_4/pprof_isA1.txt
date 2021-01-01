@@ -1,0 +1,49 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.007       15,849           1           1   15849411 .TAU application
+100.0        0.547       15,849           1          23   15849404 int main(int, char **) C 
+ 51.7        3,464        8,188           1 3.35544E+07    8188697 void create_seq(double, double) C 
+ 39.1        6,191        6,191           1           0    6191265 MPI_Finalize() 
+ 29.8        4,723        4,723 3.35545E+07           0          0 double randlc(double *, double *) C 
+  6.8          991        1,075          11          33      97745 void rank(int) C 
+  2.2          351          351           1           0     351119 MPI_Init() 
+  0.5           83           83          11           0       7569 MPI_Alltoallv() 
+  0.3           41           41           1           0      41577 void full_verify(void) C 
+  0.0        0.894        0.894           1           0        894 void alloc_space(void) C 
+  0.0        0.076        0.076          11           0          7 MPI_Allreduce() 
+  0.0        0.074        0.074           1           0         74 MPI_Comm_dup() 
+  0.0        0.015        0.015          11           0          1 MPI_Alltoall() 
+  0.0         0.01         0.01           1           0         10 MPI_Bcast() 
+  0.0         0.01         0.01           2           0          5 MPI_Reduce() 
+  0.0        0.002        0.008           1          25          8 double find_my_seed(int, int, long, double, double) C 
+  0.0        0.004        0.004           1           0          4 MPI_Comm_rank() 
+  0.0        0.003        0.003           1           0          3 MPI_Comm_size() 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.007       15,849           1           1   15849411 .TAU application
+100.0        0.547       15,849           1          23   15849404 int main(int, char **) C 
+ 51.7        3,464        8,188           1 3.35544E+07    8188697 void create_seq(double, double) C 
+ 39.1        6,191        6,191           1           0    6191265 MPI_Finalize() 
+ 29.8        4,723        4,723 3.35545E+07           0          0 double randlc(double *, double *) C 
+  6.8          991        1,075          11          33      97745 void rank(int) C 
+  2.2          351          351           1           0     351119 MPI_Init() 
+  0.5           83           83          11           0       7569 MPI_Alltoallv() 
+  0.3           41           41           1           0      41577 void full_verify(void) C 
+  0.0        0.894        0.894           1           0        894 void alloc_space(void) C 
+  0.0        0.076        0.076          11           0          7 MPI_Allreduce() 
+  0.0        0.074        0.074           1           0         74 MPI_Comm_dup() 
+  0.0        0.015        0.015          11           0          1 MPI_Alltoall() 
+  0.0         0.01         0.01           1           0         10 MPI_Bcast() 
+  0.0         0.01         0.01           2           0          5 MPI_Reduce() 
+  0.0        0.002        0.008           1          25          8 double find_my_seed(int, int, long, double, double) C 
+  0.0        0.004        0.004           1           0          4 MPI_Comm_rank() 
+  0.0        0.003        0.003           1           0          3 MPI_Comm_size() 
