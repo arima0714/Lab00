@@ -1,0 +1,72 @@
+ CG Benchmark Completed.
+ Class           =                        A
+ Time in seconds =                     0.08
+ CG Benchmark Completed.
+ Class           =                        B
+ Time in seconds =                     4.08
+ CG Benchmark Completed.
+ Class           =                        C
+ Time in seconds =                    18.47
+ CG Benchmark Completed.
+ Class           =                        D
+ Time in seconds =                   619.15
+ EP Benchmark Completed.
+ Class           =                        A
+ Time in seconds =                     0.81
+ EP Benchmark Completed.
+ Class           =                        B
+ Time in seconds =                     3.26
+ EP Benchmark Completed.
+ Class           =                        C
+ Time in seconds =                    13.01
+ EP Benchmark Completed.
+ Class           =                        D
+ Time in seconds =                   208.18
+ FT Benchmark Completed.
+ Class           =                        A
+ Time in seconds =                     0.36
+ FT Benchmark Completed.
+ Class           =                        B
+ Time in seconds =                     4.54
+ FT Benchmark Completed.
+ Class           =                        C
+ Time in seconds =                    19.93
+ FT Benchmark Completed.
+ Class           =                        D
+ Time in seconds =                   525.65
+ IS Benchmark Completed
+ Class           =                        A
+ Time in seconds =                     0.07
+ IS Benchmark Completed
+ Class           =                        B
+ Time in seconds =                     0.30
+ IS Benchmark Completed
+ Class           =                        C
+ Time in seconds =                     1.25
+ IS Benchmark Completed
+ Class           =                        D
+ Time in seconds =                    24.98
+ LU Benchmark Completed.
+ Class           =                        A
+ Time in seconds =                     2.58
+ LU Benchmark Completed.
+ Class           =                        B
+ Time in seconds =                    11.37
+ LU Benchmark Completed.
+ Class           =                        C
+ Time in seconds =                    43.84
+ LU Benchmark Completed.
+ Class           =                        D
+ Time in seconds =                   797.54
+ MG Benchmark Completed.
+ Class           =                        A
+ Time in seconds =                     0.11
+ MG Benchmark Completed.
+ Class           =                        B
+ Time in seconds =                     0.50
+ MG Benchmark Completed.
+ Class           =                        C
+ Time in seconds =                     3.93
+ MG Benchmark Completed.
+ Class           =                        D
+ Time in seconds =                    95.64
