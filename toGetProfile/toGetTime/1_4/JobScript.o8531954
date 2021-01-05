@@ -1,0 +1,60 @@
+ mpirun -n 4 -x LD_LIBRARY_PATH dt.C.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/toGetProfile/toGetTime/1_4/pprof_dtC4.txt
+ mpirun -n 1 -x LD_LIBRARY_PATH ft.D.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/toGetProfile/toGetTime/1_4/pprof_ftD1.txt
+
+
+ NAS Parallel Benchmarks 3.4 -- FT Benchmark
+
+ No input file inputft.data. Using compiled defaults
+ Size                : 2048x1024x1024  (class D)
+ Iterations          :             25
+ Number of processes :              1
+ Processor array     :         1x   1
+ Layout type         :             0D
+ mpirun -n 2 -x LD_LIBRARY_PATH ft.D.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/toGetProfile/toGetTime/1_4/pprof_ftD2.txt
+
+
+ NAS Parallel Benchmarks 3.4 -- FT Benchmark
+
+ No input file inputft.data. Using compiled defaults
+ Size                : 2048x1024x1024  (class D)
+ Iterations          :             25
+ Number of processes :              2
+ Processor array     :         1x   2
+ Layout type         :             1D
+ mpirun -n 4 -x LD_LIBRARY_PATH ft.D.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/toGetProfile/toGetTime/1_4/pprof_ftD4.txt
+
+
+ NAS Parallel Benchmarks 3.4 -- FT Benchmark
+
+ No input file inputft.data. Using compiled defaults
+ Size                : 2048x1024x1024  (class D)
+ Iterations          :             25
+ Number of processes :              4
+ Processor array     :         1x   4
+ Layout type         :             1D
+ mpirun -n 1 -x LD_LIBRARY_PATH mg.D.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/toGetProfile/toGetTime/1_4/pprof_mgD1.txt
+
+
+ NAS Parallel Benchmarks 3.4 -- MG Benchmark
+
+ No input file. Using compiled defaults 
+ Size: 1024x1024x1024  (class D)
+ Iterations:   50
+ Total number of processes:      1
+
+ mpirun -n 2 -x LD_LIBRARY_PATH mg.D.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/toGetProfile/toGetTime/1_4/pprof_mgD2.txt
+
+
+ NAS Parallel Benchmarks 3.4 -- MG Benchmark
+
+ No input file. Using compiled defaults 
+ Size: 1024x1024x1024  (class D)
+ Iterations:   50
+ Total number of processes:      2
+
+ mpirun -n 4 -x LD_LIBRARY_PATH mg.D.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/toGetProfile/toGetTime/1_4/pprof_mgD4.txt
+
+
+ NAS Parallel Benchmarks 3.4 -- MG Benchmark
+
+ No input file. Using compiled defaults 
