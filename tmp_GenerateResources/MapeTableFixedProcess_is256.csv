@@ -20,3 +20,4 @@ void_alloc_space(void),0.0,0.0,0.0
 void_create_seq(double_double),0.0,0.0,0.0
 void_full_verify(void),0.0,0.0,0.0
 void_rank(int),0.0,0.0,0.0
+Average,4.7016960456299445e-06,1.3783788936787657e-05,0.0
