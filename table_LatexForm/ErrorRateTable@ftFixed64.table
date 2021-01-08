@@ -1,0 +1,32 @@
+\begin{tabular}{llll}
+\toprule
+{} & ['A', 'B', 'C', 'D'] & ['A', 'B', 'C'] &  ['A'] \\
+\midrule
+.TAU\_application           &                    0 &               0 &      0 \\
+ALLOC\_SPACE                &                    0 &               0 &      0 \\
+CFFTS1                     &                0.089 &           0.185 &  0.555 \\
+CFFTZ                      &                0.749 &           1.001 &  0.985 \\
+CHECKSUM                   &                0.224 &             0.2 &   0.76 \\
+COMPUTE\_INDEXMAP           &                    0 &               0 &      0 \\
+COMPUTE\_INITIAL\_CONDITIONS &                    0 &               0 &      0 \\
+EVOLVE                     &                0.224 &             0.2 &   0.76 \\
+FFT                        &                0.182 &           0.185 &  0.703 \\
+FFTZ2                      &                0.749 &           1.001 &  0.989 \\
+FFT\_INIT                   &                    0 &               0 &      0 \\
+FT                         &                    0 &               0 &      0 \\
+ILOG2                      &                0.171 &            0.18 &  0.686 \\
+IPOW46                     &                    0 &               0 &      0 \\
+MPI\_Alltoall()             &                0.028 &           0.185 &  0.407 \\
+MPI\_Barrier()              &                    0 &               0 &      0 \\
+MPI\_Bcast()                &                    0 &               0 &      0 \\
+MPI\_Comm\_rank()            &                    0 &               0 &      0 \\
+MPI\_Comm\_size()            &                    0 &               0 &      0 \\
+MPI\_Comm\_split()           &                    0 &               0 &      0 \\
+MPI\_Finalize()             &                    0 &               0 &      0 \\
+MPI\_Init()                 &                    0 &               0 &      0 \\
+MPI\_Reduce()               &                0.224 &             0.2 &   0.76 \\
+SETUP                      &                    0 &               0 &      0 \\
+SET\_CLASS                  &                 0.75 &            0.75 &   0.75 \\
+VERIFY                     &                    0 &               0 &      0 \\
+\bottomrule
+\end{tabular}

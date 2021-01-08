@@ -1,0 +1,9 @@
+\begin{tabular}{llr}
+\toprule
+{} &    Average &  PredictCosts \\
+\midrule
+['A', 'B', 'C', 'D'] &  0.0657727 &      16325.12 \\
+['A', 'B', 'C']      &   0.135409 &        540.16 \\
+['A']                &   0.288136 &         10.24 \\
+\bottomrule
+\end{tabular}

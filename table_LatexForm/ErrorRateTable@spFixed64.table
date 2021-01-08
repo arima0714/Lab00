@@ -1,0 +1,47 @@
+\begin{tabular}{llll}
+\toprule
+{} & ['A', 'B', 'C', 'D'] & ['A', 'B', 'C'] &  ['A'] \\
+\midrule
+.TAU\_application    &                    0 &               0 &      0 \\
+ADD                 &                    0 &           0.199 &  0.199 \\
+ADI                 &                    0 &           0.199 &  0.199 \\
+ALLOC\_SPACE         &                    0 &               0 &      0 \\
+COMPUTE\_BUFFER\_SIZE &                    0 &               0 &      0 \\
+COMPUTE\_RHS         &                    0 &           0.199 &  0.199 \\
+COPY\_FACES          &                    0 &           0.199 &  0.199 \\
+ERROR\_NORM          &                    0 &               0 &      0 \\
+EXACT\_RHS           &                    0 &               0 &      0 \\
+EXACT\_SOLUTION      &                0.747 &           0.755 &  0.998 \\
+INITIALIZE          &                    0 &               0 &      0 \\
+LHSINIT             &                    0 &               0 &      0 \\
+LHSX                &                0.998 &             0.6 &    0.6 \\
+LHSY                &                0.998 &             0.6 &    0.6 \\
+LHSZ                &                0.998 &             0.6 &    0.6 \\
+MAKE\_SET            &                    0 &               0 &      0 \\
+MPI\_Allreduce()     &                    0 &               0 &      0 \\
+MPI\_Barrier()       &                    0 &               0 &      0 \\
+MPI\_Bcast()         &                    0 &               0 &      0 \\
+MPI\_Comm\_dup()      &                    0 &               0 &      0 \\
+MPI\_Comm\_rank()     &                    0 &               0 &      0 \\
+MPI\_Comm\_size()     &                    0 &               0 &      0 \\
+MPI\_Finalize()      &                    0 &               0 &      0 \\
+MPI\_Init()          &                    0 &               0 &      0 \\
+MPI\_Irecv()         &                0.998 &             0.6 &    0.6 \\
+MPI\_Isend()         &                0.998 &             0.6 &    0.6 \\
+MPI\_Reduce()        &                    0 &               0 &      0 \\
+MPI\_Waitall()       &                1.115 &           0.693 &  0.693 \\
+MPSP                &                    0 &               0 &      0 \\
+NINVR               &                0.998 &             0.6 &    0.6 \\
+PINVR               &                0.998 &             0.6 &    0.6 \\
+RHS\_NORM            &                    0 &               0 &      0 \\
+SETUP\_MPI           &                    0 &               0 &      0 \\
+SET\_CLASS           &                 0.75 &            0.75 &   0.75 \\
+SET\_CONSTANTS       &                    0 &               0 &      0 \\
+TXINVR              &                    0 &           0.199 &  0.199 \\
+TZETAR              &                0.998 &             0.6 &    0.6 \\
+VERIFY              &                    0 &               0 &      0 \\
+X\_SOLVE             &                    0 &           0.199 &  0.199 \\
+Y\_SOLVE             &                    0 &           0.199 &  0.199 \\
+Z\_SOLVE             &                    0 &           0.199 &  0.199 \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,32 @@
+\begin{tabular}{llllll}
+\toprule
+{} & [1, 2, 4, 8, 16, 32, 64, 128, 256] & [1, 2, 4, 8, 16, 32, 64, 128] & [1, 2, 4, 8, 16, 32] & [1, 2, 4, 8] &       [1, 2] \\
+\midrule
+.TAU\_application           &                                  0 &                             0 &                    0 &            0 &            0 \\
+ALLOC\_SPACE                &                                  0 &                             0 &                    0 &            0 &            0 \\
+CFFTS1                     &                                  0 &                             0 &                    0 &            0 &      115.454 \\
+CFFTZ                      &                              0.072 &                          0.48 &              686.129 &      3660.43 &  2.49436e+16 \\
+CHECKSUM                   &                                  0 &                             0 &                    0 &            0 &      177.799 \\
+COMPUTE\_INDEXMAP           &                                  0 &                             0 &                    0 &            0 &            0 \\
+COMPUTE\_INITIAL\_CONDITIONS &                                  0 &                             0 &                    0 &            0 &            0 \\
+EVOLVE                     &                                  0 &                             0 &                    0 &            0 &      177.799 \\
+FFT                        &                                  0 &                             0 &                    0 &            0 &        1.002 \\
+FFTZ2                      &                               0.08 &                          0.55 &               686.13 &      3660.44 &  4.65837e+16 \\
+FFT\_INIT                   &                                  0 &                             0 &                    0 &            0 &            0 \\
+FT                         &                                  0 &                             0 &                    0 &            0 &            0 \\
+ILOG2                      &                                  0 &                             0 &                    0 &            0 &      156.882 \\
+IPOW46                     &                                  0 &                             0 &                    0 &            0 &            0 \\
+MPI\_Alltoall()             &                                  0 &                             0 &                    0 &            0 &       69.272 \\
+MPI\_Barrier()              &                                  0 &                             0 &                    0 &            0 &            0 \\
+MPI\_Bcast()                &                                  0 &                             0 &                    0 &            0 &            0 \\
+MPI\_Comm\_rank()            &                                  0 &                             0 &                    0 &            0 &            0 \\
+MPI\_Comm\_size()            &                                  0 &                             0 &                    0 &            0 &            0 \\
+MPI\_Comm\_split()           &                                  0 &                             0 &                    0 &            0 &            0 \\
+MPI\_Finalize()             &                                  0 &                             0 &                    0 &            0 &            0 \\
+MPI\_Init()                 &                                  0 &                             0 &                    0 &            0 &            0 \\
+MPI\_Reduce()               &                                  0 &                             0 &                    0 &            0 &      177.799 \\
+SETUP                      &                                  0 &                             0 &                    0 &            0 &            0 \\
+SET\_CLASS                  &                              0.085 &                         0.607 &              686.129 &      3660.43 &        1.003 \\
+VERIFY                     &                                  0 &                             0 &                    0 &            0 &            0 \\
+\bottomrule
+\end{tabular}

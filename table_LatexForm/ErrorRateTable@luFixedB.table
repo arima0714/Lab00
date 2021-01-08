@@ -1,0 +1,44 @@
+\begin{tabular}{llllll}
+\toprule
+{} & [1, 2, 4, 8, 16, 32, 64, 128, 256] & [1, 2, 4, 8, 16, 32, 64, 128] & [1, 2, 4, 8, 16, 32] & [1, 2, 4, 8] & [1, 2] \\
+\midrule
+.TAU\_application &                                  0 &                             0 &                    0 &            0 &      0 \\
+ALLOC\_SPACE      &                                  0 &                             0 &                    0 &            0 &      0 \\
+APPLU            &                                  0 &                             0 &                    0 &            0 &      0 \\
+BCAST\_INPUTS     &                                  0 &                             0 &                    0 &            0 &      0 \\
+BLTS             &                              0.166 &                          0.28 &                  0.4 &        0.866 &     15 \\
+BUTS             &                              0.166 &                          0.28 &                  0.4 &        0.866 &     15 \\
+ERHS             &                                  0 &                             0 &                    0 &            0 &      0 \\
+ERROR            &                                  0 &                             0 &                    0 &            0 &      0 \\
+EXACT            &                                  0 &                             0 &                    0 &            0 &      0 \\
+EXCHANGE\_1       &                                  0 &                             0 &                    0 &            0 &      0 \\
+EXCHANGE\_3       &                                  0 &                             0 &                    0 &            0 &      0 \\
+EXCHANGE\_4       &                                  0 &                             0 &                    0 &            0 &      0 \\
+EXCHANGE\_5       &                              0.166 &                          0.28 &                  0.4 &        0.866 &     15 \\
+EXCHANGE\_6       &                              0.142 &                         0.219 &                0.285 &        0.464 &   2025 \\
+INIT\_COMM        &                                  0 &                             0 &                    0 &            0 &      0 \\
+ISQRT2           &                                  0 &                             0 &                    0 &            0 &      0 \\
+JACLD            &                              0.166 &                          0.28 &                  0.4 &        0.866 &     15 \\
+JACU             &                              0.166 &                          0.28 &                  0.4 &        0.866 &     15 \\
+L2NORM           &                                  0 &                             0 &                    0 &            0 &      0 \\
+MPI\_Allreduce()  &                                  0 &                             0 &                    0 &            0 &      0 \\
+MPI\_Barrier()    &                                  0 &                             0 &                    0 &            0 &      0 \\
+MPI\_Bcast()      &                                  0 &                             0 &                    0 &            0 &      0 \\
+MPI\_Comm\_rank()  &                                  0 &                             0 &                    0 &            0 &      0 \\
+MPI\_Comm\_size()  &                                  0 &                             0 &                    0 &            0 &      0 \\
+MPI\_Finalize()   &                                  0 &                             0 &                    0 &            0 &      0 \\
+MPI\_Init()       &                                  0 &                             0 &                    0 &            0 &      0 \\
+NEIGHBORS        &                                  0 &                             0 &                    0 &            0 &      0 \\
+PINTGR           &                                  0 &                             0 &                    0 &            0 &      0 \\
+PROC\_GRID        &                                  0 &                             0 &                    0 &            0 &      0 \\
+READ\_INPUT       &                                  0 &                             0 &                    0 &            0 &      0 \\
+RHS              &                                  0 &                             0 &                    0 &            0 &      0 \\
+SETBV            &                                  0 &                             0 &                    0 &            0 &      0 \\
+SETCOEFF         &                                  0 &                             0 &                    0 &            0 &      0 \\
+SETIV            &                                  0 &                             0 &                    0 &            0 &      0 \\
+SET\_CLASS        &                                  0 &                             0 &                    0 &            0 &  32385 \\
+SSOR             &                                  0 &                             0 &                    0 &            0 &      0 \\
+SUBDOMAIN        &                                  0 &                             0 &                    0 &            0 &      0 \\
+VERIFY           &                                  0 &                             0 &                    0 &            0 &  32385 \\
+\bottomrule
+\end{tabular}

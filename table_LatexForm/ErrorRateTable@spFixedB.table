@@ -1,0 +1,44 @@
+\begin{tabular}{llllll}
+\toprule
+{} & [1, 4, 16, 64, 256] & [1, 4, 16, 64] & [1, 4, 16] & [1, 4] &      [1] \\
+\midrule
+.TAU\_application    &                   0 &              0 &          0 &      0 &        0 \\
+ADD                 &                   0 &              0 &          0 &      0 &        0 \\
+ADI                 &                   0 &              0 &          0 &      0 &        0 \\
+ALLOC\_SPACE         &                   0 &              0 &          0 &      0 &        0 \\
+COMPUTE\_BUFFER\_SIZE &                   0 &              0 &          0 &      0 &        0 \\
+COMPUTE\_RHS         &                   0 &              0 &          0 &      0 &        0 \\
+COPY\_FACES          &                   0 &              0 &          0 &      0 &        0 \\
+ERROR\_NORM          &                   0 &              0 &          0 &      0 &        0 \\
+EXACT\_RHS           &                   0 &              0 &          0 &      0 &        0 \\
+EXACT\_SOLUTION      &               0.016 &          0.041 &      0.058 &  0.087 &  230.464 \\
+INITIALIZE          &                   0 &              0 &          0 &      0 &        0 \\
+LHSINIT             &                   0 &              0 &          0 &      0 &        0 \\
+LHSX                &                   0 &              0 &          0 &  4.375 &    0.937 \\
+LHSY                &                   0 &              0 &          0 &  4.375 &    0.937 \\
+LHSZ                &                   0 &              0 &          0 &  4.375 &    0.937 \\
+MAKE\_SET            &                   0 &              0 &          0 &      0 &        0 \\
+MPI\_Allreduce()     &                   0 &              0 &          0 &      0 &        0 \\
+MPI\_Barrier()       &                   0 &              0 &          0 &      0 &        0 \\
+MPI\_Bcast()         &                   0 &              0 &          0 &      0 &        0 \\
+MPI\_Comm\_dup()      &                   0 &              0 &          0 &      0 &        0 \\
+MPI\_Comm\_rank()     &                   0 &              0 &          0 &      0 &        0 \\
+MPI\_Comm\_size()     &                   0 &              0 &          0 &      0 &        0 \\
+MPI\_Finalize()      &                   0 &              0 &          0 &      0 &        0 \\
+MPI\_Init()          &                   0 &              0 &          0 &      0 &        0 \\
+MPI\_Reduce()        &                   0 &              0 &          0 &      0 &        0 \\
+MPSP                &                   0 &              0 &          0 &      0 &        0 \\
+NINVR               &                   0 &              0 &          0 &  4.375 &    0.937 \\
+PINVR               &                   0 &              0 &          0 &  4.375 &    0.937 \\
+RHS\_NORM            &                   0 &              0 &          0 &      0 &        0 \\
+SETUP\_MPI           &                   0 &              0 &          0 &      0 &        0 \\
+SET\_CLASS           &                   0 &              0 &          0 &  16065 &      255 \\
+SET\_CONSTANTS       &                   0 &              0 &          0 &      0 &        0 \\
+TXINVR              &                   0 &              0 &          0 &      0 &        0 \\
+TZETAR              &                   0 &              0 &          0 &  4.375 &    0.937 \\
+VERIFY              &                   0 &              0 &          0 &      0 &        0 \\
+X\_SOLVE             &                   0 &              0 &          0 &      0 &        0 \\
+Y\_SOLVE             &                   0 &              0 &          0 &      0 &        0 \\
+Z\_SOLVE             &                   0 &              0 &          0 &      0 &        0 \\
+\bottomrule
+\end{tabular}

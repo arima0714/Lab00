@@ -1,0 +1,15 @@
+\begin{tabular}{llll}
+\toprule
+{} & ['A', 'B', 'C', 'D'] & ['A', 'B', 'C'] & ['A'] \\
+\midrule
+.TAU\_application &                    0 &               0 &     0 \\
+EMBAR            &                    0 &               0 &     0 \\
+MPI\_Allreduce()  &                    0 &               0 &     0 \\
+MPI\_Barrier()    &                    0 &               0 &     0 \\
+MPI\_Bcast()      &                    0 &               0 &     0 \\
+MPI\_Comm\_rank()  &                    0 &               0 &     0 \\
+MPI\_Comm\_size()  &                    0 &               0 &     0 \\
+MPI\_Finalize()   &                    0 &               0 &     0 \\
+MPI\_Init()       &                    0 &               0 &     0 \\
+\bottomrule
+\end{tabular}
