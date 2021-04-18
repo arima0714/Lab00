@@ -1,7 +1,0 @@
-ln -s ../../dt.A.x  dt.A.x
-ln -s ../../dt.B.x  dt.B.x
-ln -s ../../dt.C.x  dt.C.x
-ln -s ../../dt.D.x  dt.D.x
-ln -s ../../dt.S.x  dt.S.x
-ln -s ../../dt.W.x  dt.W.x
-

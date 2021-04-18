@@ -1,3 +1,0 @@
- mpirun -n 128 -x LD_LIBRARY_PATH dt.A.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/128/pprof_dtA128.txt
- mpirun -n 128 -x LD_LIBRARY_PATH dt.B.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/128/pprof_dtB128.txt
- mpirun -n 128 -x LD_LIBRARY_PATH dt.D.x && pprof -s > /home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/128/pprof_dtD128.txt
