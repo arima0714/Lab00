@@ -89,6 +89,8 @@ plt.scatter(notTrain_x, notTrain_y, marker="o", label="予測に用いなかっ�
 plot_x = np.linspace(0.01, 256, 500)
 plot_x = np.array(plot_x).reshape(-1, 1)
 
+if st.checkbox("モデル名"):
+    pass
 
 plt.xlabel("Cores or Problem size")
 plt.legend()
