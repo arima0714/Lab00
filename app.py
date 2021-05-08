@@ -84,8 +84,10 @@ plt.scatter(target_x, target_y, marker="o", label="予測したい関数コー�
 plt.scatter(notTrain_x, notTrain_y, marker="o", label="最初のデータを除外した時に予測に用いなかった関数コール回数")
 ## モデル式をプロットするために変数”plot_x”を用意する
 plot_x_min = 0.01
-plot_x_max = 256
-plot_x = np.linspace(plot_x_min, plot_x_max, 500)
+plot_x_max = 256.0
+### モデル式としてプロットする最低値の設定
+_min = st.slider("モデル式に表示する最小値", min_value=plot_x_min, max_value=plot_x_max, step=0.3, value=1.0)
+plot_x = np.linspace(_min, plot_x_max, 500)
 plot_x = np.array(plot_x).reshape(-1, 1)
 
 
@@ -133,6 +135,26 @@ if st.checkbox("対数モデル(ロバスト回帰)"):
     model_log_rob.calc_hr()
     plot_y_log_rob = model_log_rob.predict(plot_x)
     plt.plot(plot_x, plot_y_log_rob, label="対数モデル（ロバスト回帰）")
+if st.checkbox("線形モデル"):
+    model_lin = lib.ModelLin(train_x, train_y, benchmark, functionName, test_ratio=0)
+    model_lin.calc_lr()
+    plot_y_lin = model_lin.predict(plot_x)
+    plt.plot(plot_x, plot_y_lin, label="線形モデル")
+if st.checkbox("対数モデル"):
+    model_log10 = lib.ModelLog10(train_x, train_y, benchmark, functionName, test_ratio=0)
+    model_log10.calc_lr()
+    plot_y_log10 = model_log10.predict(plot_x)
+    plt.plot(plot_x, plot_y_log10, label="対数モデル")
+if st.checkbox("反比例モデル"):
+    model_ip = lib.ModelIP(train_x, train_y, benchmark, functionName, test_ratio=0)
+    model_ip.calc_lr()
+    plot_y_ip = model_ip.predict(plot_x)
+    plt.plot(plot_x, plot_y_ip, label="反比例モデル")
+if st.checkbox("線形飽和モデル"):
+    model_branch = lib.ModelBranch(train_x, train_y, benchmark, functionName, test_ratio=0)
+    model_branch.calc_lr()
+    plot_y_branch = model_branch.predict(plot_x)
+    plt.plot(plot_x, plot_y_branch, label="線形飽和モデル")
 
 
 # 凡例の表示
