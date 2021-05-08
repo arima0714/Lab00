@@ -130,6 +130,16 @@ if st.checkbox("対数モデル(ロバスト回帰)"):
     plot_y_log_rob = model_log_rob.predict(plot_x)
     plt.plot(plot_x, plot_y_log_rob, label="対数モデル（ロバスト回帰）")
 
-plt.xlabel("Cores or Problem size")
+
+# 凡例の表示
 plt.legend()
+# 軸ラベルの設定
+plt.ylabel("関数コール回数")
+plt.xlabel("実行コア数")
+# 軸の対数軸化
+if st.checkbox("X軸の対数化"):
+    plt.xscale('log')
+if st.checkbox("Y軸の対数化"):
+    plt.yscale('log')
+
 st.pyplot(fig)
