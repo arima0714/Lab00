@@ -13,6 +13,7 @@ sklearn = "*"
 numpy = "*"
 matplotlib = "*"
 extrap = "*"
+streamlit = "*"
 
 [dev-packages]
 
