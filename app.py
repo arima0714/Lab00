@@ -59,3 +59,13 @@ st.table(targetRawDF)
 
 functionNames = targetRawDF.index.tolist()
 functionName = st.selectbox("関数名を選択", functionNames)
+
+targetFunctionDF = targetRawDF.loc[[functionName]]
+st.table(targetFunctionDF)
+
+raw_x = targetFunctionDF.columns.tolist()
+raw_y = [targetFunctionDF.at[functionName, x] for x in raw_x]
+if(fixedTarget == "コア数"):
+    raw_x = lib.ConvertBenchmarkClasses(raw_x)
+
+# グラフのプロット
