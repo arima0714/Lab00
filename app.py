@@ -83,7 +83,9 @@ plt.scatter(train_x, train_y, marker="o", label="予測に用いた関数コー�
 plt.scatter(target_x, target_y, marker="o", label="予測したい関数コール回数の実測値")
 plt.scatter(notTrain_x, notTrain_y, marker="o", label="最初のデータを除外した時に予測に用いなかった関数コール回数")
 ## モデル式をプロットするために変数”plot_x”を用意する
-plot_x = np.linspace(0.01, 256, 500)
+plot_x_min = 0.01
+plot_x_max = 256
+plot_x = np.linspace(plot_x_min, plot_x_max, 500)
 plot_x = np.array(plot_x).reshape(-1, 1)
 
 
