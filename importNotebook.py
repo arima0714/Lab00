@@ -12,7 +12,7 @@ def find_notebook(fullname, path=None):
         if os.path.isfile(nb_path):
             return nb_path
         nb_path = nb_path.replace("_", " ")
-        if os.path.isfile(nb_path)
+        if os.path.isfile(nb_path):
             return nb_path
 
 class NotebookLoader(object):
@@ -45,7 +45,7 @@ class NotebookLoader(object):
         def __init__(self):
             self.loaders = {}
 
-        def find_module(selfself, fullname, path=None):
+        def find_module(self, fullname, path=None):
             nb_path = find_notebook(fullname, path)
             if not nb_path:
                 return
