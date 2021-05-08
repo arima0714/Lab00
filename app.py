@@ -30,12 +30,9 @@ import libLab00 as lib
 
 # コア数と問題サイズのどちらを固定するかを選択
 fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
-st.write(f"{fixedTarget} を選択")
 
 # ベンチマークを選択
 benchmark = st.selectbox("ベンチマークを選択", lib.benchmarks)
-st.write(f"{benchmark} を選択")
-
 
 if benchmark == "bt" or benchmark == "sp":
     processes = lib.processes_onlyBTSP
@@ -47,19 +44,18 @@ if fixedTarget == "問題サイズ":
     fixed = st.selectbox("どの問題サイズで固定するか？", lib.benchmarkClasses)
 else:
     fixed = st.selectbox("どのコア数で固定するか？", processes)
-st.write(f"{fixed}を選択")
 
 if fixedTarget == "問題サイズ":
     targetRawDF = lib.returnRawDFperBenchmark(Benchmark=benchmark, fix="Class", Processes=processes, FixedBenchmarkClass=fixed)
 else:
     targetRawDF = lib.returnRawDFperBenchmark(Benchmark=benchmark, fix="Process", benchmarkClass=benchmarkClasses)
 
-st.markdown('# targetRawDF')
+st.markdown(f"# {fixedTarget}を{fixed}に固定した時のベンチマーク{benchmark}の関数コール回数")
 st.table(targetRawDF)
 
 functionNames = targetRawDF.index.tolist()
 functionName = st.selectbox("関数名を選択", functionNames)
-
+st.markdown(f"# 関数{functionName}の関数コール回数")
 targetFunctionDF = targetRawDF.loc[[functionName]]
 st.table(targetFunctionDF)
 
@@ -67,6 +63,7 @@ raw_x = targetFunctionDF.columns.tolist()
 raw_y = [targetFunctionDF.at[functionName, x] for x in raw_x]
 if(fixedTarget == "コア数"):
     raw_x = lib.ConvertBenchmarkClasses(raw_x)
+
 
 # グラフのプロット
 ## 準備
@@ -88,6 +85,11 @@ plt.scatter(notTrain_x, notTrain_y, marker="o", label="最初のデータを除�
 ## モデル式をプロットするために変数”plot_x”を用意する
 plot_x = np.linspace(0.01, 256, 500)
 plot_x = np.array(plot_x).reshape(-1, 1)
+
+
+"""
+# モデルの選択
+"""
 ## 最初のデータを除外したモデル式のプロット
 if st.checkbox("線形モデル(最初のデータを除外)"):
     model_lin = lib.ModelLin(train_x, train_y, benchmark, functionName, test_ratio=0)
@@ -110,10 +112,10 @@ if st.checkbox("線形飽和モデル(最初のデータを除外)"):
     plot_y_branch = model_branch.predict(plot_x)
     plt.plot(plot_x, plot_y_branch, label="線形飽和モデル(最初のデータを除外)")
 
-# 最初のデータを含む学習データと最後のデータのみの試験用データに分割
+## 最初のデータを含む学習データと最後のデータのみの試験用データに分割
 train_x, target_x = raw_x[:-1], raw_x[-1]
 train_y, target_y = raw_y[:-1], raw_y[-1]
-# ロバスト回帰によるモデル式のプロット
+## ロバスト回帰によるモデル式のプロット
 if st.checkbox("線形モデル(ロバスト回帰)"):
     model_lin_rob = lib.ModelLin_rob(train_x=train_x, train_y=train_y, target_x=target_x, target_y=target_y)
     model_lin_rob.calc_hr()
@@ -136,7 +138,11 @@ plt.legend()
 # 軸ラベルの設定
 plt.ylabel("関数コール回数")
 plt.xlabel("実行コア数")
+
+"""
 # 軸の対数軸化
+"""
+
 if st.checkbox("X軸の対数化"):
     plt.xscale('log')
 if st.checkbox("Y軸の対数化"):
