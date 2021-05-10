@@ -2,11 +2,6 @@ import streamlit as st
 import subprocess
 import pandas as pd
 
-# DataFrameを生成するcache機能付の関数を定義
-@st.cache
-def get_df(s):
-    return pd.DataFrame({'id':['1','2','3'], 'name':['X', 'Y', s]})
-
 def gen_lib():
     subprocess.run(["jupyter", "nbconvert", "--to", "python", "lib.ipynb"])
     subprocess.run(["mv", "lib.py", "libLab00.py"])
@@ -14,19 +9,6 @@ def gen_lib():
 gen_lib()
 # 変換されたライブラリノートをimport
 import libLab00 as lib
-
-# # text formを生成
-# s = st.text_input('input s')
-# df = get_df(s)
-#
-# # DataFrameをテーブルで表示
-# st.markdown('# Table')
-# st.table(df)
-#
-# # histgramを表示
-# st.markdown('# Histgram')
-# df['name'].hist()
-# st.pyplot()
 
 # コア数と問題サイズのどちらを固定するかを選択
 fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
