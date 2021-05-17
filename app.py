@@ -87,24 +87,29 @@ plot_x = np.array(plot_x).reshape(-1, 1)
 # モデルの選択
 """
 ## 最初のデータを除外したモデル式のプロット
-if st.checkbox("線形モデル(最初のデータを除外)"):
+if st.checkbox("線形モデル(コア数1もしくは問題サイズAのデータを除外)"):
     model_lin = lib.ModelLin(train_x, train_y, benchmark, functionName, test_ratio=0)
     model_lin.calc_lr()
     plot_y_lin = model_lin.predict(plot_x)
-    plt.plot(plot_x, plot_y_lin, label="線形モデル(最初のデータを除外)")
-if st.checkbox("対数モデル(最初のデータを除外)"):
+    plt.plot(plot_x, plot_y_lin, label="線形モデル(コア数1もしくは問題サイズAのデータを除外)")
+if st.checkbox("対数モデル(コア数1もしくは問題サイズAのデータを除外)"):
     model_log10 = lib.ModelLog10(
         train_x, train_y, benchmark, functionName, test_ratio=0
     )
     model_log10.calc_lr()
     plot_y_log10 = model_log10.predict(plot_x)
-    plt.plot(plot_x, plot_y_log10, label="対数モデル(最初のデータを除外)")
-if st.checkbox("反比例モデル(最初のデータを除外)"):
+    plt.plot(plot_x, plot_y_log10, label="対数モデル(コア数1もしくは問題サイズAのデータを除外)")
+if st.checkbox("反比例モデル(コア数1もしくは問題サイズAのデータを除外)"):
     model_ip = lib.ModelIP(train_x, train_y, benchmark, functionName, test_ratio=0)
     model_ip.calc_lr()
     plot_y_ip = model_ip.predict(plot_x)
-    plt.plot(plot_x, plot_y_ip, label="反比例モデル(最初のデータを除外)")
-if st.checkbox("線形飽和モデル(最初のデータを除外)"):
+    plt.plot(plot_x, plot_y_ip, label="反比例モデル(コア数1もしくは問題サイズAのデータを除外)")
+if st.checkbox("反比例モデル ver2(コア数1もしくは問題サイズAのデータを除外)"):
+    model_ip2 = lib.ModelIp_mk2(train_x, train_y, target_x, target_y)
+    model_ip2.calc_lr()
+    plot_y_ip2 = model_ip2.predict(plot_x)
+    plt.plot(plot_x, plot_y_ip2, label="反比例モデル ver2(コア数1もしくは問題サイズAのデータを除外)")
+if st.checkbox("線形飽和モデル(コア数1もしくは問題サイズAのデータを除外)"):
     model_branch = lib.ModelBranch(
         train_x, train_y, benchmark, functionName, test_ratio=0
     )
