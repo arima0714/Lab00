@@ -2,7 +2,7 @@ import streamlit as st
 import subprocess
 import pandas as pd
 
-
+@st.cache
 def gen_lib():
     subprocess.run(["jupyter", "nbconvert", "--to", "python", "lib.ipynb"])
     subprocess.run(["mv", "lib.py", "libLab00.py"])
@@ -105,10 +105,10 @@ if st.checkbox("反比例モデル(コア数1もしくは問題サイズAのデ�
     plot_y_ip = model_ip.predict(plot_x)
     plt.plot(plot_x, plot_y_ip, label="反比例モデル(コア数1もしくは問題サイズAのデータを除外)")
 if st.checkbox("反比例モデル ver2(コア数1もしくは問題サイズAのデータを除外)"):
-    model_ip2 = lib.ModelIp_mk2(train_x, train_y, target_x, target_y)
+    model_ip2 = lib.ModelIp_mk2(train_x=train_x, train_y=train_y, target_x=target_x, target_y=target_y)
     model_ip2.calc_lr()
-    plot_y_ip2 = model_ip2.predict(plot_x)
-    plt.plot(plot_x, plot_y_ip2, label="反比例モデル ver2(コア数1もしくは問題サイズAのデータを除外)")
+    plot_y_ip2_mk2 = model_ip2.predict(plot_x)
+    plt.plot(plot_x, plot_y_ip2_mk2, label="反比例モデル ver2(コア数1もしくは問題サイズAのデータを除外)")
 if st.checkbox("線形飽和モデル(コア数1もしくは問題サイズAのデータを除外)"):
     model_branch = lib.ModelBranch(
         train_x, train_y, benchmark, functionName, test_ratio=0
