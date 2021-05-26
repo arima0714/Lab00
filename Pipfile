@@ -18,6 +18,7 @@ numexpr = "*"
 black = "==18.9b0"
 yapf = "*"
 autopep8 = "*"
+jupyterlab-code-formatter = "*"
 
 [dev-packages]
 
