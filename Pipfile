@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pytest-ipynb = "*"
 pytest = "*"
 jupyterlab = "*"
 japanize-matplotlib = "*"
