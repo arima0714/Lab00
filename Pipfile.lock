@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b58f7898cdf8fb1612341c2ba234753c529f59bbbf94ca543cbc9fc7e95906a0"
+            "sha256": "df8100281f2b24529afe84d8ddc3320462a47d5f9a19b19497e265eaa06d9e2c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -31,13 +31,6 @@
             ],
             "markers": "python_full_version >= '3.6.2'",
             "version": "==3.1.0"
-        },
-        "appdirs": {
-            "hashes": [
-                "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41",
-                "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"
-            ],
-            "version": "==1.4.4"
         },
         "argon2-cffi": {
             "hashes": [
@@ -120,21 +113,6 @@
             ],
             "markers": "python_version >= '3.5'",
             "version": "==2.1.0"
-        },
-        "black": {
-            "hashes": [
-                "sha256:817243426042db1d36617910df579a54f1afd659adb96fc5032fcf4b36209739",
-                "sha256:e030a9a28f542debc08acceb273f228ac422798e5215ba2a791a6ddeaaca22a5"
-            ],
-            "index": "pypi",
-            "version": "==18.9b0"
-        },
-        "blackcellmagic": {
-            "hashes": [
-                "sha256:089b98d28aa647f2d86c3161b60cbf09793384ea94ceb1227f4f1d425db4002c"
-            ],
-            "index": "pypi",
-            "version": "==0.0.2"
         },
         "bleach": {
             "hashes": [
@@ -411,13 +389,6 @@
             ],
             "index": "pypi",
             "version": "==3.0.16"
-        },
-        "jupyterlab-black": {
-            "file": "https://github.com/ryantam626/jupyterlab_black/archive/master.zip",
-            "hashes": [
-                "sha256:4fe06bab25140072d0ee426cbd6428c7eacb3fd7d8c6d2677532fbfebe4d5c97"
-            ],
-            "version": "==0.2.1"
         },
         "jupyterlab-code-formatter": {
             "hashes": [

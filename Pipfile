@@ -14,12 +14,9 @@ matplotlib = "*"
 extrap = "*"
 streamlit = "*"
 numexpr = "*"
-black = "==18.9b0"
 yapf = "*"
 autopep8 = "*"
 jupyterlab-code-formatter = "*"
-blackcellmagic = "*"
-jupyterlab-black = {file = "https://github.com/ryantam626/jupyterlab_black/archive/master.zip"}
 
 [dev-packages]
 
