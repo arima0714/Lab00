@@ -17,6 +17,7 @@ numexpr = "*"
 yapf = "*"
 autopep8 = "*"
 jupyterlab-code-formatter = "*"
+plotly = "*"
 
 [dev-packages]
 
