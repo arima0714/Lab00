@@ -31,3 +31,4 @@ lib/test_*
 .local
 .npm
 tmp*
+workspace.code-workspace
