@@ -33,8 +33,14 @@ elif dimension == "３次元":  # 3次元グラフの描画
     # 問題サイズを数値化
     programSize = rawDataDF['benchmarkClass'].tolist()
     programSizeInNum = lib.convertBenchmarkClasses_problemSizeInNPB(inputList=programSize)
+    rawDataDF["benchmarkClassInNum"] = programSizeInNum
     # プロット用のDFを作成
-
+    functionName = "CONJ_GRAD"
+    DFperFunctionName = rawDataDF[rawDataDF["functionName"]==functionName]
+    numCore = DFperFunctionName["process"].tolist()
+    programSize = DFperFunctionName["benchmarkClassInNum"].tolist()
+    functionCallCount = DFperFunctionName["functionCallNum"].tolist()
+    DFtoPlot = pd.DataFrame({"問題サイズ":programSize, "コア数":numCore, "関数コール回数":functionCallCount})
     # プロット
 
 else:
