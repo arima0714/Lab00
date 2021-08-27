@@ -45,10 +45,11 @@ elif dimension == "３次元":  # 3次元グラフの描画
     functionCallCount = DFperFunctionName["functionCallNum"].tolist()
     DFtoPlot = pd.DataFrame({"問題サイズ":programSize, "コア数":numCore, "関数コール回数":functionCallCount})
     # プロット
-    enableLogX = False
-    enableLogY = False
-    enableLogZ = False
-    fig = px.scatter_3d(DFtoPlot, x='問題サイズ', y='コア数', z='関数コール回数', width=700, height=700, log_x=enableLogX, log_y=enableLogY, log_z=enableLogZ)
+    enableLogX = st.checkbox(label="問題サイズの軸の対数化")
+    enableLogY = st.checkbox(label='コア数の軸の対数化')
+    enableLogZ = st.checkbox(label='関数コール回数の軸の対数化')
+    fig = px.scatter_3d(DFtoPlot, x='問題サイズ', y='コア数', z='関数コール回数', log_x=enableLogX, log_y=enableLogY, log_z=enableLogZ)
+    fig.update_layout(width=700, height=700)
     st.write(fig)
 
 else:
