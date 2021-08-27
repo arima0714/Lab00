@@ -27,7 +27,7 @@ elif dimension == "３次元":  # 3次元グラフの描画
     st.markdown("# ３次元グラフのプロット")
 
     # 生データの取得
-    benchmarkName = ["cg"]
+    benchmarkName = [st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマーク名")]
     classes = ["A", "B", "C", "D"]
     processes = [2, 4, 8, 16, 32, 64, 128, 256]
     csvDirPath = "../csv_files/"
@@ -37,14 +37,18 @@ elif dimension == "３次元":  # 3次元グラフの描画
     programSizeInNum = lib.convertBenchmarkClasses_problemSizeInNPB(inputList=programSize)
     rawDataDF["benchmarkClassInNum"] = programSizeInNum
     # プロット用のDFを作成
-    functionName = "CONJ_GRAD"
+    functionNames = sorted(list(set(rawDataDF['functionName'].tolist())))
+    functionName = st.selectbox(options=functionNames, label='関数名')
     DFperFunctionName = rawDataDF[rawDataDF["functionName"]==functionName]
     numCore = DFperFunctionName["process"].tolist()
     programSize = DFperFunctionName["benchmarkClassInNum"].tolist()
     functionCallCount = DFperFunctionName["functionCallNum"].tolist()
     DFtoPlot = pd.DataFrame({"問題サイズ":programSize, "コア数":numCore, "関数コール回数":functionCallCount})
     # プロット
-    fig = px.scatter_3d(DFtoPlot, x='問題サイズ', y='コア数', z='関数コール回数', width=700, height=700)
+    enableLogX = False
+    enableLogY = False
+    enableLogZ = False
+    fig = px.scatter_3d(DFtoPlot, x='問題サイズ', y='コア数', z='関数コール回数', width=700, height=700, log_x=enableLogX, log_y=enableLogY, log_z=enableLogZ)
     st.write(fig)
 
 else:
