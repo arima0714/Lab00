@@ -30,6 +30,9 @@ elif dimension == "３次元":  # 3次元グラフの描画
     processes = [2, 4, 8, 16, 32, 64, 128, 256]
     csvDirPath = "../csv_files/"
     rawDataDF = lib.returnCollectedExistingData(benchmarkNames=benchmarkName, classes=classes, processes=processes, csvDirPath=csvDirPath)
+    # 問題サイズを数値化
+    programSize = rawDataDF['benchmarkClass'].tolist()
+    programSizeInNum = lib.convertBenchmarkClasses_problemSizeInNPB(inputList=programSize)
     # プロット用のDFを作成
 
     # プロット
