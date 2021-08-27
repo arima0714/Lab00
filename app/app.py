@@ -21,6 +21,8 @@ if dimension == "２次元":  # 2次元グラフの描画
     st.markdown("# ２次元グラフのプロット")
 
 elif dimension == "３次元":  # 3次元グラフの描画
+    import plotly.express as px
+    import plotly.graph_objects as go
 
     st.markdown("# ３次元グラフのプロット")
 
