@@ -48,7 +48,15 @@ elif dimension == "３次元":  # 3次元グラフの描画
     enableLogX = st.checkbox(label="問題サイズの軸の対数化")
     enableLogY = st.checkbox(label='コア数の軸の対数化')
     enableLogZ = st.checkbox(label='関数コール回数の軸の対数化')
-    fig = px.scatter_3d(DFtoPlot, x='問題サイズ', y='コア数', z='関数コール回数', log_x=enableLogX, log_y=enableLogY, log_z=enableLogZ)
+    plotType = st.selectbox(options=["scatter", "mesh"], label='プロットするタイプの選択')
+    if plotType == "scatter":
+        fig = px.scatter_3d(DFtoPlot, x='問題サイズ', y='コア数', z='関数コール回数', log_x=enableLogX, log_y=enableLogY, log_z=enableLogZ)
+    elif plotType == "mesh":
+        x = DFtoPlot["問題サイズ"].tolist()
+        y = DFtoPlot["コア数"].tolist()
+        z = DFtoPlot["関数コール回数"].tolist()
+        fig = go.Figure(data=[go.Mesh3d(x=x, y=y, z=z, opacity=0.70)])
+        fig.update_layout()
     fig.update_layout(width=700, height=700)
     st.write(fig)
 
