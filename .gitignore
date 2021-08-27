@@ -32,3 +32,4 @@ lib/test_*
 .npm
 tmp*
 workspace.code-workspace
+.vscode
