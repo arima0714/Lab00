@@ -1,6 +1,8 @@
 import streamlit as st
 import subprocess
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 
 
 @st.cache
@@ -31,9 +33,10 @@ functionNames = sorted(list(set(rawDataDF['functionName'].tolist())))
 functionName = st.selectbox(options=functionNames, label='関数名')
 DFperFunctionName = rawDataDF[rawDataDF["functionName"]==functionName]
 numCore = DFperFunctionName["process"].tolist()
-programSize = DFperFunctionName["benchmarkClassInNum"].tolist()
+programSize = DFperFunctionName["benchmarkClass"].tolist()
+programSizeInNum = DFperFunctionName["benchmarkClass"].tolist()
 functionCallCount = DFperFunctionName["functionCallNum"].tolist()
-DFtoPlot = pd.DataFrame({"問題サイズ":programSize, "コア数":numCore, "関数コール回数":functionCallCount})
+DFtoPlot = pd.DataFrame({"問題サイズ":programSizeInNum, "コア数":numCore, "関数コール回数":functionCallCount, "問題サイズ（文字）":programSize})
 # プロット
 enableLogX = st.checkbox(label="問題サイズの軸の対数化")
 enableLogY = st.checkbox(label='コア数の軸の対数化')
@@ -43,22 +46,32 @@ if dimension == "２次元":  # 2次元グラフの描画
 
 
     fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
+    notFixed = "コア数" if fixedTarget=="問題サイズ" else "問題サイズ"
+    fixedVar = None
 
     if fixedTarget == "問題サイズ":
         # 問題サイズを固定する場合は、問題サイズ(文字)->問題サイズ(数値)->実際に固定
+        choiceList = sorted(list(set(DFtoPlot["問題サイズ（文字）"].tolist())))
         pass
     elif fixedTarget == "コア数":
         # コア数を固定する場合は、コア数の数値で固定
+        choiceList = sorted(list(set(DFtoPlot["コア数"].tolist())))
         pass
     else:
         pass
+
+    choosedVar = st.selectbox("固定する値", choiceList)
+
+    DFtoPlotIn2D = DFtoPlot[DFtoPlot[fixedTarget]==choosedVar]
+
+    DFtoPlotIn2D
+
+    fig = px.scatter(DFtoPlotIn2D,x=notFixed, y='関数コール回数')
 
 
     st.markdown("# ２次元グラフのプロット")
 
 elif dimension == "３次元":  # 3次元グラフの描画
-    import plotly.express as px
-    import plotly.graph_objects as go
 
     st.markdown("# ３次元グラフのプロット")
 
@@ -72,7 +85,8 @@ elif dimension == "３次元":  # 3次元グラフの描画
         fig = go.Figure(data=[go.Mesh3d(x=x, y=y, z=z, opacity=0.70)])
         fig.update_layout()
     fig.update_layout(width=700, height=700)
-    st.write(fig)
 
 else:
     pass
+
+st.write(fig)
