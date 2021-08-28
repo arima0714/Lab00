@@ -38,9 +38,6 @@ programSizeInNum = DFperFunctionName["benchmarkClass"].tolist()
 functionCallCount = DFperFunctionName["functionCallNum"].tolist()
 DFtoPlot = pd.DataFrame({"問題サイズ":programSizeInNum, "コア数":numCore, "関数コール回数":functionCallCount, "問題サイズ（文字）":programSize})
 # プロット
-enableLogX = st.checkbox(label="問題サイズの軸の対数化")
-enableLogY = st.checkbox(label='コア数の軸の対数化')
-enableLogZ = st.checkbox(label='関数コール回数の軸の対数化')
 
 if dimension == "２次元":  # 2次元グラフの描画
 
@@ -60,13 +57,16 @@ if dimension == "２次元":  # 2次元グラフの描画
     else:
         pass
 
+    enableLogX = st.checkbox(label="X軸（横軸）の対数化")
+    enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
+
     choosedVar = st.selectbox("固定する値", choiceList)
 
     DFtoPlotIn2D = DFtoPlot[DFtoPlot[fixedTarget]==choosedVar]
 
     DFtoPlotIn2D
 
-    fig = px.scatter(DFtoPlotIn2D,x=notFixed, y='関数コール回数')
+    fig = px.scatter(DFtoPlotIn2D,x=notFixed, y='関数コール回数',log_x=enableLogX, log_y=enableLogY)
 
 
     st.markdown("# ２次元グラフのプロット")
@@ -74,6 +74,10 @@ if dimension == "２次元":  # 2次元グラフの描画
 elif dimension == "３次元":  # 3次元グラフの描画
 
     st.markdown("# ３次元グラフのプロット")
+
+    enableLogX = st.checkbox(label="問題サイズの軸の対数化")
+    enableLogY = st.checkbox(label='コア数の軸の対数化')
+    enableLogZ = st.checkbox(label='関数コール回数の軸の対数化')
 
     plotType = st.selectbox(options=["scatter", "mesh"], label='プロットするタイプの選択')
     if plotType == "scatter":
