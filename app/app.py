@@ -41,6 +41,19 @@ enableLogZ = st.checkbox(label='関数コール回数の軸の対数化')
 
 if dimension == "２次元":  # 2次元グラフの描画
 
+
+    fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
+
+    if fixedTarget == "問題サイズ":
+        # 問題サイズを固定する場合は、問題サイズ(文字)->問題サイズ(数値)->実際に固定
+        pass
+    elif fixedTarget == "コア数":
+        # コア数を固定する場合は、コア数の数値で固定
+        pass
+    else:
+        pass
+
+
     st.markdown("# ２次元グラフのプロット")
 
 elif dimension == "３次元":  # 3次元グラフの描画
