@@ -34,7 +34,7 @@ functionName = st.selectbox(options=functionNames, label='関数名')
 DFperFunctionName = rawDataDF[rawDataDF["functionName"]==functionName]
 numCore = DFperFunctionName["process"].tolist()
 programSize = DFperFunctionName["benchmarkClass"].tolist()
-programSizeInNum = DFperFunctionName["benchmarkClass"].tolist()
+programSizeInNum = DFperFunctionName["benchmarkClassInNum"].tolist()
 functionCallCount = DFperFunctionName["functionCallNum"].tolist()
 DFtoPlot = pd.DataFrame({"問題サイズ":programSizeInNum, "コア数":numCore, "関数コール回数":functionCallCount, "問題サイズ（文字）":programSize})
 # プロット
