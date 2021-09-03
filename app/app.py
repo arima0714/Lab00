@@ -1,3 +1,5 @@
+from numpy import minimum
+import statistics
 import streamlit as st
 import subprocess
 import pandas as pd
@@ -93,6 +95,10 @@ elif dimension == "３次元":  # 3次元グラフの描画
     enableLogY = st.checkbox(label="コア数の軸の対数化")
     enableLogZ = st.checkbox(label="関数コール回数の軸の対数化")
 
+    maximumFunctionCall = max(DFtoPlot["関数コール回数"].tolist())
+    minimumFunctionCall = min(DFtoPlot["関数コール回数"].tolist())
+    halfOfFunctionCall = statistics.median([maximumFunctionCall, minimumFunctionCall])
+
     plotType = st.selectbox(options=["scatter", "mesh"], label="プロットするタイプの選択")
     if plotType == "scatter":
         fig = px.scatter_3d(
@@ -100,7 +106,7 @@ elif dimension == "３次元":  # 3次元グラフの描画
             x="問題サイズ",
             y="コア数",
             z="関数コール回数",
-            color = DFtoPlot["問題サイズ（文字）"].tolist(),
+            color=DFtoPlot["問題サイズ（文字）"].tolist(),
             log_x=enableLogX,
             log_y=enableLogY,
             log_z=enableLogZ,
@@ -109,7 +115,23 @@ elif dimension == "３次元":  # 3次元グラフの描画
         x = DFtoPlot["問題サイズ"].tolist()
         y = DFtoPlot["コア数"].tolist()
         z = DFtoPlot["関数コール回数"].tolist()
-        fig = go.Figure(data=[go.Mesh3d(x=x, y=y, z=z, opacity=0.70)])
+        fig = go.Figure(
+            data=[
+                go.Mesh3d(
+                    x=x,
+                    y=y,
+                    z=z,
+                    opacity=0.70,
+                    colorbar_title="z",
+                    colorscale=[
+                        [minimumFunctionCall, "gold"],
+                        [halfOfFunctionCall, "mediumturquoise"],
+                        [maximumFunctionCall, "magenta"],
+                    ],
+                    showscale=True,
+                )
+            ]
+        )
     fig.update_layout(width=800, height=800, autosize=False)
 
 else:
