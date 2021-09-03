@@ -100,6 +100,7 @@ elif dimension == "３次元":  # 3次元グラフの描画
             x="問題サイズ",
             y="コア数",
             z="関数コール回数",
+            color = DFtoPlot["問題サイズ（文字）"].tolist(),
             log_x=enableLogX,
             log_y=enableLogY,
             log_z=enableLogZ,
