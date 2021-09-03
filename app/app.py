@@ -95,9 +95,9 @@ elif dimension == "３次元":  # 3次元グラフの描画
     enableLogY = st.checkbox(label="コア数の軸の対数化")
     enableLogZ = st.checkbox(label="関数コール回数の軸の対数化")
 
-    maximumFunctionCall = max(DFtoPlot["関数コール回数"].tolist())
-    minimumFunctionCall = min(DFtoPlot["関数コール回数"].tolist())
-    halfOfFunctionCall = statistics.median([maximumFunctionCall, minimumFunctionCall])
+    # maximumFunctionCall = max(DFtoPlot["関数コール回数"].tolist())
+    # minimumFunctionCall = min(DFtoPlot["関数コール回数"].tolist())
+    # halfOfFunctionCall = statistics.median([maximumFunctionCall, minimumFunctionCall])
 
     plotType = st.selectbox(options=["scatter", "mesh"], label="プロットするタイプの選択")
     if plotType == "scatter":
@@ -122,12 +122,6 @@ elif dimension == "３次元":  # 3次元グラフの描画
                     y=y,
                     z=z,
                     opacity=0.70,
-                    colorbar_title="z",
-                    colorscale=[
-                        [minimumFunctionCall, "gold"],
-                        [halfOfFunctionCall, "mediumturquoise"],
-                        [maximumFunctionCall, "magenta"],
-                    ],
                     showscale=True,
                 )
             ]
