@@ -110,8 +110,7 @@ elif dimension == "３次元":  # 3次元グラフの描画
         y = DFtoPlot["コア数"].tolist()
         z = DFtoPlot["関数コール回数"].tolist()
         fig = go.Figure(data=[go.Mesh3d(x=x, y=y, z=z, opacity=0.70)])
-        fig.update_layout()
-    fig.update_layout(width=700, height=700)
+    fig.update_layout(width=800, height=800, autosize=False)
 
 else:
     pass
