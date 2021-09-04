@@ -124,7 +124,8 @@ elif dimension == "３次元":  # 3次元グラフの描画
                     opacity=0.70,
                     showscale=True,
                 )
-            ]
+            ],
+            layout={}
         )
     fig.update_layout(
         width=800,
