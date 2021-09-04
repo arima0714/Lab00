@@ -126,7 +126,12 @@ elif dimension == "３次元":  # 3次元グラフの描画
                 )
             ]
         )
-    fig.update_layout(width=800, height=800, autosize=False)
+    fig.update_layout(
+        width=800,
+        height=800,
+        autosize=False,
+        scene={"xaxis_title": "問題サイズ", "yaxis_title": "コア数", "zaxis_title": "関数コール回数"},
+    )
 
 else:
     pass
