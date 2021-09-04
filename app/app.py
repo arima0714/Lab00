@@ -95,14 +95,6 @@ elif dimension == "３次元":  # 3次元グラフの描画
     enableLogY = st.checkbox(label="コア数の軸の対数化")
     enableLogZ = st.checkbox(label="関数コール回数の軸の対数化")
 
-    layoutDictForMesh = {}
-    if enableLogX:
-        layoutDictForMesh["xaxis":{}]
-    if enableLogY:
-        layoutDictForMesh["yaxis":{}]
-    if enableLogZ:
-        layoutDictForMesh["zaxis":{}]
-
     plotType = st.selectbox(options=["scatter", "mesh"], label="プロットするタイプの選択")
     if plotType == "scatter":
         fig = px.scatter_3d(
@@ -131,6 +123,14 @@ elif dimension == "３次元":  # 3次元グラフの描画
             ],
             layout={}
         )
+
+        if enableLogX:
+            fig.update_scenes(xaxis_type="log")
+        if enableLogY:
+            fig.update_scenes(yaxis_type="log")
+        if enableLogZ:
+            fig.update_scenes(zaxis_type="log")
+
     fig.update_layout(
         width=800,
         height=800,
