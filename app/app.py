@@ -1,10 +1,12 @@
 from numpy import minimum
+from scipy.spatial import Delaunay
 import statistics
 import streamlit as st
 import subprocess
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
+import plotly.figure_factory as ff
+import plotly.express as px
 
 
 @st.cache
@@ -130,6 +132,8 @@ elif dimension == "３次元":  # 3次元グラフの描画
             fig.update_scenes(yaxis_type="log")
         if enableLogZ:
             fig.update_scenes(zaxis_type="log")
+
+        fig2 = ff.create_trisurf(x=x, y=y, z=z, simplices=DFtoPlot)
 
     fig.update_layout(
         width=800,
