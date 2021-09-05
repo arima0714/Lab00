@@ -135,6 +135,10 @@ elif dimension == "３次元":  # 3次元グラフの描画
         if enableLogZ:
             fig.update_scenes(zaxis_type="log")
 
+        fig2 = plt.figure()
+        ax = fig2.gca(projection='3d')
+        ax.plot_trisurf(x, y, z, alpha=0.9, color='g', antialiased=False)
+        st.write(fig2)
 
     fig.update_layout(
         width=800,
