@@ -1,4 +1,6 @@
-from numpy import minimum
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 from scipy.spatial import Delaunay
 import statistics
 import streamlit as st
@@ -133,10 +135,6 @@ elif dimension == "３次元":  # 3次元グラフの描画
         if enableLogZ:
             fig.update_scenes(zaxis_type="log")
 
-        # 変数u, vを設定
-        # Delaunay()を使う
-        # 図をプロットする
-        fig2 = ff.create_trisurf(x=x, y=y, z=z, simplices=DFtoPlot)
 
     fig.update_layout(
         width=800,
