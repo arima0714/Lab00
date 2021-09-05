@@ -121,8 +121,10 @@ elif dimension == "３次元":  # 3次元グラフの描画
                     x=x,
                     y=y,
                     z=z,
-                    opacity=0.70,
-                    showscale=True,
+                    colorbar={"bordercolor":"black", "borderwidth":5, "outlinecolor":"black", "outlinewidth":5},
+                    contour={"color":"black", "show":True, "width":5},
+                    lighting={"roughness":1},
+                    # flatshading=True,
                 )
             ],
             layout={}
@@ -144,7 +146,7 @@ elif dimension == "３次元":  # 3次元グラフの描画
         width=800,
         height=800,
         autosize=False,
-        scene={"xaxis_title": "問題サイズ", "yaxis_title": "コア数", "zaxis_title": "関数コール回数"},
+        scene={"xaxis_title": "問題サイズ", "yaxis_title": "コア数", "zaxis_title": "関数コール回数", "aspectmode":'cube'},
     )
 
 else:
