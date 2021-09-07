@@ -6,7 +6,7 @@ do
     for benchmarkName in "${benchmarkNames[@]}"
     do
         dirName=./$problemSize/$numOfCore/$benchmarkName
-        echo $dirName
+        mkdir -p $dirName
     done
 done
 
