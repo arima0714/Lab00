@@ -15,4 +15,4 @@ module load openmpi
 module load papi
 module load gcc
 # 実行
-source ./<executeShellScript>
+source ./<executeShellScript> <numOfCore>
