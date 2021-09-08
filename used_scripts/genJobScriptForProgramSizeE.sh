@@ -5,12 +5,6 @@
 
 numOfCores=(32 64 128 256)
 
-# <executeEnvironment>
-# <numOfExecuteEnvironment>
-# <executingHour>
-# <executeShellScript>
-# <numOfCore>
-# <processPerNode>
 
 for numOfCore in "${numOfCores[@]}"
 do
@@ -18,15 +12,39 @@ do
     if [ 32 -eq "$numOfCore" ]; then
         # 32コア
         echo "numOfCore=$numOfCore(32)"
+        # <executeEnvironment>
+        # <numOfExecuteEnvironment>
+        # <executingHour>
+        # <executeShellScript>
+        # <numOfCore>
+        # <processPerNode>
     elif [ 64 -eq "$numOfCore" ]; then
         # 64コア
         echo "numOfCore=$numOfCore(64)"
+        # <executeEnvironment>
+        # <numOfExecuteEnvironment>
+        # <executingHour>
+        # <executeShellScript>
+        # <numOfCore>
+        # <processPerNode>
     elif [ 128 -eq "$numOfCore" ]; then
         # 128コア
         echo "numOfCore=$numOfCore(128)"
+        # <executeEnvironment>
+        # <numOfExecuteEnvironment>
+        # <executingHour>
+        # <executeShellScript>
+        # <numOfCore>
+        # <processPerNode>
     elif [ 256 -eq "$numOfCore" ]; then
         # 256コア
         echo "numOfCore=$numOfCore(256)"
+        # <executeEnvironment>
+        # <numOfExecuteEnvironment>
+        # <executingHour>
+        # <executeShellScript>
+        # <numOfCore>
+        # <processPerNode>
     else
         echo "There is an inappropriate element."
     fi
