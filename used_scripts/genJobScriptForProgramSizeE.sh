@@ -5,9 +5,15 @@
 
 numOfCores=(32 64 128 256)
 
+jobScriptBaseFileName="jobScriptForProblemSizeE"
 
 for numOfCore in "${numOfCores[@]}"
 do
+    # 各コア数ごとにジョブスクリプトを作成する
+    jobScriptFileName=$jobScriptBaseFileName$numOfCore
+    cp $jobScriptBaseFileName $jobScriptFileName
+    # <executeShellScript>
+
     # 各コア数ごとに異なる処理を行う
     if [ 32 -eq "$numOfCore" ]; then
         # 32コア
@@ -18,7 +24,6 @@ do
         numOfExecuteEnvironment=8
         # <executingHour>
         executingHour=23
-        # <executeShellScript>
         # <numOfCore>
         numOfCore=32
         # <processPerNode>
@@ -32,7 +37,6 @@ do
         numOfExecuteEnvironment=16
         # <executingHour>
         executingHour=14
-        # <executeShellScript>
         # <numOfCore>
         numOfCore=64
         # <processPerNode>
@@ -46,7 +50,6 @@ do
         numOfExecuteEnvironment=5
         # <executingHour>
         executingHour=8
-        # <executeShellScript>
         # <numOfCore>
         numOfCore=128
         # <processPerNode>
@@ -60,7 +63,6 @@ do
         numOfExecuteEnvironment=10
         # <executingHour>
         executingHour=5
-        # <executeShellScript>
         # <numOfCore>
         numOfCore=256
         # <processPerNode>
