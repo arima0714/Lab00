@@ -12,8 +12,6 @@ benchmarkNames=(lu is ep cg mg ft)
 problemSize=E
 
 baseDir=$PWD
-echo $baseDir
-echo 'numOfCore='$numOfCore
 
 export PATH=\"\$PATH:/home/9/20IA1328/tau-2.29/x86_64/bin\"
 export TAU_MAKEFILE=/home/9/20IA1328/tau-2.29/x86_64/lib/Makefile.tau-papi-mpi-pdt
@@ -32,7 +30,9 @@ do
         echo $binName
         # 実行
         # ノードあたりAプロセスMPI全B プロセスを使用
-        # mpirun -npernode \$A -n \$B -x LD_LIBRARY_PATH \${binName}
+        # mpirun -npernode $A -n $B -x LD_LIBRARY_PATH ${binName}
+    else
+        echo "execute "$binName" failed"
     fi
     # 元のディレクトリに戻る
     cd $baseDir
