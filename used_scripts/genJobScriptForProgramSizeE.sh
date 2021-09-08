@@ -6,12 +6,13 @@
 numOfCores=(32 64 128 256)
 
 jobScriptBaseFileName="jobScriptForProblemSizeE"
+jobScriptBaseDir="./used_scripts/"
 
 for numOfCore in "${numOfCores[@]}"
 do
     # 各コア数ごとにジョブスクリプトを作成する
     jobScriptFileName=$jobScriptBaseFileName$numOfCore
-    cp $jobScriptBaseFileName $jobScriptFileName
+    cp $jobScriptBaseDir$jobScriptBaseFileName $jobScriptBaseDir$jobScriptFileName
     # <executeShellScript>
 
     # 各コア数ごとに異なる処理を行う
