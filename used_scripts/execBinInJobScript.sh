@@ -1,6 +1,13 @@
 #!/bin/bash
+
+# 使い方：ジョブスクリプト内で実行する。実行時引き数は2つあり次の通り
+# 引数１：コア数（総プロセス数）
+# 引数２：ノード当たりの実行プロセス数
+# 実行される処理：引き数で渡されたコア数・ノード当たりのプロセス数に応じた環境で、ベンチマークプログラムを実行する
+
 numOfCore=$1
-numOfCoreInNode=$2
+A=$2
+B=$numOfCore
 benchmarkNames=(lu is ep cg mg ft)
 problemSize=E
 
@@ -13,9 +20,6 @@ export TAU_MAKEFILE=/home/9/20IA1328/tau-2.29/x86_64/lib/Makefile.tau-papi-mpi-p
 export TAU_OPTIONS=-optRevert
 export PATH=\"\$PATH:/home/9/20IA1328/pdtoolkit-3.25.1/x86_64//bin\"
 export TAU_THROTTLE=0
-# 実行
-# ノードあたりAプロセスMPI全B プロセスを使用
-mpirun -npernode \$A -n \$B -x LD_LIBRARY_PATH \${BenchmarkFileName}
 
 for benchmarkName in "${benchmarkNames[@]}"
 do
@@ -26,6 +30,9 @@ do
     binName=$benchmarkName.$problemSize.x
     if [ -e $binName ]; then
         echo $binName
+        # 実行
+        # ノードあたりAプロセスMPI全B プロセスを使用
+        # mpirun -npernode \$A -n \$B -x LD_LIBRARY_PATH \${binName}
     fi
     # 元のディレクトリに戻る
     cd $baseDir
