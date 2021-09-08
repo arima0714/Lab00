@@ -14,7 +14,7 @@ do
     jobScriptFileName=$jobScriptBaseFileName$numOfCore
     cp $jobScriptBaseDir$jobScriptBaseFileName $jobScriptBaseDir$jobScriptFileName
     # <executeShellScript>
-
+    executeShellScript="execBenchmarkExcludeBTSPonE.sh"
     # 各コア数ごとに異なる処理を行う
     if [ 32 -eq "$numOfCore" ]; then
         # 32コア

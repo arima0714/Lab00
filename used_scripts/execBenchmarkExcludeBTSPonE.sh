@@ -29,10 +29,10 @@ do
     if [ -e $binName ]; then
         # 実行
         # ノードあたりAプロセスMPI全B プロセスを使用
-        # mpirun -npernode $A -n $B -x LD_LIBRARY_PATH ${binName}
+        mpirun -npernode $A -n $B -x LD_LIBRARY_PATH ${binName}
     else
-        echo "execute "$binName" failed"
+        echo "execute ""$binName"" failed"
     fi
     # 元のディレクトリに戻る
-    cd $baseDir
+    cd $baseDir || exit
 done
