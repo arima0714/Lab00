@@ -10,6 +10,9 @@
 # moduleコマンドの初期化
 . /etc/profile.d/modules.sh
 # 各種環境の読み込み
-
+module load cuda
+module load openmpi
+module load papi
+module load gcc
 # 実行
 ./<executeBin>
