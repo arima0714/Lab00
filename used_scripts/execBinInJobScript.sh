@@ -27,7 +27,6 @@ do
     # ベンチマークバイナリを実行
     binName=$benchmarkName.$problemSize.x
     if [ -e $binName ]; then
-        echo $binName
         # 実行
         # ノードあたりAプロセスMPI全B プロセスを使用
         # mpirun -npernode $A -n $B -x LD_LIBRARY_PATH ${binName}
