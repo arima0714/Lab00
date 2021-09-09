@@ -6,7 +6,7 @@
 numOfCores=(32 64 128 256)
 
 jobScriptBaseFileName="jobScriptForProblemSizeE"
-jobScriptBaseDir="./used_scripts/"
+jobScriptBaseDir="./"
 
 for numOfCore in "${numOfCores[@]}"
 do
@@ -71,4 +71,17 @@ do
     else
         echo "There is an inappropriate element."
     fi
+    # <executeEnvironment>
+    sed -i -e "s/<executeEnvironment>/$executeEnvironment/g" $jobScriptFileName
+    # <numOfExecuteEnvironment>
+    sed -i -e "s/<numOfExecuteEnvironment>/$numOfExecuteEnvironment/g" $jobScriptFileName
+    # <executingHour>
+    sed -i -e "s/<executingHour>/$executingHour/g" $jobScriptFileName
+    # <executeShellScript>
+    sed -i -e "s/<executeShellScript>/$executeShellScript/g" $jobScriptFileName
+    # <numOfCore>
+    sed -i -e "s/<numOfCore>/$numOfCore/g" $jobScriptFileName
+    # <processPerNode>
+    sed -i -e "s/<processPerNode>/$processPerNode/g" $jobScriptFileName
+
 done
