@@ -15,4 +15,6 @@ module load openmpi
 module load papi
 module load gcc
 # 実行
-source ./<executeShellScript> <numOfCore> <processPerNode>
+ls
+pwd
+source ../<executeShellScript> <numOfCore> <processPerNode>
