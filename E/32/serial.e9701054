@@ -1,0 +1,537 @@
+warning: this version of gcc is not compatible with the loaded cuda version.
+please use cuda/11.2.146 or use gcc/8.3.0.
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[34843,1],16]
+  Exit code:    1
+--------------------------------------------------------------------------
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#0  0x2aaaaceb5c6f in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#0  0x2aaaaceb5c6f in ???
+#3  0x45e200 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+
+Backtrace for this error:
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#0  0x2aaaaceb5c6f in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#0  0x2aaaaceb5c6f in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#1  0x2aaaad213558 in ???
+#0  0x2aaaaceb5c6f in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#0  0x2aaaaceb5c6f in ???
+#0  0x2aaaaceb5c6f in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e200 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 20 with PID 22833 on node r4i2n8 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 17 with PID 53663 on node r3i0n7 exited on signal 9 (Killed).
+--------------------------------------------------------------------------
