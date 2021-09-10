@@ -17,4 +17,4 @@ module load gcc
 # 実行
 ls
 pwd
-source ../<executeShellScript> <numOfCore> <processPerNode>
+../<executeShellScript> <numOfCore> <processPerNode>
