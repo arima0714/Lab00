@@ -7,12 +7,16 @@ numOfCores=(32 64 128 256)
 
 jobScriptBaseFileName="jobScriptForProblemSizeE"
 jobScriptBaseDir="./"
+programSize="E"
 
 for numOfCore in "${numOfCores[@]}"
 do
     # 各コア数ごとにジョブスクリプトを作成する
     jobScriptFileName=$jobScriptBaseFileName$numOfCore
-    cp $jobScriptBaseDir$jobScriptBaseFileName $jobScriptBaseDir$jobScriptFileName
+    # 保存するディレクトリを保持する変数
+    saveDir="../$programSize/$numOfCore/"
+    jobScriptPath=$saveDir$jobScriptFileName
+    cp $jobScriptBaseDir$jobScriptBaseFileName $jobScriptPath
     # <executeShellScript>
     executeShellScript="execBenchmarkExcludeBTSPonE.sh"
     # 各コア数ごとに異なる処理を行う
@@ -72,16 +76,16 @@ do
         echo "There is an inappropriate element."
     fi
     # <executeEnvironment>
-    sed -i -e "s/<executeEnvironment>/$executeEnvironment/g" $jobScriptFileName
+    sed -i -e "s/<executeEnvironment>/$executeEnvironment/g" $jobScriptPath
     # <numOfExecuteEnvironment>
-    sed -i -e "s/<numOfExecuteEnvironment>/$numOfExecuteEnvironment/g" $jobScriptFileName
+    sed -i -e "s/<numOfExecuteEnvironment>/$numOfExecuteEnvironment/g" $jobScriptPath
     # <executingHour>
-    sed -i -e "s/<executingHour>/$executingHour/g" $jobScriptFileName
+    sed -i -e "s/<executingHour>/$executingHour/g" $jobScriptPath
     # <executeShellScript>
-    sed -i -e "s/<executeShellScript>/$executeShellScript/g" $jobScriptFileName
+    sed -i -e "s/<executeShellScript>/$executeShellScript/g" $jobScriptPath
     # <numOfCore>
-    sed -i -e "s/<numOfCore>/$numOfCore/g" $jobScriptFileName
+    sed -i -e "s/<numOfCore>/$numOfCore/g" $jobScriptPath
     # <processPerNode>
-    sed -i -e "s/<processPerNode>/$processPerNode/g" $jobScriptFileName
+    sed -i -e "s/<processPerNode>/$processPerNode/g" $jobScriptPath
 
 done
