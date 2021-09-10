@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 使い方：ジョブスクリプト内で実行する。実行時引き数は2つあり次の通り
+# 使い方：ジョブスクリプト内で実行する。実行時引き数は2つあり下記の通り。ジョブスクリプトはコア数を示すディレクトリでqsubするように実行する。
 # 引数１：コア数（総プロセス数）
 # 引数２：ノード当たりの実行プロセス数
 # 実行される処理：引き数で渡されたコア数・ノード当たりのプロセス数に応じた環境で、ベンチマークプログラムを実行する
@@ -25,7 +25,7 @@ pwd
 for benchmarkName in "${benchmarkNames[@]}"
 do
     # ディレクトリを実行環境用のディレクトリに移動
-    dirName=./$problemSize/$numOfCore/$benchmarkName
+    dirName=./$numOfCore/$benchmarkName
     cd $dirName || exit
     # ベンチマークバイナリを実行
     binName=$benchmarkName.$problemSize.x
