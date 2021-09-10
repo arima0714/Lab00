@@ -19,11 +19,14 @@ export TAU_OPTIONS=-optRevert
 export PATH="$PATH:/home/9/20IA1328/pdtoolkit-3.25.1/x86_64//bin"
 export TAU_THROTTLE=0
 
+ls
+pwd
+
 for benchmarkName in "${benchmarkNames[@]}"
 do
     # ディレクトリを実行環境用のディレクトリに移動
     dirName=./$problemSize/$numOfCore/$benchmarkName
-    cd $dirName
+    cd $dirName || exit
     # ベンチマークバイナリを実行
     binName=$benchmarkName.$problemSize.x
     if [ -e $binName ]; then
