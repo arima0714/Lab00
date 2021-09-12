@@ -1,0 +1,469 @@
+bt
+cg
+ep
+ft
+is
+jobScriptForProblemSizeE128
+lu
+mg
+serial.e9707188
+serial.o9707188
+sp
+/home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/E/128
+
+
+ NAS Parallel Benchmarks 3.4 -- LU Benchmark
+
+ Size: 1020x1020x1020  (class E)
+ Iterations:  300
+ Total number of processes:    128
+
+ Time step    1
+ Time step   20
+ Time step   40
+ Time step   60
+ Time step   80
+ Time step  100
+ Time step  120
+ Time step  140
+ Time step  160
+ Time step  180
+ Time step  200
+ Time step  220
+ Time step  240
+ Time step  260
+ Time step  280
+ Time step  300
+
+ Verification being performed for class E
+ Accuracy setting for epsilon =  0.1000000000000E-07
+ Comparison of RMS-norms of residual
+           1   0.2099641687874E+06 0.2099641687874E+06 0.2230288314208E-12
+           2   0.2130403143165E+05 0.2130403143165E+05 0.2231896022180E-12
+           3   0.5319228789371E+05 0.5319228789371E+05 0.5061080137458E-13
+           4   0.4509761639833E+05 0.4509761639833E+05 0.2984752335322E-13
+           5   0.2932360006590E+06 0.2932360006590E+06 0.3970021469578E-14
+ Comparison of RMS-norms of solution error
+           1   0.4800572578333E+03 0.4800572578333E+03 0.5198184273377E-13
+           2   0.4221993400184E+02 0.4221993400184E+02 0.5435946528019E-13
+           3   0.1210851906824E+03 0.1210851906824E+03 0.4213311978125E-13
+           4   0.1047888986770E+03 0.1047888986770E+03 0.1342579829130E-12
+           5   0.8363028257389E+03 0.8363028257389E+03 0.1033142469560E-13
+ Comparison of surface integral
+               0.9512163272273E+02 0.9512163272273E+02 0.3256847300912E-13
+ Verification Successful
+
+
+ LU Benchmark Completed.
+ Class           =                        E
+ Size            =           1020x1020x1020
+ Iterations      =                      300
+ Time in seconds =                  1998.88
+ Total processes =                      128
+ Active processes=                      128
+ Mop/s total     =                314413.50
+ Mop/s/process   =                  2456.36
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = (none)
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
+
+
+ NAS Parallel Benchmarks 3.4 -- IS Benchmark
+
+ Size:  34359738368  (class E)
+ Iterations:   10
+ Total number of processes:  128
+
+   iteration
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8
+        9
+        10
+
+
+ IS Benchmark Completed
+ Class           =                        E
+ Size            =              34359738368
+ Iterations      =                       10
+ Time in seconds =                   116.60
+ Total processes =                      128
+ Active processes=                      128
+ Mop/s total     =                  2946.92
+ Mop/s/process   =                    23.02
+ Operation type  =              keys ranked
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPICC        = tau_cc.sh
+    CLINK        = $(MPICC)
+    CMPI_LIB     = (none)
+    CMPI_INC     = (none)
+    CFLAGS       = -O3
+    CLINKFLAGS   = $(CFLAGS)
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team
+ npb@nas.nasa.gov
+
+
+
+ NAS Parallel Benchmarks 3.4 -- EP Benchmark
+
+ Number of random numbers generated:   2199023255552  (class E)
+ Total number of processes:                      128
+
+EP Benchmark Results:
+
+CPU Time =  418.0491
+N = 2^   40
+No. Gaussian Pairs =  863554308186.
+Sums =    -5.319717441511848D+05   -3.688834557739783D+05
+Counts:
+  0  402472491787.
+  1  384285547773.
+  2   72139715664.
+  3    4547154685.
+  4     108408570.
+  5        986325.
+  6          3374.
+  7             8.
+  8             0.
+  9             0.
+
+
+ EP Benchmark Completed.
+ Class           =                        E
+ Size            =            2199023255552
+ Iterations      =                        0
+ Time in seconds =                   418.05
+ Total processes =                      128
+ Active processes=                      128
+ Mop/s total     =                  5260.20
+ Mop/s/process   =                    41.10
+ Operation type  = Random numbers generated
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = randi8
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
+
+
+ NAS Parallel Benchmarks 3.4 -- CG Benchmark
+
+ Size:    9000000  (class E)
+ Iterations:   100
+ Number of nonzeroes per row:       26
+ Eigenvalue shift:  1500.000
+ Total number of processes:    128
+
+   iteration           ||r||                 zeta
+        1       0.16833033083212E-11  1499.9998413806252
+        2       0.48452335501284E-15    72.8774756683831
+        3       0.50005228698630E-15    73.2915890919505
+        4       0.50494414747551E-15    73.6707042243706
+        5       0.50746088763796E-15    74.0174332195447
+        6       0.50928674647924E-15    74.3342550247025
+        7       0.51034124986348E-15    74.6235104535424
+        8       0.51096364498326E-15    74.8874001510972
+        9       0.51141953021190E-15    75.1279849103082
+       10       0.51181731580724E-15    75.3471878618511
+       11       0.51206576493173E-15    75.5467981207908
+       12       0.51272862154539E-15    75.7284755317257
+       13       0.51300219339153E-15    75.8937562100600
+       14       0.51318102621184E-15    76.0440586262418
+       15       0.51369609843860E-15    76.1806900244599
+       16       0.51410976075425E-15    76.3048530077117
+       17       0.51450029439261E-15    76.4176521533536
+       18       0.51453694301536E-15    76.5201005541549
+       19       0.51508009210950E-15    76.6131262034705
+       20       0.51512830686733E-15    76.6975781642411
+       21       0.51591281401820E-15    76.7742324785734
+       22       0.51606984538857E-15    76.8437977880419
+       23       0.51628967922176E-15    76.9069206474067
+       24       0.51670307556215E-15    76.9641905218732
+       25       0.51696844277045E-15    77.0161444661826
+       26       0.51736718651919E-15    77.0632714889214
+       27       0.51771804109447E-15    77.1060166097682
+       28       0.51796495273190E-15    77.1447846197418
+       29       0.51782036607612E-15    77.1799435578575
+       30       0.51803487926847E-15    77.2118279176448
+       31       0.51871439173086E-15    77.2407415992288
+       32       0.51859621952260E-15    77.2669606216959
+       33       0.51880502790713E-15    77.2907356118342
+       34       0.51893956090702E-15    77.3122940842952
+       35       0.51923393435859E-15    77.3318425279183
+       36       0.51954056989143E-15    77.3495683124877
+       37       0.51984538621780E-15    77.3656414304601
+       38       0.51965032187121E-15    77.3802160851574
+       39       0.51982563622175E-15    77.3934321393688
+       40       0.52005716829562E-15    77.4054164341846
+       41       0.52025697130001E-15    77.4162839903292
+       42       0.52005986866174E-15    77.4261391005462
+       43       0.52037241869891E-15    77.4350763236991
+       44       0.52060918048313E-15    77.4431813878434
+       45       0.52026645498805E-15    77.4505320111589
+       46       0.52039431287338E-15    77.4571986472981
+       47       0.52085214800312E-15    77.4632451625546
+       48       0.52091007183008E-15    77.4687294502428
+       49       0.52092258065260E-15    77.4737039884824
+       50       0.52117592396246E-15    77.4782163460600
+       51       0.52095595193911E-15    77.4823096416412
+       52       0.52108686938399E-15    77.4860229600718
+       53       0.52081408819864E-15    77.4893917297668
+       54       0.52129596434138E-15    77.4924480652853
+       55       0.52112105665418E-15    77.4952210776669
+       56       0.52138474039990E-15    77.4977371556247
+       57       0.52140644878436E-15    77.5000202208926
+       58       0.52151951775233E-15    77.5020919591061
+       59       0.52133901217337E-15    77.5039720295231
+       60       0.52162470090127E-15    77.5056782548411
+       61       0.52135343825414E-15    77.5072267932653
+       62       0.52163430822406E-15    77.5086322944630
+       63       0.52163024810864E-15    77.5099080409047
+       64       0.52162348896991E-15    77.5110660759035
+       65       0.52120195768433E-15    77.5121173195814
+       66       0.52187689403334E-15    77.5130716741867
+       67       0.52150049628296E-15    77.5139381191420
+       68       0.52184222859447E-15    77.5147247975806
+       69       0.52174095065195E-15    77.5154390944856
+       70       0.52135451033533E-15    77.5160877076012
+       71       0.52191420535922E-15    77.5166767116245
+       72       0.52212326474955E-15    77.5172116164672
+       73       0.52184545972510E-15    77.5176974201509
+       74       0.52206107921653E-15    77.5181386562433
+       75       0.52171743687902E-15    77.5185394376044
+       76       0.52182388509701E-15    77.5189034953980
+       77       0.52171361249417E-15    77.5192342147475
+       78       0.52185632920560E-15    77.5195346669746
+       79       0.52194516289665E-15    77.5198076388860
+       80       0.52193806599650E-15    77.5200556592540
+       81       0.52206327328697E-15    77.5202810227183
+       82       0.52185701828197E-15    77.5204858118345
+       83       0.52195891164341E-15    77.5206719164516
+       84       0.52173551451263E-15    77.5208410519094
+       85       0.52214353059603E-15    77.5209947751805
+       86       0.52177437858952E-15    77.5211344993772
+       87       0.52169992713427E-15    77.5212615074634
+       88       0.52202427845756E-15    77.5213769639963
+       89       0.52175988888057E-15    77.5214819262683
+       90       0.52203159481066E-15    77.5215773542263
+       91       0.52186853387605E-15    77.5216641194495
+       92       0.52159319149849E-15    77.5217430133935
+       93       0.52193237493112E-15    77.5218147547030
+       94       0.52178777252913E-15    77.5218799960776
+       95       0.52174945100298E-15    77.5219393302120
+       96       0.52172006875946E-15    77.5219932954569
+       97       0.52169013821904E-15    77.5220423807968
+       98       0.52152439896002E-15    77.5220870303892
+       99       0.52168176677316E-15    77.5221276477419
+      100       0.52159341021803E-15    77.5221645993970
+ Benchmark completed 
+ VERIFICATION SUCCESSFUL 
+ Zeta is     0.7752216459940E+02
+ Error is    0.1805637389876E-12
+
+
+ CG Benchmark Completed.
+ Class           =                        E
+ Size            =                  9000000
+ Iterations      =                      100
+ Time in seconds =                  1603.70
+ Total processes =                      128
+ Active processes=                      128
+ Mop/s total     =                 20633.15
+ Mop/s/process   =                   161.20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = randi8
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
+
+
+ NAS Parallel Benchmarks 3.4 -- MG Benchmark
+
+ No input file. Using compiled defaults 
+ Size: 2048x2048x2048  (class E)
+ Iterations:   50
+ Total number of processes:    128
+
+
+ Initialization time:           6.781 seconds
+
+  iter    1
+  iter    5
+  iter   10
+  iter   15
+  iter   20
+  iter   25
+  iter   30
+  iter   35
+  iter   40
+  iter   45
+  iter   50
+
+ Benchmark completed 
+ VERIFICATION SUCCESSFUL 
+ L2 Norm is  0.5630442584623E-10
+ Error is    0.1566921731553E-10
+
+
+ MG Benchmark Completed.
+ Class           =                        E
+ Size            =           2048x2048x2048
+ Iterations      =                       50
+ Time in seconds =                   158.57
+ Total processes =                      128
+ Active processes=                      128
+ Mop/s total     =                157100.14
+ Mop/s/process   =                  1227.34
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = randi8
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
+
+
+ NAS Parallel Benchmarks 3.4 -- FT Benchmark
+
+ No input file inputft.data. Using compiled defaults
+ Size                : 4096x2048x2048  (class E)
+ Iterations          :             25
+ Number of processes :            128
+ Processor array     :         1x 128
+ Layout type         :             1D
+
+ Initialization time =     42.6979
+
+ T =    1     Checksum =    5.121601045346D+02    5.117395998266D+02
+ T =    2     Checksum =    5.120905403678D+02    5.118614716182D+02
+ T =    3     Checksum =    5.120623229306D+02    5.119074203747D+02
+ T =    4     Checksum =    5.120438418997D+02    5.119345900733D+02
+ T =    5     Checksum =    5.120311521872D+02    5.119551325550D+02
+ T =    6     Checksum =    5.120226088809D+02    5.119720179919D+02
+ T =    7     Checksum =    5.120169296534D+02    5.119861371665D+02
+ T =    8     Checksum =    5.120131225172D+02    5.119979364402D+02
+ T =    9     Checksum =    5.120104767108D+02    5.120077674092D+02
+ T =   10     Checksum =    5.120085127969D+02    5.120159443121D+02
+ T =   11     Checksum =    5.120069224127D+02    5.120227453670D+02
+ T =   12     Checksum =    5.120055158164D+02    5.120284096041D+02
+ T =   13     Checksum =    5.120041820159D+02    5.120331373793D+02
+ T =   14     Checksum =    5.120028605402D+02    5.120370938679D+02
+ T =   15     Checksum =    5.120015223011D+02    5.120404138831D+02
+ T =   16     Checksum =    5.120001570022D+02    5.120432068837D+02
+ T =   17     Checksum =    5.119987650555D+02    5.120455615860D+02
+ T =   18     Checksum =    5.119973525091D+02    5.120475499442D+02
+ T =   19     Checksum =    5.119959279472D+02    5.120492304629D+02
+ T =   20     Checksum =    5.119945006558D+02    5.120506508902D+02
+ T =   21     Checksum =    5.119930795911D+02    5.120518503782D+02
+ T =   22     Checksum =    5.119916728462D+02    5.120528612016D+02
+ T =   23     Checksum =    5.119902874185D+02    5.120537101195D+02
+ T =   24     Checksum =    5.119889291565D+02    5.120544194514D+02
+ T =   25     Checksum =    5.119876028049D+02    5.120550079284D+02
+ Result verification successful
+
+
+ FT Benchmark Completed.
+ Class           =                        E
+ Size            =           4096x2048x2048
+ Iterations      =                       25
+ Time in seconds =                   825.27
+ Total processes =                      128
+ Active processes=                      128
+ Mop/s total     =                 95008.24
+ Mop/s/process   =                   742.25
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = randi8
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
