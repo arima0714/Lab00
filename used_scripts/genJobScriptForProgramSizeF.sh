@@ -5,9 +5,9 @@
 
 numOfCores=(32 64 128 256)
 
-jobScriptBaseFileName="jobScriptForProblemSizeE"
+jobScriptBaseFileName="jobScriptForProblemSizeF"
 jobScriptBaseDir="./"
-programSize="E"
+programSize="F"
 
 for numOfCore in "${numOfCores[@]}"
 do
@@ -18,7 +18,7 @@ do
     jobScriptPath=$saveDir$jobScriptFileName
     cp $jobScriptBaseDir$jobScriptBaseFileName $jobScriptPath
     # <executeShellScript>
-    executeShellScript="execBenchmarkExcludeBTSPonE.sh"
+    executeShellScript="execBenchmarkExcludeBTSPonF.sh"
     # 各コア数ごとに異なる処理を行う
     if [ 32 -eq "$numOfCore" ]; then
         # 32コア
