@@ -1,0 +1,103 @@
+bt
+cg
+ep
+ft
+is
+jobScriptForProblemSizeF128
+lu
+mg
+serial.e9711743
+serial.o9711743
+sp
+/home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/F/128
+
+
+ NAS Parallel Benchmarks 3.4 -- LU Benchmark
+
+ Size: 2560x2560x2560  (class F)
+ Iterations:  300
+ Total number of processes:    128
+
+
+ NAS Parallel Benchmarks 3.4 -- EP Benchmark
+
+ Number of random numbers generated:  35184372088832  (class F)
+ Total number of processes:                      128
+
+EP Benchmark Results:
+
+CPU Time = 6780.6562
+N = 2^   44
+No. Gaussian Pairs =13816870608324.
+Sums =    -1.986774500273168D+01   -2.164447948802263D+01
+Counts:
+  0 6439559008720.
+  1 6148573791336.
+  2 1154233052902.
+  3   72754421080.
+  4    1734491760.
+  5      15788010.
+  6         54448.
+  7            68.
+  8             0.
+  9             0.
+
+
+ EP Benchmark Completed.
+ Class           =                        F
+ Size            =           35184372088832
+ Iterations      =                        0
+ Time in seconds =                  6780.66
+ Total processes =                      128
+ Active processes=                      128
+ Mop/s total     =                  5188.93
+ Mop/s/process   =                    40.54
+ Operation type  = Random numbers generated
+ Verification    =             UNSUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = randi8
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
+
+
+ NAS Parallel Benchmarks 3.4 -- CG Benchmark
+
+ Size:   54000000  (class F)
+ Iterations:   100
+ Number of nonzeroes per row:       31
+ Eigenvalue shift:  5000.000
+ Total number of processes:    128
+
+
+ NAS Parallel Benchmarks 3.4 -- MG Benchmark
+
+ No input file. Using compiled defaults 
+ Size: 4096x4096x4096  (class F)
+ Iterations:   50
+ Total number of processes:    128
+
+
+
+ NAS Parallel Benchmarks 3.4 -- FT Benchmark
+
+ No input file inputft.data. Using compiled defaults
+ Size                : 8192x4096x4096  (class F)
+ Iterations          :             25
+ Number of processes :            128
+ Processor array     :         1x 128
+ Layout type         :             1D
