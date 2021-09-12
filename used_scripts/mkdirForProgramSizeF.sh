@@ -1,6 +1,6 @@
 numOfCores=(32 64 128 256)
 benchmarkNames=(bt sp lu is ep cg mg ft)
-problemSize=E
+problemSize=F
 for numOfCore in "${numOfCores[@]}"
 do
     for benchmarkName in "${benchmarkNames[@]}"
