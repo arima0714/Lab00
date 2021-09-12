@@ -25,7 +25,7 @@ pwd
 for benchmarkName in "${benchmarkNames[@]}"
 do
     # ディレクトリを実行環境用のディレクトリに移動
-    dirName=./$numOfCore/$benchmarkName
+    dirName=./$benchmarkName
     cd $dirName || exit
     # ベンチマークバイナリを実行
     binName=$benchmarkName.$problemSize.x
