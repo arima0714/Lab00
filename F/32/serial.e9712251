@@ -1,0 +1,830 @@
+warning: this version of gcc is not compatible with the loaded cuda version.
+please use cuda/11.2.146 or use gcc/8.3.0.
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 7 with PID 29408 on node r1i7n1 exited on signal 9 (Killed).
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 0 with PID 0 on node r1i5n5 exited on signal 9 (Killed).
+--------------------------------------------------------------------------
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#7  0xffffffffffffffff in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x2aaaad213558 in ???
+#2  0x451720 in ???
+#3  0x45e240 in ???
+#4  0x450dcc in ???
+#5  0x2aaaad0e2764 in ???
+#6  0x4512e8 in ???
+	at ../sysdeps/x86_64/start.S:118
+#7  0xffffffffffffffff in ???
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 10 with PID 20073 on node r1i6n3 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#0  0x2aaaaceb5c6f in ???
+#1  0x453539 in ???
+#2  0x457e8a in ???
+#6  0xffffffffffffffff in ???
+#3  0x450d0c in ???
+#4  0x2aaaad0e2764 in ???
+#5  0x451228 in ???
+	at ../sysdeps/x86_64/start.S:118
+#6  0xffffffffffffffff in ???
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 8 with PID 20147 on node r1i6n3 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
