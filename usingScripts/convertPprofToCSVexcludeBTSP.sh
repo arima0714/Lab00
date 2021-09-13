@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # 関数：exec_pprof_s()
-# 引数："<問題サイズ>/<コア数>/"
-# 処理内容：引数に当てはまるパスに存在する実験データから、`pprof -s`コマンドで集計したテキストファイル`<pprof_s.txt>`を出力する
+# 処理内容：カレントディレクトリに存在する実験データから、`pprof -s`コマンドで集計したテキストファイル`<pprof_s.txt>`を出力する
 
 function exec_pprof_s() {
 	pathInFuncExecPprofS=$1
@@ -10,8 +9,7 @@ function exec_pprof_s() {
 }
 
 # 関数：convert_pprof2csv()
-# 引数："<問題サイズ>/<コア数>/"
-# 処理内容：引数に当てはまるパスに存在する`exec_pprof_s()`の実行結果をCSVに変換するスクリプト
+# 処理内容：カレントディレクトリに存在する`exec_pprof_s()`の実行結果をCSVに変換するスクリプト
 
 function convert_pprof2csv() {
 	pathInFuncConvertPprof2csv=$1
