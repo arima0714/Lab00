@@ -25,7 +25,7 @@ programSize=$1
 numOfCore=$2
 benchmarkNames=("cg" "ep" "ft" "is" "lu" "mg")
 baseDir=$PWD
-csvFileDir=csv_files/
+csvFileDir=$PWD/csv_files/
 
 for benchmarkName in "${benchmarkNames[@]}"
 do
@@ -33,7 +33,7 @@ do
 	cd "$dirPath" || exit
 	exec_pprof_s
 	convert_pprof2csv
-	mv $csv_FileName $csvFileDir/$csv_FileName
+	mv $csv_FileName $csvFileDir/pprof_$benchmarkName$programSize$numOfCore.csv
 	echo "_____$benchmarkName @$programSize/$numOfCore finished._____"
 	cd "$baseDir" || exit
 done
