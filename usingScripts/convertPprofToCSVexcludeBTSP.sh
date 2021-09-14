@@ -4,16 +4,14 @@
 # 処理内容：カレントディレクトリに存在する実験データから、`pprof -s`コマンドで集計したテキストファイル`<pprof_s.txt>`を出力する
 
 function exec_pprof_s() {
-	pathInFuncExecPprofS=$1
-	echo "pathInFuncExecPprofS=""$pathInFuncExecPprofS"
+	echo "$PWD"
 }
 
 # 関数：convert_pprof2csv()
 # 処理内容：カレントディレクトリに存在する`exec_pprof_s()`の実行結果をCSVに変換するスクリプト
 
 function convert_pprof2csv() {
-	pathInFuncConvertPprof2csv=$1
-	echo "pathInFuncConvertPprof2csv=""$pathInFuncConvertPprof2csv"
+	echo "$PWD"
 }
 
 # 使用方法：`./bin/`で実行する。引数は下記の通り。
@@ -29,6 +27,6 @@ for benchmarkName in "${benchmarkNames[@]}"
 do
 	dirPath="./$programSize/$numOfCore/$benchmarkName/"
 	echo "dirPath=""$dirPath"
-	exec_pprof_s "$dirPath"
-	convert_pprof2csv "$dirPath"
+	exec_pprof_s
+	convert_pprof2csv
 done
