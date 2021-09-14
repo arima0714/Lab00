@@ -25,7 +25,7 @@ function convert_pprof2csv() {
 
 programSize=$1
 numOfCore=$2
-benchmarkNames=("cg" "dt" "ep" "ft" "is" "lu" "mg")
+benchmarkNames=("cg" "ep" "ft" "is" "lu" "mg")
 baseDir=$PWD
 
 for benchmarkName in "${benchmarkNames[@]}"
