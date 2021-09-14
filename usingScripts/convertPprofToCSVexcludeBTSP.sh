@@ -5,6 +5,7 @@
 
 function exec_pprof_s() {
 	echo "$PWD"
+	pprof -s > pprof_s.txt
 }
 
 # 関数：convert_pprof2csv()
@@ -12,6 +13,9 @@ function exec_pprof_s() {
 
 function convert_pprof2csv() {
 	echo "$PWD"
+	pprof_s_FileName=pprof_s.txt
+	csv_FileName=pprof_s.csv
+	cat ${pprof_s_FileName} | sed -n '/mean/,$p'| sed -e 's/char /char_/g' | sed -e 's/void /void_/g' | sed -e 's/double /double_/g' | sed -e 's/int /int_/g' | sed -e 's/.TAU application/.TAU_application/g' | sed -e 's/, /_/g' | sed "4,5d" | sed "1,2d" | awk -v OFS=, '{print $7, $4}' > "${csv_FileName}"
 }
 
 # 使用方法：`./bin/`で実行する。引数は下記の通り。
@@ -22,11 +26,13 @@ function convert_pprof2csv() {
 programSize=$1
 numOfCore=$2
 benchmarkNames=("cg" "dt" "ep" "ft" "is" "lu" "mg")
+baseDir=$PWD
 
 for benchmarkName in "${benchmarkNames[@]}"
 do
 	dirPath="./$programSize/$numOfCore/$benchmarkName/"
-	echo "dirPath=""$dirPath"
+	cd "$dirPath" || exit
 	exec_pprof_s
 	convert_pprof2csv
+	cd "$baseDir" || exit
 done
