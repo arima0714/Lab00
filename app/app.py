@@ -154,4 +154,4 @@ else:
 
 st.write(fig)
 
-st.dataframe(DFtoPlot[["コア数", "関数コール回数", "問題サイズ（文字）"]])
+st.dataframe(DFtoPlot[["コア数", "関数コール回数", "問題サイズ（文字）", "問題サイズ"]])
