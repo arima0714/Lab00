@@ -1,13 +1,11 @@
 import app1
 import app2
-import streamlit as st
 
-PAGES = {
-    "App1":app1,
-    "App2":app2,
-}
+from multiapp import MultiApp
 
-st.sidebar.title('Navigation')
-selection = st.sidebar.radio("Go to", list(PAGES.keys()))
-page = PAGES[selection]
-page.app()
+app = MultiApp()
+
+app.add_app("app1", app1.app)
+app.add_app("app2", app2.app)
+
+app.run()
