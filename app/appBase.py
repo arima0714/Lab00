@@ -5,7 +5,7 @@ from multiapp import MultiApp
 
 app = MultiApp()
 
-app.add_app("app1", app1.app)
-app.add_app("app2", app2.app)
+app.add_app("３次元および２次元プロット", app1.app)
+app.add_app("データの確認", app2.app)
 
 app.run()
