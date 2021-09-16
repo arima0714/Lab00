@@ -28,7 +28,7 @@ dimension = st.sidebar.selectbox("プロットする次元", ("２次元", "３�
 benchmarkName = [
     st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマーク名")
 ]
-classes = ["A", "B", "C", "D"]
+classes = ["A", "B", "C", "D", "E", "F"]
 processes = [2, 4, 8, 16, 32, 64, 128, 256]
 csvDirPath = "../csv_files/"
 rawDataDF = lib.returnCollectedExistingData(
