@@ -2,6 +2,11 @@ import streamlit as st
 
 
 def app():
+    @st.cache
+    def gen_lib():
+        subprocess.run(["jupyter", "nbconvert", "--to", "python", "../lib/lib.ipynb"])
+        subprocess.run(["mv", "../lib/lib.py", "libLab00.py"])
+
     st.title("データの確認")
 
     st.header("問題サイズの指定")
@@ -31,7 +36,7 @@ def app():
     st.write(programsizeList)
 
     st.header("コア数の指定")
-    
+
     enable001 = st.checkbox("コア数1", value=True)
     enable002 = st.checkbox("コア数2")
     enable004 = st.checkbox("コア数4")
