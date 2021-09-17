@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # 使い方：`bin/used_scripts/`で実行する。
+# 引数：問題サイズ（アルファベット1文字）
 # 実行される処理：ジョブスクリプトを作成する。
 
 numOfCores=(32 64 128 256)
 
 jobScriptBaseFileName="jobScriptForProblemSizeF"
 jobScriptBaseDir="./"
-programSize="F"
+programSize=$1
 
 for numOfCore in "${numOfCores[@]}"
 do
