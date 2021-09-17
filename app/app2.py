@@ -8,6 +8,11 @@ def app():
         subprocess.run(["jupyter", "nbconvert", "--to", "python", "../lib/lib.ipynb"])
         subprocess.run(["mv", "../lib/lib.py", "libLab00.py"])
 
+    # ライブラリノートを実行可能な形式に変換
+    gen_lib()
+    # 変換されたライブラリノートをimport
+    import libLab00 as lib
+
     st.title("データの確認")
 
     st.header("問題サイズの指定")
@@ -70,3 +75,20 @@ def app():
 
     numOfCoreList = sorted(list(numOfCoreSet))
     st.write(numOfCoreList)
+    
+    st.header("ベンチマークプログラムの指定")
+
+    benchmarkName = [
+        st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマークプログラム名")
+    ]
+
+
+    csvDirPath = "../csv_files/"
+    rawDataDF = lib.returnCollectedExistingData(
+        benchmarkNames=benchmarkName,
+        classes=programsizeList,
+        processes=numOfCoreList,
+        csvDirPath=csvDirPath,
+    )
+
+    st.write(rawDataDF)
