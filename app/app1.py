@@ -10,19 +10,19 @@ import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import plotly.express as px
 
+
 def app():
     @st.cache
     def gen_lib():
         subprocess.run(["jupyter", "nbconvert", "--to", "python", "../lib/lib.ipynb"])
         subprocess.run(["mv", "../lib/lib.py", "libLab00.py"])
 
-
     # ライブラリノートを実行可能な形式に変換
     gen_lib()
     # 変換されたライブラリノートをimport
     import libLab00 as lib
 
-    st.title('３次元および２次元プロット')
+    st.title("３次元および２次元プロット")
 
     dimension = st.selectbox("プロットする次元", ("２次元", "３次元"))
 
@@ -41,7 +41,9 @@ def app():
     )
     # 問題サイズを数値化
     programSize = rawDataDF["benchmarkClass"].tolist()
-    programSizeInNum = lib.convertBenchmarkClasses_problemSizeInNPB(inputList=programSize)
+    programSizeInNum = lib.convertBenchmarkClasses_problemSizeInNPB(
+        inputList=programSize
+    )
     rawDataDF["benchmarkClassInNum"] = programSizeInNum
     # プロット用のDFを作成
     functionNames = sorted(list(set(rawDataDF["functionName"].tolist())))
@@ -123,13 +125,18 @@ def app():
                         x=x,
                         y=y,
                         z=z,
-                        colorbar={"bordercolor":"black", "borderwidth":5, "outlinecolor":"black", "outlinewidth":5},
-                        contour={"color":"black", "show":True, "width":5},
-                        lighting={"roughness":1},
+                        colorbar={
+                            "bordercolor": "black",
+                            "borderwidth": 5,
+                            "outlinecolor": "black",
+                            "outlinewidth": 5,
+                        },
+                        contour={"color": "black", "show": True, "width": 5},
+                        lighting={"roughness": 1},
                         # flatshading=True,
                     )
                 ],
-                layout={}
+                layout={},
             )
 
             if enableLogX:
@@ -140,15 +147,20 @@ def app():
                 fig.update_scenes(zaxis_type="log")
 
             fig2 = plt.figure()
-            ax = fig2.gca(projection='3d')
-            ax.plot_trisurf(x, y, z, alpha=0.9, color='g', antialiased=False)
+            ax = fig2.gca(projection="3d")
+            ax.plot_trisurf(x, y, z, alpha=0.9, color="g", antialiased=False)
             st.write(fig2)
 
         fig.update_layout(
             width=800,
             height=800,
             autosize=False,
-            scene={"xaxis_title": "問題サイズ", "yaxis_title": "コア数", "zaxis_title": "関数コール回数", "aspectmode":'cube'},
+            scene={
+                "xaxis_title": "問題サイズ",
+                "yaxis_title": "コア数",
+                "zaxis_title": "関数コール回数",
+                "aspectmode": "cube",
+            },
         )
 
     else:
