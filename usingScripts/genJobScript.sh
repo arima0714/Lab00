@@ -1,21 +1,22 @@
 #!/bin/bash
 
-# 使い方：`bin/used_scripts/`で実行する。
-# 引数：問題サイズ（アルファベット1文字）
+# 使い方：`bin/usingScripts/`で実行する。
+# 引数1：問題サイズ（アルファベット1文字）
+# 引数2：ベースとなるジョブスクリプトのパス
 # 実行される処理：ジョブスクリプトを作成する。
 
 numOfCores=(32 64 128 256)
 
-jobScriptBaseFileName="jobScriptForProblemSizeF"
-jobScriptBaseDir="./"
 programSize=$1
+jobScriptBaseFileName=$2
+jobScriptBaseDir="./"
 
 for numOfCore in "${numOfCores[@]}"
 do
     # 各コア数ごとにジョブスクリプトを作成する
     jobScriptFileName=$jobScriptBaseFileName$numOfCore
     # 保存するディレクトリを保持する変数
-    saveDir="../$programSize/$numOfCore/"
+    saveDir="./$programSize/$numOfCore/"
     jobScriptPath=$saveDir$jobScriptFileName
     cp $jobScriptBaseDir$jobScriptBaseFileName $jobScriptPath
     # <executeShellScript>
