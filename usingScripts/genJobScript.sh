@@ -1,15 +1,16 @@
 #!/bin/bash
 
-# 使い方：`bin/usingScripts/`で実行する。
+# 使い方：`bin/`で実行する。
 # 引数1：問題サイズ（アルファベット1文字）
-# 引数2：ベースとなるジョブスクリプトのパス
+# 引数2：ベースとなるジョブスクリプトのファイル名
+# 引数3：ベースとなるジョブスクリプトが存在するディレクトリ
 # 実行される処理：ジョブスクリプトを作成する。
 
 numOfCores=(2 4 8 16 32 64 128 256)
 
 programSize=$1
 jobScriptBaseFileName=$2
-jobScriptBaseDir="./"
+jobScriptBaseDir=$3
 
 for numOfCore in "${numOfCores[@]}"
 do
