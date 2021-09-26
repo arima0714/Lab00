@@ -5,7 +5,7 @@
 # 引数2：ベースとなるジョブスクリプトのパス
 # 実行される処理：ジョブスクリプトを作成する。
 
-numOfCores=(32 64 128 256)
+numOfCores=(2 4 8 16 32 64 128 256)
 
 programSize=$1
 jobScriptBaseFileName=$2
