@@ -28,13 +28,26 @@ do
         # <executeEnvironment>
         executeEnvironment="q_core"
         # <numOfExecuteEnvironment>
-        numOfExecuteEnvironment=2
+        numOfExecuteEnvironment=1
         # <executingHour>
         executingHour=10
         # <numOfCore>
         numOfCore=2
         # <processPerNode>
         processPerNode=2
+    if [ 4 -eq "$numOfCore" ]; then
+        # 32コア
+        echo "numOfCore=$numOfCore(4)"
+        # <executeEnvironment>
+        executeEnvironment="q_core"
+        # <numOfExecuteEnvironment>
+        numOfExecuteEnvironment=1
+        # <executingHour>
+        executingHour=6
+        # <numOfCore>
+        numOfCore=4
+        # <processPerNode>
+        processPerNode=4
     elif [ 32 -eq "$numOfCore" ]; then
         # 32コア
         echo "numOfCore=$numOfCore(32)"
