@@ -48,6 +48,19 @@ do
         numOfCore=4
         # <processPerNode>
         processPerNode=4
+    if [ 8 -eq "$numOfCore" ]; then
+        # 32コア
+        echo "numOfCore=$numOfCore(8)"
+        # <executeEnvironment>
+        executeEnvironment="q_core"
+        # <numOfExecuteEnvironment>
+        numOfExecuteEnvironment=2
+        # <executingHour>
+        executingHour=4
+        # <numOfCore>
+        numOfCore=8
+        # <processPerNode>
+        processPerNode=4
     elif [ 32 -eq "$numOfCore" ]; then
         # 32コア
         echo "numOfCore=$numOfCore(32)"
