@@ -4,7 +4,7 @@
 # 引数：問題サイズ（アルファベット1文字）
 # 実行される処理：`bin/<コア数>/<問題サイズ>/<ベンチマーク名>`の様な構成のディレクトリを作成する
 
-numOfCores=(32 64 128 256)
+numOfCores=(2 4 8 16 32 64 128 256)
 benchmarkNames=(bt sp lu is ep cg mg ft)
 problemSize=$1
 for numOfCore in "${numOfCores[@]}"
