@@ -35,7 +35,7 @@ do
         numOfCore=2
         # <processPerNode>
         processPerNode=2
-    if [ 4 -eq "$numOfCore" ]; then
+    elif [ 4 -eq "$numOfCore" ]; then
         # 32コア
         echo "numOfCore=$numOfCore(4)"
         # <executeEnvironment>
@@ -48,7 +48,7 @@ do
         numOfCore=4
         # <processPerNode>
         processPerNode=4
-    if [ 8 -eq "$numOfCore" ]; then
+    elif [ 8 -eq "$numOfCore" ]; then
         # 32コア
         echo "numOfCore=$numOfCore(8)"
         # <executeEnvironment>
@@ -61,7 +61,7 @@ do
         numOfCore=8
         # <processPerNode>
         processPerNode=4
-    if [ 16 -eq "$numOfCore" ]; then
+    elif [ 16 -eq "$numOfCore" ]; then
         # 32コア
         echo "numOfCore=$numOfCore(16)"
         # <executeEnvironment>
