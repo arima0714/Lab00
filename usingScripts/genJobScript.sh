@@ -22,7 +22,20 @@ do
     # <executeShellScript>
     executeShellScript="execBenchmarkExcludeBTSPonF.sh"
     # 各コア数ごとに異なる処理を行う
-    if [ 32 -eq "$numOfCore" ]; then
+    if [ 2 -eq "$numOfCore" ]; then
+        # 32コア
+        echo "numOfCore=$numOfCore(2)"
+        # <executeEnvironment>
+        executeEnvironment="q_core"
+        # <numOfExecuteEnvironment>
+        numOfExecuteEnvironment=2
+        # <executingHour>
+        executingHour=10
+        # <numOfCore>
+        numOfCore=2
+        # <processPerNode>
+        processPerNode=2
+    elif [ 32 -eq "$numOfCore" ]; then
         # 32コア
         echo "numOfCore=$numOfCore(32)"
         # <executeEnvironment>
