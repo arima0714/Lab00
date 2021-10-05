@@ -9,9 +9,9 @@ for benchmark in "${benchmarks[@]}"
 do
 	for class in "${classes[@]}"
 	do
-		if [ "${benchmark}" = "is" -a "${class}" = "F" ]; then
+		if [ "${benchmark}" = "is" ] && [ "${class}" = "F" ]; then
 			echo "echo \"${benchmark}に${class}はありません\""
-		elif [ "${benchmark}" = "dt" ] && [ "${class}" = "E" -o "${class}" = "F" ]; then
+		elif [ "${benchmark}" = "dt" ] && [ "${class}" = "E"  -o "${class}" = "F" ]; then
 			echo "echo \"${benchmark}には${class}はありません\""
 		else
 			echo "make ${benchmark} CLASS=${class}"
