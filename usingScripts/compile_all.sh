@@ -16,6 +16,8 @@ do
 			echo "echo \"${benchmark}には${class}はありません\""
 		else
 			echo "make ${benchmark} CLASS=${class}"
+			BENCHMARKNAME=${benchmark^^}
+			echo "mv ./$BENCHMARKNAME/npbparams.h ./$BENCHMARKNAME/npbparams_$class.h"
 		fi
 	done
 done
