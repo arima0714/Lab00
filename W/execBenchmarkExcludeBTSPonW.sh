@@ -9,7 +9,7 @@ numOfCore=$1
 A=$2
 B=$numOfCore
 benchmarkNames=(cg ep ft is lu mg)
-problemSize=F
+problemSize=W
 
 baseDir=$PWD
 
