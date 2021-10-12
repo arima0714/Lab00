@@ -15,4 +15,4 @@ module load openmpi
 module load papi
 module load gcc
 # 実行
-../execBenchmarkExcludeBTSPonF.sh 4 4
+../execBenchmarkExcludeBTSPonW.sh 4 4
