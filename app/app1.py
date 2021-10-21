@@ -125,9 +125,8 @@ def app():
         selection = ["コア数", "問題サイズ"]
         ## ラベルとする列名(?)を選択
         selectedAsLabel = st.selectbox("コア数と問題サイズのどちらをラベルとして表示しますか？", selection)
-        columnNameOfLabel = "process" if selectedAsLabel == "コア数" else ""
         ## 生データからラベル化する
-        labelDatum = sorted(list(set()))
+        labelDatum = sorted(list(set(DFtoPlot[selectedAsLabel].tolist())))
 
         fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
         notFixed = "コア数" if fixedTarget == "問題サイズ" else "問題サイズ"
