@@ -25,16 +25,7 @@ def app():
     benchmarkName = [
         st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマーク名")
     ]
-    classes = ["S", "W", "A", "B", "C", "D", "E", "F"]
-    processes = [2, 4, 8, 16, 32, 64, 128, 256]
-    csvDirPath = "../csv_files/"
-    rawDataDF = lib.returnCollectedExistingData(
-        benchmarkNames=benchmarkName,
-        classes=classes,
-        processes=processes,
-        csvDirPath=csvDirPath,
-    )
-
+    
     st.markdown("## 抽出条件の選択")
 
     ## 2列にして、コア数・問題サイズを選択する
@@ -43,7 +34,6 @@ def app():
     ### コア数に関する列の設定
     columnForCore.subheader("コア数")
     #### 実際にデータ内にあるコア数のリストを作成
-
     enable001 = columnForCore.checkbox("コア数1", value=True)
     enable002 = columnForCore.checkbox("コア数2")
     enable004 = columnForCore.checkbox("コア数4")
@@ -53,7 +43,6 @@ def app():
     enable064 = columnForCore.checkbox("コア数64")
     enable128 = columnForCore.checkbox("コア数128")
     enable256 = columnForCore.checkbox("コア数256")
-
     numOfCoreSet = set()
     if enable001:
         numOfCoreSet.add(1)
@@ -73,19 +62,17 @@ def app():
         numOfCoreSet.add(128)
     if enable256:
         numOfCoreSet.add(256)
-
     numOfCoreList = sorted(list(numOfCoreSet))
+
     ### 問題サイズに関する列の設定
     columnForSize.subheader("問題サイズ")
     #### 実際にデータ内にある問題サイズのリストを作成
-
     enableA = columnForSize.checkbox("問題サイズA", value=True)
     enableB = columnForSize.checkbox("問題サイズB")
     enableC = columnForSize.checkbox("問題サイズC")
     enableD = columnForSize.checkbox("問題サイズD")
     enableE = columnForSize.checkbox("問題サイズE")
     enableF = columnForSize.checkbox("問題サイズF")
-
     programsizeSet = set()
     if enableA:
         programsizeSet.add("A")
@@ -101,6 +88,13 @@ def app():
         programsizeSet.add("F")
     programsizeList = sorted(list(programsizeSet))
 
+    csvDirPath = "../csv_files/"
+    rawDataDF = lib.returnCollectedExistingData(
+        benchmarkNames=benchmarkName,
+        classes=programsizeList,
+        processes=numOfCoreList,
+        csvDirPath=csvDirPath,
+    )
     # 問題サイズを数値化
     programSize = rawDataDF["benchmarkClass"].tolist()
     programSizeInNum = lib.convertBenchmarkClasses_problemSizeInNPB(
