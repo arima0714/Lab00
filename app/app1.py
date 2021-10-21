@@ -25,7 +25,7 @@ def app():
     benchmarkName = [
         st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマーク名")
     ]
-    
+
     st.markdown("## 抽出条件の選択")
 
     ## 2列にして、コア数・問題サイズを選択する
@@ -120,6 +120,14 @@ def app():
     # プロット
 
     if dimension == "２次元":  # 2次元グラフの描画
+        
+        # 横軸もしくはラベル化する列名の選択肢を作成
+        selection = ["コア数", "問題サイズ"]
+        ## ラベルとする列名(?)を選択
+        selectedAsLabel = st.selectbox("コア数と問題サイズのどちらをラベルとして表示しますか？", selection)
+        columnNameOfLabel = "process" if selectedAsLabel == "コア数" else ""
+        ## 生データからラベル化する
+        labelDatum = sorted(list(set()))
 
         fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
         notFixed = "コア数" if fixedTarget == "問題サイズ" else "問題サイズ"
