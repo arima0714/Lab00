@@ -127,6 +127,11 @@ def app():
         selectedAsLabel = st.selectbox("コア数と問題サイズのどちらをラベルとして表示しますか？", selection)
         ## 生データからラベル化する
         labelDatum = sorted(list(set(DFtoPlot[selectedAsLabel].tolist())))
+        ## ラベルでループをしつつデータをプロットする
+        ### プロットを行う
+        fig = px.scatter(
+            DFtoPlotIn2D, x=notFixed, y="関数コール回数", log_x=enableLogX, log_y=enableLogY
+        )
         for labelName in labelDatum:
             st.write(labelName)
 
@@ -151,10 +156,6 @@ def app():
 
         enableLogX = st.checkbox(label="X軸（横軸）の対数化")
         enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
-
-        # fig = px.scatter(
-        #     DFtoPlotIn2D, x=notFixed, y="関数コール回数", log_x=enableLogX, log_y=enableLogY
-        # )
 
         st.markdown("# ２次元グラフのプロット")
 
