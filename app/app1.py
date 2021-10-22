@@ -125,15 +125,21 @@ def app():
         selection = ["コア数", "問題サイズ"]
         ## ラベルとする列名(?)を選択
         selectedAsLabel = st.selectbox("コア数と問題サイズのどちらをラベルとして表示しますか？", selection)
+        ## ラベルとしない(=X軸に使用する)列名を選択
+        selection.remove(selectedAsLabel)
+        selectedAsXAxis = st.selectbox("コア数と問題サイズのどちらをX軸として使用しますか？", selection)
+        ## 軸の対数化の有無を選択
+        enableLogX = st.checkbox(label="X軸（横軸）の対数化")
+        enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
         ## 生データからラベル化する
         labelDatum = sorted(list(set(DFtoPlot[selectedAsLabel].tolist())))
-        ## ラベルでループをしつつデータをプロットする
-        ### プロットを行う
-        fig = px.scatter(
-            DFtoPlotIn2D, x=notFixed, y="関数コール回数", log_x=enableLogX, log_y=enableLogY
-        )
+        ### ラベルでループをしつつデータをプロットする
+        fig = go.Figure()
+        #### ループ
         for labelName in labelDatum:
             st.write(labelName)
+            #### プロット
+            fig = fig.add_trace(go.Scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", log_x=enableLogX, log_y=enableLogY))
 
         # fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
         # notFixed = "コア数" if fixedTarget == "問題サイズ" else "問題サイズ"
@@ -153,9 +159,6 @@ def app():
         # choosedVar = st.selectbox("固定する値", choiceList)
 
         # DFtoPlotIn2D = DFtoPlot[DFtoPlot[fixedTarget] == choosedVar]
-
-        enableLogX = st.checkbox(label="X軸（横軸）の対数化")
-        enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
 
         st.markdown("# ２次元グラフのプロット")
 
