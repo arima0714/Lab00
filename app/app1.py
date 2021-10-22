@@ -111,10 +111,10 @@ def app():
     functionCallCount = DFperFunctionName["functionCallNum"].tolist()
     DFtoPlot = pd.DataFrame(
         {
-            "問題サイズ": programSizeInNum,
+            "問題サイズ（数値）": programSizeInNum,
             "コア数": numCore,
             "関数コール回数": functionCallCount,
-            "問題サイズ（文字）": programSize,
+            "問題サイズ": programSize,
         }
     )
     # プロット
@@ -127,6 +127,8 @@ def app():
         selectedAsLabel = st.selectbox("コア数と問題サイズのどちらをラベルとして表示しますか？", selection)
         ## 生データからラベル化する
         labelDatum = sorted(list(set(DFtoPlot[selectedAsLabel].tolist())))
+        for labelName in labelDatum:
+            st.write(labelName)
 
         # fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
         # notFixed = "コア数" if fixedTarget == "問題サイズ" else "問題サイズ"
@@ -147,14 +149,12 @@ def app():
 
         # DFtoPlotIn2D = DFtoPlot[DFtoPlot[fixedTarget] == choosedVar]
 
-        # DFtoPlotIn2D
-
         enableLogX = st.checkbox(label="X軸（横軸）の対数化")
         enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
 
-        fig = px.scatter(
-            DFtoPlotIn2D, x=notFixed, y="関数コール回数", log_x=enableLogX, log_y=enableLogY
-        )
+        # fig = px.scatter(
+        #     DFtoPlotIn2D, x=notFixed, y="関数コール回数", log_x=enableLogX, log_y=enableLogY
+        # )
 
         st.markdown("# ２次元グラフのプロット")
 
@@ -229,6 +229,6 @@ def app():
     else:
         pass
 
-    st.write(fig)
+    # st.write(fig)
 
-    st.dataframe(DFtoPlot[["コア数", "関数コール回数", "問題サイズ（文字）", "問題サイズ"]])
+    st.dataframe(DFtoPlot[["コア数", "関数コール回数", "問題サイズ", "問題サイズ（数値）"]])
