@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from numpy import e
 import streamlit as st
 import subprocess
 import pandas as pd
@@ -133,9 +134,10 @@ def app():
         enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
         ## 生データからラベル化する
         labelDatum = sorted(list(set(DFtoPlot[selectedAsLabel].tolist())))
-        
-        fig = px.scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", color=selectedAsLabel)
-
+        try:
+            fig = px.scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", color=selectedAsLabel)
+        except:
+            st.markdown("px.scatterでエラーが発生しました")
         # ### ラベルでループをしつつデータをプロットする
         # fig = go.Figure()
         # #### ループ
