@@ -133,13 +133,16 @@ def app():
         enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
         ## 生データからラベル化する
         labelDatum = sorted(list(set(DFtoPlot[selectedAsLabel].tolist())))
-        ### ラベルでループをしつつデータをプロットする
-        fig = go.Figure()
-        #### ループ
-        for labelName in labelDatum:
-            st.write(labelName)
-            #### プロット
-            fig = fig.add_trace(go.Scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", log_x=enableLogX, log_y=enableLogY))
+        
+        
+
+        # ### ラベルでループをしつつデータをプロットする
+        # fig = go.Figure()
+        # #### ループ
+        # for labelName in labelDatum:
+        #     st.write(labelName)
+        #     #### プロット
+        #     fig = fig.add_trace(go.Scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", log_x=enableLogX, log_y=enableLogY))
 
         # fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
         # notFixed = "コア数" if fixedTarget == "問題サイズ" else "問題サイズ"
