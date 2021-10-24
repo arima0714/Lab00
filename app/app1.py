@@ -138,32 +138,6 @@ def app():
             fig = px.scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", color=selectedAsLabel)
         except:
             st.markdown("px.scatterでエラーが発生しました")
-        # ### ラベルでループをしつつデータをプロットする
-        # fig = go.Figure()
-        # #### ループ
-        # for labelName in labelDatum:
-        #     st.write(labelName)
-        #     #### プロット
-        #     fig = fig.add_trace(go.Scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", log_x=enableLogX, log_y=enableLogY))
-
-        # fixedTarget = st.selectbox("コア数と問題サイズのどちらを固定するか？", ["コア数", "問題サイズ"])
-        # notFixed = "コア数" if fixedTarget == "問題サイズ" else "問題サイズ"
-        # fixedVar = None
-
-        # if fixedTarget == "問題サイズ":
-        #     # 問題サイズを固定する場合は、問題サイズ(文字)->問題サイズ(数値)->実際に固定
-        #     choiceList = sorted(list(set(DFtoPlot["問題サイズ（文字）"].tolist())))
-        #     pass
-        # elif fixedTarget == "コア数":
-        #     # コア数を固定する場合は、コア数の数値で固定
-        #     choiceList = sorted(list(set(DFtoPlot["コア数"].tolist())))
-        #     pass
-        # else:
-        #     pass
-
-        # choosedVar = st.selectbox("固定する値", choiceList)
-
-        # DFtoPlotIn2D = DFtoPlot[DFtoPlot[fixedTarget] == choosedVar]
 
         st.markdown("# ２次元グラフのプロット")
 
