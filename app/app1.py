@@ -141,6 +141,9 @@ def app():
 
         st.markdown("# ２次元グラフのプロット")
 
+        st.write(fig)
+
+        st.dataframe(DFtoPlot[["コア数", "関数コール回数", "問題サイズ", "問題サイズ（数値）"]])
     elif dimension == "３次元":  # 3次元グラフの描画
 
         st.markdown("# ３次元グラフのプロット")
@@ -208,10 +211,8 @@ def app():
                 "aspectmode": "cube",
             },
         )
-
+    
+        st.write(fig)
     else:
         pass
 
-    st.write(fig)
-
-    st.dataframe(DFtoPlot[["コア数", "関数コール回数", "問題サイズ", "問題サイズ（数値）"]])
