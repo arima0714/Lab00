@@ -134,7 +134,7 @@ def app():
         ## 生データからラベル化する
         labelDatum = sorted(list(set(DFtoPlot[selectedAsLabel].tolist())))
         
-        
+        fig = px.scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", color=selectedAsLabel)
 
         # ### ラベルでループをしつつデータをプロットする
         # fig = go.Figure()
@@ -236,6 +236,6 @@ def app():
     else:
         pass
 
-    # st.write(fig)
+    st.write(fig)
 
     st.dataframe(DFtoPlot[["コア数", "関数コール回数", "問題サイズ", "問題サイズ（数値）"]])
