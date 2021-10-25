@@ -132,7 +132,7 @@ def app():
         enableLogX = st.checkbox(label="X軸（横軸）の対数化")
         enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
         try:
-            fig = px.scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", color=selectedAsLabel)
+            fig = px.scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", color=selectedAsLabel, log_x=enableLogX, log_y=enableLogY)
         except:
             st.markdown("px.scatterでエラーが発生しました")
 
