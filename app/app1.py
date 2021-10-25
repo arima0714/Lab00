@@ -131,8 +131,6 @@ def app():
         ## 軸の対数化の有無を選択
         enableLogX = st.checkbox(label="X軸（横軸）の対数化")
         enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
-        ## 生データからラベル化する
-        labelDatum = sorted(list(set(DFtoPlot[selectedAsLabel].tolist())))
         try:
             fig = px.scatter(DFtoPlot, x=selectedAsXAxis, y="関数コール回数", color=selectedAsLabel)
         except:
