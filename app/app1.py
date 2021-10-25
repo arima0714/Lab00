@@ -127,8 +127,7 @@ def app():
         ## ラベルとする列名(?)を選択
         selectedAsLabel = st.selectbox("コア数と問題サイズのどちらをラベルとして表示しますか？", selection)
         ## ラベルとしない(=X軸に使用する)列名を選択
-        selection.remove(selectedAsLabel)
-        selectedAsXAxis = st.selectbox("コア数と問題サイズのどちらをX軸として使用しますか？", selection)
+        selectedAsXAxis = "問題サイズ" if "コア数" == selectedAsLabel else "コア数"
         ## 軸の対数化の有無を選択
         enableLogX = st.checkbox(label="X軸（横軸）の対数化")
         enableLogY = st.checkbox(label="Y軸（縦軸）の対数化")
