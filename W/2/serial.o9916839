@@ -1,0 +1,356 @@
+bt
+cg
+ep
+ft
+is
+jobScriptForProblemSizeW2
+lu
+mg
+serial.e9916839
+serial.o9916839
+sp
+/home/9/20IA1328/NPB3.4.1/NPB3.4-MPI/bin/W/2
+
+
+ NAS Parallel Benchmarks 3.4 -- CG Benchmark
+
+ Size:       7000  (class W)
+ Iterations:    15
+ Number of nonzeroes per row:        8
+ Eigenvalue shift:    12.000
+ Total number of processes:      2
+
+   iteration           ||r||                 zeta
+        1       0.18783871195209E-12    11.9997003727381
+        2       0.25987866064729E-14    10.3457275664058
+        3       0.25442326758784E-14    10.3617880137963
+        4       0.25537016999064E-14    10.3625416284965
+        5       0.25869578190260E-14    10.3625905854467
+        6       0.25224922378326E-14    10.3625946467087
+        7       0.25238445018921E-14    10.3625950398342
+        8       0.24794133307783E-14    10.3625950817269
+        9       0.24360375714870E-14    10.3625950864815
+       10       0.24878549813823E-14    10.3625950870452
+       11       0.24393496387030E-14    10.3625950871141
+       12       0.24409654849993E-14    10.3625950871227
+       13       0.24278647321053E-14    10.3625950871238
+       14       0.23737454112649E-14    10.3625950871240
+       15       0.23400950107224E-14    10.3625950871240
+ Benchmark completed 
+ VERIFICATION SUCCESSFUL 
+ Zeta is     0.1036259508712E+02
+ Error is    0.0000000000000E+00
+
+
+ CG Benchmark Completed.
+ Class           =                        W
+ Size            =                     7000
+ Iterations      =                       15
+ Time in seconds =                     0.11
+ Total processes =                        2
+ Active processes=                        2
+ Mop/s total     =                  3830.57
+ Mop/s/process   =                  1915.28
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = randi8
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
+
+ NAS Parallel Benchmarks 3.4 -- EP Benchmark
+
+ Number of random numbers generated:        67108864  (class W)
+ Total number of processes:                        2
+
+EP Benchmark Results:
+
+CPU Time =    0.8091
+N = 2^   25
+No. Gaussian Pairs =      26354769.
+Sums =    -2.863319731646375D+03   -6.320053679108284D+03
+Counts:
+  0      12281576.
+  1      11729692.
+  2       2202726.
+  3        137368.
+  4          3371.
+  5            36.
+  6             0.
+  7             0.
+  8             0.
+  9             0.
+
+
+ EP Benchmark Completed.
+ Class           =                        W
+ Size            =                 67108864
+ Iterations      =                        0
+ Time in seconds =                     0.81
+ Total processes =                        2
+ Active processes=                        2
+ Mop/s total     =                    82.94
+ Mop/s/process   =                    41.47
+ Operation type  = Random numbers generated
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = randi8
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
+
+
+ NAS Parallel Benchmarks 3.4 -- FT Benchmark
+
+ No input file inputft.data. Using compiled defaults
+ Size                :  128x 128x  32  (class W)
+ Iterations          :              6
+ Number of processes :              2
+ Processor array     :         1x   2
+ Layout type         :             1D
+
+ Initialization time =      0.0232
+
+ T =    1     Checksum =    5.673612178944D+02    5.293246849175D+02
+ T =    2     Checksum =    5.631436885271D+02    5.282149986629D+02
+ T =    3     Checksum =    5.594024089970D+02    5.270996558037D+02
+ T =    4     Checksum =    5.560698047020D+02    5.260027904925D+02
+ T =    5     Checksum =    5.530898991250D+02    5.249400845633D+02
+ T =    6     Checksum =    5.504159734538D+02    5.239212247086D+02
+ Result verification successful
+
+
+ FT Benchmark Completed.
+ Class           =                        W
+ Size            =            128x 128x  32
+ Iterations      =                        6
+ Time in seconds =                     0.11
+ Total processes =                        2
+ Active processes=                        2
+ Mop/s total     =                  3389.86
+ Mop/s/process   =                  1694.93
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = randi8
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
+
+
+ NAS Parallel Benchmarks 3.4 -- IS Benchmark
+
+ Size:  1048576  (class W)
+ Iterations:   10
+ Total number of processes:  2
+
+   iteration
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8
+        9
+        10
+
+
+ IS Benchmark Completed
+ Class           =                        W
+ Size            =                  1048576
+ Iterations      =                       10
+ Time in seconds =                     0.03
+ Total processes =                        2
+ Active processes=                        2
+ Mop/s total     =                   315.22
+ Mop/s/process   =                   157.61
+ Operation type  =              keys ranked
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPICC        = tau_cc.sh
+    CLINK        = $(MPICC)
+    CMPI_LIB     = (none)
+    CMPI_INC     = (none)
+    CFLAGS       = -O3
+    CLINKFLAGS   = $(CFLAGS)
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team
+ npb@nas.nasa.gov
+
+
+
+
+ NAS Parallel Benchmarks 3.4 -- LU Benchmark
+
+ Size:   33x  33x  33  (class W)
+ Iterations:  300
+ Total number of processes:      2
+
+ Time step    1
+ Time step   20
+ Time step   40
+ Time step   60
+ Time step   80
+ Time step  100
+ Time step  120
+ Time step  140
+ Time step  160
+ Time step  180
+ Time step  200
+ Time step  220
+ Time step  240
+ Time step  260
+ Time step  280
+ Time step  300
+
+ Verification being performed for class W
+ Accuracy setting for epsilon =  0.1000000000000E-07
+ Comparison of RMS-norms of residual
+           1   0.1236511638192E+02 0.1236511638192E+02 0.1469628744751E-12
+           2   0.1317228477799E+01 0.1317228477799E+01 0.3786071976632E-12
+           3   0.2550120713095E+01 0.2550120713095E+01 0.9421211368355E-13
+           4   0.2326187750252E+01 0.2326187750252E+01 0.1851813266182E-12
+           5   0.2826799444189E+02 0.2826799444189E+02 0.1530779012170E-12
+ Comparison of RMS-norms of solution error
+           1   0.4867877144216E+00 0.4867877144216E+00 0.5040375530711E-13
+           2   0.5064652880982E-01 0.5064652880982E-01 0.9357530807619E-13
+           3   0.9281818101960E-01 0.9281818101960E-01 0.1689528931785E-13
+           4   0.8570126542733E-01 0.8570126542733E-01 0.7448877632977E-14
+           5   0.1084277417792E+01 0.1084277417792E+01 0.2553678770746E-12
+ Comparison of surface integral
+               0.1161399311023E+02 0.1161399311023E+02 0.3074289103934E-13
+ Verification Successful
+
+
+ LU Benchmark Completed.
+ Class           =                        W
+ Size            =             33x  33x  33
+ Iterations      =                      300
+ Time in seconds =                     2.68
+ Total processes =                        2
+ Active processes=                        2
+ Mop/s total     =                  6726.81
+ Mop/s/process   =                  3363.41
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = (none)
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
+
+
+ NAS Parallel Benchmarks 3.4 -- MG Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  128x 128x 128  (class W)
+ Iterations:    4
+ Total number of processes:      2
+
+
+ Initialization time:           0.038 seconds
+
+  iter    1
+  iter    4
+
+ Benchmark completed 
+ VERIFICATION SUCCESSFUL 
+ L2 Norm is  0.6467329375339E-05
+ Error is    0.2894460301605E-13
+
+
+ MG Benchmark Completed.
+ Class           =                        W
+ Size            =            128x 128x 128
+ Iterations      =                        4
+ Time in seconds =                     0.07
+ Total processes =                        2
+ Active processes=                        2
+ Mop/s total     =                  7280.08
+ Mop/s/process   =                  3640.04
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.4.1
+ Compile date    =              09 Oct 2020
+
+ Compile options:
+    MPIFC        = tau_f90.sh
+    FLINK        = $(MPIFC)
+    FMPI_LIB     = (none)
+    FMPI_INC     = (none)
+    FFLAGS       = -O3
+    FLINKFLAGS   = $(FFLAGS)
+    RAND         = randi8
+
+
+ Please send feedbacks and/or the results of this run to:
+
+ NPB Development Team 
+ Internet: npb@nas.nasa.gov
+
+
