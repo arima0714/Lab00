@@ -1,8 +1,9 @@
 FROM python:3
 USER root
 
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - 
 RUN apt-get update
-RUN apt-get -y install locales 
+RUN apt-get -y install locales nodejs
 RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 
 RUN apt-get install -y vim less
 
@@ -19,4 +20,5 @@ WORKDIR /root/src
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 RUN pip install -r requirements.txt
+
 

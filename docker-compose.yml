@@ -1,11 +1,25 @@
 version: '3'
 services:
-        python3:
+        jupyter:
                 restart: always
                 build: .
-                container_name: 'python3'
+                container_name: 'jupyter'
                 working_dir: '/root/src'
                 tty: true
                 volumes:
                         - ${SRC_PATH}:/root/src
+                ports:
+                        - "8080:8080"
+                command: jupyter-lab --ip 0.0.0.0 --port=8080 --allow-root --no-browser --NotebookApp.token=''
+        streamlit:
+                restart: always
+                build: .
+                container_name: 'streamlit'
+                working_dir: '/root/src/app'
+                tty: true
+                volumes:
+                        - ${SRC_PATH}:/root/src
+                ports:
+                        - "8501:8501"
+                command: streamlit run appBase.py
 
