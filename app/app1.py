@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from numpy import e
 import streamlit as st
 import subprocess
 import pandas as pd
