@@ -25,6 +25,40 @@ def app():
     column_for_core, column_for_size = st.columns(2)
 ## TODO:コア数の指定(チェックボックス)
 
+
+    column_for_core.subheader("コア数")
+    #### 実際にデータ内にあるコア数のリストを作成
+    enable001 = column_for_core.checkbox("コア数1", value=True)
+    enable002 = column_for_core.checkbox("コア数2")
+    enable004 = column_for_core.checkbox("コア数4")
+    enable008 = column_for_core.checkbox("コア数8")
+    enable016 = column_for_core.checkbox("コア数16")
+    enable032 = column_for_core.checkbox("コア数32")
+    enable064 = column_for_core.checkbox("コア数64")
+    enable128 = column_for_core.checkbox("コア数128")
+    enable256 = column_for_core.checkbox("コア数256")
+
+    numOfCoreSet = set()
+    if enable001:
+        numOfCoreSet.add(1)
+    if enable002:
+        numOfCoreSet.add(2)
+    if enable004:
+        numOfCoreSet.add(4)
+    if enable008:
+        numOfCoreSet.add(8)
+    if enable016:
+        numOfCoreSet.add(16)
+    if enable032:
+        numOfCoreSet.add(32)
+    if enable064:
+        numOfCoreSet.add(64)
+    if enable128:
+        numOfCoreSet.add(128)
+    if enable256:
+        numOfCoreSet.add(256)
+    numOfCoreList = sorted(list(numOfCoreSet))
+
 # TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
 ## TODO:元データとなるDFから列名を取得
 ## TODO:取得した列名をチェックボックス化して、チェックされた変数をリスト化
