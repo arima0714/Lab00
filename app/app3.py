@@ -15,7 +15,14 @@ def app():
 # TODO:元データとなるDFの指定
 
 ## TODO:ベンチマークの指定
+    # 生データの取得
+    benchmark_name = [
+        st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマーク名")
+    ]
+
+    ### 列の作成
 ## TODO:問題サイズの指定(チェックボックス)
+    column_for_core, column_for_size = st.columns(2)
 ## TODO:コア数の指定(チェックボックス)
 
 # TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
