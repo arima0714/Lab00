@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from numpy import e
 import streamlit as st
 import subprocess
 import pandas as pd
@@ -153,16 +152,16 @@ def app():
         if plotType == "scatter":
             fig = px.scatter_3d(
                 DFtoPlot,
-                x="問題サイズ",
+                x="問題サイズ（数値）",
                 y="コア数",
                 z="関数コール回数",
-                color=DFtoPlot["問題サイズ（文字）"].tolist(),
+                color=DFtoPlot["問題サイズ（数値）"].tolist(),
                 log_x=enableLogX,
                 log_y=enableLogY,
                 log_z=enableLogZ,
             )
         elif plotType == "mesh":
-            x = DFtoPlot["問題サイズ"].tolist()
+            x = DFtoPlot["問題サイズ（数値）"].tolist()
             y = DFtoPlot["コア数"].tolist()
             z = DFtoPlot["関数コール回数"].tolist()
             fig = go.Figure(
@@ -192,17 +191,17 @@ def app():
             if enableLogZ:
                 fig.update_scenes(zaxis_type="log")
 
-            fig2 = plt.figure()
-            ax = fig2.gca(projection="3d")
-            ax.plot_trisurf(x, y, z, alpha=0.9, color="g", antialiased=False)
-            st.write(fig2)
+            # fig2 = plt.figure()
+            # ax = fig2.gca(projection="3d")
+            # ax.plot_trisurf(x, y, z, alpha=0.9, color="g", antialiased=False)
+            # st.write(fig2)
 
         fig.update_layout(
             width=800,
             height=800,
             autosize=False,
             scene={
-                "xaxis_title": "問題サイズ",
+                "xaxis_title": "問題サイズ（数値）",
                 "yaxis_title": "コア数",
                 "zaxis_title": "関数コール回数",
                 "aspectmode": "cube",
