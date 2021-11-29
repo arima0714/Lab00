@@ -23,9 +23,36 @@ def app():
     ### 列の作成
 ## TODO:問題サイズの指定(チェックボックス)
     column_for_core, column_for_size = st.columns(2)
+
+
+
+    st.header("問題サイズの指定")
+
+    enableA = st.checkbox("問題サイズA", value=True)
+    enableB = st.checkbox("問題サイズB")
+    enableC = st.checkbox("問題サイズC")
+    enableD = st.checkbox("問題サイズD")
+    enableE = st.checkbox("問題サイズE")
+    enableF = st.checkbox("問題サイズF")
+
+    programsizeSet = set()
+    if enableA:
+        programsizeSet.add("A")
+    if enableB:
+        programsizeSet.add("B")
+    if enableC:
+        programsizeSet.add("C")
+    if enableD:
+        programsizeSet.add("D")
+    if enableE:
+        programsizeSet.add("E")
+    if enableF:
+        programsizeSet.add("F")
+
+    programsizeList = sorted(list(programsizeSet))
+    st.write(programsizeList)
+
 ## TODO:コア数の指定(チェックボックス)
-
-
     column_for_core.subheader("コア数")
     #### 実際にデータ内にあるコア数のリストを作成
     enable001 = column_for_core.checkbox("コア数1", value=True)
@@ -58,6 +85,7 @@ def app():
     if enable256:
         numOfCoreSet.add(256)
     numOfCoreList = sorted(list(numOfCoreSet))
+    st.write(numOfCoreList)
 
 # TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
 ## TODO:元データとなるDFから列名を取得
