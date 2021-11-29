@@ -12,45 +12,45 @@ def app():
         subprocess.run(["jupyter", "nbconvert", "--to", "python", "../lib/lib.ipynb"])
         subprocess.run(["mv", "../lib/lib.py", "libLab00.py"])
 
-# TODO:元データとなるDFの指定
+    # TODO:元データとなるDFの指定
 
-## ベンチマークの指定
+    ## ベンチマークの指定
     # 生データの取得
     benchmark_name = [
         st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマーク名")
     ]
 
     ### 列の作成
-## TODO:問題サイズの指定(チェックボックス)
+    ## TODO:問題サイズの指定(チェックボックス)
     column_for_core, column_for_size = st.columns(2)
 
-    st.header("問題サイズの指定")
+    column_for_core.subheader("問題サイズの指定")
 
-    enableA = st.checkbox("問題サイズA", value=True)
-    enableB = st.checkbox("問題サイズB")
-    enableC = st.checkbox("問題サイズC")
-    enableD = st.checkbox("問題サイズD")
-    enableE = st.checkbox("問題サイズE")
-    enableF = st.checkbox("問題サイズF")
+    enable_a = column_for_core.checkbox("問題サイズA", value=True)
+    enable_b = column_for_core.checkbox("問題サイズB")
+    enable_c = column_for_core.checkbox("問題サイズC")
+    enable_d = column_for_core.checkbox("問題サイズD")
+    enable_e = column_for_core.checkbox("問題サイズE")
+    enable_f = column_for_core.checkbox("問題サイズF")
 
-    programsizeSet = set()
-    if enableA:
-        programsizeSet.add("A")
-    if enableB:
-        programsizeSet.add("B")
-    if enableC:
-        programsizeSet.add("C")
-    if enableD:
-        programsizeSet.add("D")
-    if enableE:
-        programsizeSet.add("E")
-    if enableF:
-        programsizeSet.add("F")
+    program_size_set = set()
+    if enable_a:
+        program_size_set.add("A")
+    if enable_b:
+        program_size_set.add("B")
+    if enable_c:
+        program_size_set.add("C")
+    if enable_c:
+        program_size_set.add("D")
+    if enable_e:
+        program_size_set.add("E")
+    if enable_f:
+        program_size_set.add("F")
 
-    programsizeList = sorted(list(programsizeSet))
-    st.write(programsizeList)
+    program_size_list = sorted(list(program_size_set))
+    st.write(program_size_list)
 
-## TODO:コア数の指定(チェックボックス)
+    ## TODO:コア数の指定(チェックボックス)
     column_for_core.subheader("コア数")
     #### 実際にデータ内にあるコア数のリストを作成
     enable001 = column_for_core.checkbox("コア数1", value=True)
