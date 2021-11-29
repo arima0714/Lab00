@@ -63,27 +63,27 @@ def app():
     enable128 = column_for_core.checkbox("コア数128")
     enable256 = column_for_core.checkbox("コア数256")
 
-    numOfCoreSet = set()
+    num_of_core_set = set()
     if enable001:
-        numOfCoreSet.add(1)
+        num_of_core_set.add(1)
     if enable002:
-        numOfCoreSet.add(2)
+        num_of_core_set.add(2)
     if enable004:
-        numOfCoreSet.add(4)
+        num_of_core_set.add(4)
     if enable008:
-        numOfCoreSet.add(8)
+        num_of_core_set.add(8)
     if enable016:
-        numOfCoreSet.add(16)
+        num_of_core_set.add(16)
     if enable032:
-        numOfCoreSet.add(32)
+        num_of_core_set.add(32)
     if enable064:
-        numOfCoreSet.add(64)
+        num_of_core_set.add(64)
     if enable128:
-        numOfCoreSet.add(128)
+        num_of_core_set.add(128)
     if enable256:
-        numOfCoreSet.add(256)
-    numOfCoreList = sorted(list(numOfCoreSet))
-    st.write(numOfCoreList)
+        num_of_core_set.add(256)
+    num_of_core_list = sorted(list(num_of_core_set))
+    st.write(num_of_core_list)
 
 # TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
 ## TODO:元データとなるDFから列名を取得
