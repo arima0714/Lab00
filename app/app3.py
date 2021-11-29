@@ -21,7 +21,7 @@ def app():
     ]
 
     ### 列の作成
-    ## TODO:問題サイズの指定(チェックボックス)
+    ## 問題サイズの指定(チェックボックス)
     column_for_core, column_for_size = st.columns(2)
 
     column_for_core.subheader("問題サイズの指定")
@@ -50,7 +50,7 @@ def app():
     program_size_list = sorted(list(program_size_set))
     st.write(program_size_list)
 
-    ## TODO:コア数の指定(チェックボックス)
+    ## コア数の指定(チェックボックス)
     column_for_core.subheader("コア数")
     #### 実際にデータ内にあるコア数のリストを作成
     enable001 = column_for_core.checkbox("コア数1", value=True)
