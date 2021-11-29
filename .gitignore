@@ -34,4 +34,3 @@ tmp*
 workspace.code-workspace
 .vscode
 __pycache__
-
