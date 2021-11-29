@@ -40,7 +40,7 @@ def app():
         program_size_set.add("B")
     if enable_c:
         program_size_set.add("C")
-    if enable_c:
+    if enable_d:
         program_size_set.add("D")
     if enable_e:
         program_size_set.add("E")
