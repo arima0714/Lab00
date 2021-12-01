@@ -27,14 +27,14 @@ def app():
     ## 問題サイズの指定(チェックボックス)
     column_for_core, column_for_size = st.columns(2)
 
-    column_for_core.subheader("問題サイズの指定")
+    column_for_size.subheader("問題サイズの指定")
 
-    enable_a = column_for_core.checkbox("問題サイズA", value=True)
-    enable_b = column_for_core.checkbox("問題サイズB")
-    enable_c = column_for_core.checkbox("問題サイズC")
-    enable_d = column_for_core.checkbox("問題サイズD")
-    enable_e = column_for_core.checkbox("問題サイズE")
-    enable_f = column_for_core.checkbox("問題サイズF")
+    enable_a = column_for_size.checkbox("問題サイズA", value=True)
+    enable_b = column_for_size.checkbox("問題サイズB")
+    enable_c = column_for_size.checkbox("問題サイズC")
+    enable_d = column_for_size.checkbox("問題サイズD")
+    enable_e = column_for_size.checkbox("問題サイズE")
+    enable_f = column_for_size.checkbox("問題サイズF")
 
     program_size_set = set()
     if enable_a:
@@ -51,7 +51,7 @@ def app():
         program_size_set.add("F")
 
     program_size_list = sorted(list(program_size_set))
-    st.write(program_size_list)
+    column_for_size.write(program_size_list)
 
     ## コア数の指定(チェックボックス)
     column_for_core.subheader("コア数")
@@ -86,7 +86,7 @@ def app():
     if enable256:
         num_of_core_set.add(256)
     num_of_core_list = sorted(list(num_of_core_set))
-    st.write(num_of_core_list)
+    column_for_core.write(num_of_core_list)
 
     # TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
     ## TODO:抽出条件をもとにDFを取得
