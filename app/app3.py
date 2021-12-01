@@ -22,6 +22,7 @@ def app():
     benchmark_name = [
         st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマーク名")
     ]
+    st.write(benchmark_name)
 
     ### 列の作成
     ## 問題サイズの指定(チェックボックス)
@@ -90,7 +91,7 @@ def app():
 
     # TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
     ## TODO:抽出条件をもとにDFを取得
-    raw_df = lib.returnCollectedExistingData(benchmarkNames=[benchmark_name], classes=program_size_list,
+    raw_df = lib.returnCollectedExistingData(benchmarkNames=benchmark_name, classes=program_size_list,
                                              processes=num_of_core_list, csvDirPath="../csv_files/")
     ## TODO:取得したDFに初期変数を追加
     raw_df_with_init = lib.addInitDataToRawDF(raw_df)
