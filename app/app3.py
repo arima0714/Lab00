@@ -2,6 +2,8 @@
 import streamlit as st
 import subprocess
 import libLab00 as lib
+
+
 # import pandas as pd
 # import plotly.graph_objects as go
 # import plotly.express as px
@@ -86,13 +88,15 @@ def app():
     num_of_core_list = sorted(list(num_of_core_set))
     st.write(num_of_core_list)
 
-# TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
-## TODO:抽出条件をもとにDFを取得
-    raw_df = lib.returnCollectedExistingData(benchmarkNames=[benchmark_name], classes=program_size_list, processes=num_of_core_list)
-## TODO:取得したDFに初期変数を追加
+    # TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
+    ## TODO:抽出条件をもとにDFを取得
+    raw_df = lib.returnCollectedExistingData(benchmarkNames=[benchmark_name], classes=program_size_list,
+                                             processes=num_of_core_list, csvDirPath="../csv_files/")
+    ## TODO:取得したDFに初期変数を追加
     raw_df_with_init = lib.addInitDataToRawDF(raw_df)
-## TODO:元データとなるDFから列名を取得
+    ## TODO:元データとなるDFから列名を取得
     column_names = raw_df_with_init.columns.to_list()
+    st.write(column_names)
 ## TODO:取得した列名をチェックボックス化して、チェックされた変数をリスト化
 ## TODO:リスト化された変数をモデルの構築に使用
 
