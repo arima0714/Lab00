@@ -115,15 +115,20 @@ def app():
     # TODO:モデルの構築
     ## TODO:{モデル名:モデル}となるようにモデルを格納
     ### TODO:モデル構築
+    model_names_list_jp = []
     #### TODO:線形モデル
     if "線形モデル" in model_names:
+        model_names_list_jp.append("modelLin")
         st.write("lin model")
     #### TODO:反比例モデル
     if "反比例モデル" in model_names:
+        model_names_list_jp.append("modelIp")
         st.write("ip model")
     #### TODO:対数モデル
     if "対数モデル" in model_names:
+        model_names_list_jp.append("modelLog")
         st.write("log model")
+    st.write(model_names_list_jp)
 ### TODO:構築されたモデルを辞書に格納
 
 # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
