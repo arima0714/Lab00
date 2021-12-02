@@ -137,6 +137,17 @@ def app():
         resVarColNames=res_vars,
         targetDF=None,
         modelNames=model_names_list_en)
+    generated_models_dict = {}
+    for model_name in model_names_list_en:
+        st.write(model_name)
+        if "modelLin"==model_name:
+            generated_models_dict[model_name] = genarated_models.objectModelLin
+        elif "modelIp"==model_name:
+            generated_models_dict[model_name] = genarated_models.objectModelIp
+        elif "modelLog"==model_name:
+            generated_models_dict[model_name] = genarated_models.objectModelLog
+    st.write(generated_models_dict)
+
 ### TODO:構築されたモデルを辞書に格納
 
 # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
