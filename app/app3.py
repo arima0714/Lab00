@@ -105,7 +105,7 @@ def app():
 
     ## TODO:リスト化された変数をモデルの構築に使用
 
-    # TODO:モデルの選択（線形、反比例、対数、線形飽和...）
+    # モデルの選択（線形、反比例、対数、線形飽和...）
 
     st.subheader("モデルの選択")
     model_names_list = ['線形モデル', '反比例モデル', '対数モデル']
@@ -115,20 +115,25 @@ def app():
     # TODO:モデルの構築
     ## TODO:{モデル名:モデル}となるようにモデルを格納
     ### TODO:モデル構築
-    model_names_list_jp = []
+    model_names_list_en = []
     #### TODO:線形モデル
     if "線形モデル" in model_names:
-        model_names_list_jp.append("modelLin")
+        model_names_list_en.append("modelLin")
         st.write("lin model")
     #### TODO:反比例モデル
     if "反比例モデル" in model_names:
-        model_names_list_jp.append("modelIp")
+        model_names_list_en.append("modelIp")
         st.write("ip model")
     #### TODO:対数モデル
     if "対数モデル" in model_names:
-        model_names_list_jp.append("modelLog")
+        model_names_list_en.append("modelLog")
         st.write("log model")
-    st.write(model_names_list_jp)
+    st.write(model_names_list_en)
+    genarated_models = lib.Models(inputDF=raw_df_with_init,
+        expVarColNames=exp_vars,
+        resVarColNames=["functionCallNum"],
+        targetDF=None,
+        modelNames=model_names_list_en)
 ### TODO:構築されたモデルを辞書に格納
 
 # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
