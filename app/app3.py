@@ -103,6 +103,10 @@ def app():
     st.subheader("説明変数の選択")
     exp_vars = st.multiselect('説明変数として使用する列名を選択:', column_names)
     st.write(exp_vars)
+    ## 目的変数を選択
+    st.subheader("目的変数の選択")
+    res_vars = st.multiselect('目的変数として使用する列名を選択:', column_names)
+    st.write(res_vars)
 
     ## TODO:リスト化された変数をモデルの構築に使用
 
@@ -120,19 +124,17 @@ def app():
     #### TODO:線形モデル
     if "線形モデル" in model_names:
         model_names_list_en.append("modelLin")
-        st.write("lin model")
     #### TODO:反比例モデル
     if "反比例モデル" in model_names:
         model_names_list_en.append("modelIp")
-        st.write("ip model")
     #### TODO:対数モデル
     if "対数モデル" in model_names:
         model_names_list_en.append("modelLog")
-        st.write("log model")
+
     st.write(model_names_list_en)
     genarated_models = lib.Models(inputDF=raw_df_with_init,
         expVarColNames=exp_vars,
-        resVarColNames=["functionCallNum"],
+        resVarColNames=res_vars,
         targetDF=None,
         modelNames=model_names_list_en)
 ### TODO:構築されたモデルを辞書に格納
