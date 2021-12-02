@@ -112,12 +112,12 @@ def app():
     model_names = st.multiselect('説明変数として使用する列名を選択:', model_names_list)
     st.write(model_names)
 
-
-## TODO:モデル名をチェックボックス化して、チェックされた変数をリスト化
-## TODO:リスト化されたモデル名をモデルの構築に使用
-
 # TODO:モデルの構築
 ## TODO:{モデル名:モデル}となるようにモデルを格納
+### TODO:モデル構築
+#### TODO:線形モデル
+#### TODO:反比例モデル
+#### TODO:対数モデル
 
 # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
 ## TODO:元データのプロット
