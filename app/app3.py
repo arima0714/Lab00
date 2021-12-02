@@ -117,38 +117,37 @@ def app():
     model_names = st.multiselect('説明変数として使用する列名を選択:', model_names_list)
     st.write(model_names)
 
-    # TODO:モデルの構築
-    ## TODO:{モデル名:モデル}となるようにモデルを格納
-    ### TODO:モデル構築
+    # モデルの構築
+    ## {モデル名:モデル}となるようにモデルを格納
+    ### モデル構築
     model_names_list_en = []
-    #### TODO:線形モデル
+    #### 線形モデル
     if "線形モデル" in model_names:
         model_names_list_en.append("modelLin")
-    #### TODO:反比例モデル
+    #### 反比例モデル
     if "反比例モデル" in model_names:
         model_names_list_en.append("modelIp")
-    #### TODO:対数モデル
+    #### 対数モデル
     if "対数モデル" in model_names:
         model_names_list_en.append("modelLog")
 
     st.write(model_names_list_en)
     genarated_models = lib.Models(inputDF=raw_df_with_init,
-        expVarColNames=exp_vars,
-        resVarColNames=res_vars,
-        targetDF=None,
-        modelNames=model_names_list_en)
+                                  expVarColNames=exp_vars,
+                                  resVarColNames=res_vars,
+                                  targetDF=None,
+                                  modelNames=model_names_list_en)
+    ### 構築されたモデルを辞書に格納
     generated_models_dict = {}
     for model_name in model_names_list_en:
         st.write(model_name)
-        if "modelLin"==model_name:
+        if "modelLin" == model_name:
             generated_models_dict[model_name] = genarated_models.objectModelLin
-        elif "modelIp"==model_name:
+        elif "modelIp" == model_name:
             generated_models_dict[model_name] = genarated_models.objectModelIp
-        elif "modelLog"==model_name:
+        elif "modelLog" == model_name:
             generated_models_dict[model_name] = genarated_models.objectModelLog
     st.write(generated_models_dict)
-
-### TODO:構築されたモデルを辞書に格納
 
 # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
 ## TODO:元データのプロット
