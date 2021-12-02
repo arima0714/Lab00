@@ -18,6 +18,7 @@ def app():
     # TODO:元データとなるDFの指定
 
     ## ベンチマークの指定
+    st.subheader("ベンチマークプログラムの指定")
     # 生データの取得
     benchmark_name = [
         st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマーク名")
