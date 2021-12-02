@@ -112,12 +112,18 @@ def app():
     model_names = st.multiselect('説明変数として使用する列名を選択:', model_names_list)
     st.write(model_names)
 
-# TODO:モデルの構築
-## TODO:{モデル名:モデル}となるようにモデルを格納
-### TODO:モデル構築
-#### TODO:線形モデル
-#### TODO:反比例モデル
-#### TODO:対数モデル
+    # TODO:モデルの構築
+    ## TODO:{モデル名:モデル}となるようにモデルを格納
+    ### TODO:モデル構築
+    #### TODO:線形モデル
+    if "線形モデル" in model_names:
+        st.write("lin model")
+    #### TODO:反比例モデル
+    if "反比例モデル" in model_names:
+        st.write("ip model")
+    #### TODO:対数モデル
+    if "対数モデル" in model_names:
+        st.write("log model")
 ### TODO:構築されたモデルを辞書に格納
 
 # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
