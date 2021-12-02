@@ -100,6 +100,7 @@ def app():
     column_names = raw_df_with_init.columns.to_list()
     st.write(column_names)
     ## 取得した列名をチェックボックス化して、チェックされた変数をリスト化
+    st.subheader("説明変数の選択")
     exp_vars = st.multiselect('説明変数として使用する列名を選択:', column_names)
     st.write(exp_vars)
 
