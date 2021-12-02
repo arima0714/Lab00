@@ -90,21 +90,29 @@ def app():
     num_of_core_list = sorted(list(num_of_core_set))
     column_for_core.write(num_of_core_list)
 
-    # TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
-    ## TODO:抽出条件をもとにDFを取得
+    # モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
+    ## 抽出条件をもとにDFを取得
     raw_df = lib.returnCollectedExistingData(benchmarkNames=benchmark_name, classes=program_size_list,
                                              processes=num_of_core_list, csvDirPath="../csv_files/")
-    ## TODO:取得したDFに初期変数を追加
+    ## 取得したDFに初期変数を追加
     raw_df_with_init = lib.addInitDataToRawDF(raw_df)
-    ## TODO:元データとなるDFから列名を取得
+    ## 元データとなるDFから列名を取得
     column_names = raw_df_with_init.columns.to_list()
     st.write(column_names)
-    ## TODO:取得した列名をチェックボックス化して、チェックされた変数をリスト化
-    option = st.multiselect('Select three known variables:', column_names)
-    st.write(option)
+    ## 取得した列名をチェックボックス化して、チェックされた変数をリスト化
+    exp_vars = st.multiselect('説明変数として使用する列名を選択:', column_names)
+    st.write(exp_vars)
+
 ## TODO:リスト化された変数をモデルの構築に使用
 
 # TODO:モデルの選択（線形、反比例、対数、線形飽和...）
+
+    st.subheader("モデルの選択")
+    model_names_list = ['線形モデル', '反比例モデル', '対数モデル']
+    model_names = st.multiselect('説明変数として使用する列名を選択:', model_names_list)
+    st.write(model_names)
+
+
 ## TODO:モデル名をチェックボックス化して、チェックされた変数をリスト化
 ## TODO:リスト化されたモデル名をモデルの構築に使用
 
