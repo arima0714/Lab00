@@ -98,7 +98,9 @@ def app():
     ## TODO:元データとなるDFから列名を取得
     column_names = raw_df_with_init.columns.to_list()
     st.write(column_names)
-## TODO:取得した列名をチェックボックス化して、チェックされた変数をリスト化
+    ## TODO:取得した列名をチェックボックス化して、チェックされた変数をリスト化
+    option = st.multiselect('Select three known variables:', column_names)
+    st.write(option)
 ## TODO:リスト化された変数をモデルの構築に使用
 
 # TODO:モデルの選択（線形、反比例、対数、線形飽和...）
