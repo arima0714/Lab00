@@ -103,7 +103,7 @@ def app():
     st.write(exp_vars)
     ## 目的変数を選択
     st.subheader("目的変数の選択")
-    res_vars = st.multiselect('目的変数として使用する列名を選択:', column_names)
+    res_vars = st.selectbox('目的変数として使用する列名を選択:', column_names)
     st.write(res_vars)
 
     ## TODO:リスト化された変数をモデルの構築に使用
