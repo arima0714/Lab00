@@ -3,9 +3,10 @@ import streamlit as st
 import subprocess
 import libLab00 as lib
 
-
 # import pandas as pd
-# import plotly.graph_objects as go
+import plotly.graph_objects as go
+
+
 # import plotly.express as px
 
 
@@ -149,10 +150,13 @@ def app():
             generated_models_dict[model_name] = genarated_models.objectModelLog
     st.write(generated_models_dict)
 
-# TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
-## TODO:元データのプロット
-### TODO:X軸の選択
-### TODO:Y軸の選択
+    # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
+    ## TODO:元データのプロット
+    ### TODO:X軸の選択
+    x_axis_name = st.multiselect('X軸として使用する列名を選択:', column_names)
+    ### TODO:Y軸の選択
+    y_axis_name = st.multiselect('Y軸として使用する列名を選択:', column_names)
 ### TODO:実際にプロット
+    
 ## TODO:元データの横軸最低値から横軸最大値でモデルを用いて予測
 ## TODO:モデルから予測されたデータをプロット
