@@ -2,12 +2,9 @@
 import streamlit as st
 import subprocess
 import libLab00 as lib
-
 # import pandas as pd
-import plotly.graph_objects as go
-
-
-# import plotly.express as px
+# import plotly.graph_objects as go
+import plotly.express as px
 
 
 def app():
@@ -152,11 +149,14 @@ def app():
 
     # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
     ## TODO:元データのプロット
-    ### TODO:X軸の選択
-    x_axis_name = st.multiselect('X軸として使用する列名を選択:', column_names)
-    ### TODO:Y軸の選択
-    y_axis_name = st.multiselect('Y軸として使用する列名を選択:', column_names)
-### TODO:実際にプロット
-    
-## TODO:元データの横軸最低値から横軸最大値でモデルを用いて予測
-## TODO:モデルから予測されたデータをプロット
+    ### X軸の選択
+    x_axis_name = st.selectbox('X軸として使用する列名を選択:', column_names)
+    ### Y軸の選択
+    y_axis_name = st.selectbox('Y軸として使用する列名を選択:', column_names)
+    ### 実際にプロット
+    fig = px.scatter(raw_df_with_init, x=x_axis_name, y=y_axis_name)
+    ## TODO:元データの横軸最低値から横軸最大値でモデルを用いて予測
+    ## TODO:モデルから予測されたデータをプロット
+
+    ## 最終的なグラフを画面上に出力
+    st.plotly_chart(fig)
