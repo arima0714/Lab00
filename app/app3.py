@@ -153,6 +153,9 @@ def app():
     x_axis_name = st.selectbox('X軸として使用する列名を選択:', column_names)
     ### Y軸の選択
     y_axis_name = st.selectbox('Y軸として使用する列名を選択:', column_names)
+    ### ラベルとなる列名の選択
+    label_column_name = st.selectbox('ラベルとして使用する列名を選択', column_names)
+    labels_lists = sorted(list(set(raw_df_with_init[label_column_name].to_list())))
     ### 実際にプロット
     fig = px.scatter(raw_df_with_init, x=x_axis_name, y=y_axis_name)
     ## TODO:元データの横軸最低値から横軸最大値でモデルを用いて予測
