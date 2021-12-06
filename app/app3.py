@@ -148,7 +148,7 @@ def app():
     st.write(generated_models_dict)
 
     # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
-    ## TODO:元データのプロット
+    ## 元データのプロット
     ### X軸の選択
     x_axis_name = st.selectbox('X軸として使用する列名を選択:', column_names)
     ### Y軸の選択
