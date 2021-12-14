@@ -166,8 +166,9 @@ def app():
         data_to_be_plotted = go.Scatter(x=x_data_to_be_plotted, y=y_data_to_be_plotted)
         datum_to_be_plotted.append(data_to_be_plotted)
         fig_tmp = go.Figure(data=datum_to_be_plotted)
-    fig = px.scatter(raw_df_with_init, x=x_axis_name, y=y_axis_name)
     ## TODO:元データの横軸最低値から横軸最大値でモデルを用いて予測
+
+    fig = px.scatter(raw_df_with_init, x=x_axis_name, y=y_axis_name)
     ## TODO:モデルから予測されたデータをプロット
 
     ## 最終的なグラフを画面上に出力
