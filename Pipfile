@@ -18,6 +18,7 @@ autopep8 = "*"
 jupyterlab-code-formatter = "*"
 plotly = "*"
 black = "*"
+importlib-resources = "*"
 
 [dev-packages]
 
