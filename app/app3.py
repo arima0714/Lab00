@@ -1,10 +1,13 @@
 # import matplotlib.pyplot as plt
 import streamlit as st
 import subprocess
+import libLab00 as lib
 # import pandas as pd
 # import plotly.graph_objects as go
 # import plotly.express as px
 import libLab00
+import plotly.graph_objects as go
+import plotly.express as px
 
 
 def app():
@@ -16,23 +19,25 @@ def app():
     # TODO:元データとなるDFの指定
 
     ## ベンチマークの指定
+    st.subheader("ベンチマークプログラムの指定")
     # 生データの取得
     benchmark_name = [
         st.selectbox(options=["cg", "ep", "ft", "is", "lu", "mg"], label="ベンチマーク名")
     ]
+    st.write(benchmark_name)
 
     ### 列の作成
     ## 問題サイズの指定(チェックボックス)
     column_for_core, column_for_size = st.columns(2)
 
-    column_for_core.subheader("問題サイズの指定")
+    column_for_size.subheader("問題サイズの指定")
 
-    enable_a = column_for_core.checkbox("問題サイズA", value=True)
-    enable_b = column_for_core.checkbox("問題サイズB")
-    enable_c = column_for_core.checkbox("問題サイズC")
-    enable_d = column_for_core.checkbox("問題サイズD")
-    enable_e = column_for_core.checkbox("問題サイズE")
-    enable_f = column_for_core.checkbox("問題サイズF")
+    enable_a = column_for_size.checkbox("問題サイズA", value=True)
+    enable_b = column_for_size.checkbox("問題サイズB")
+    enable_c = column_for_size.checkbox("問題サイズC")
+    enable_d = column_for_size.checkbox("問題サイズD")
+    enable_e = column_for_size.checkbox("問題サイズE")
+    enable_f = column_for_size.checkbox("問題サイズF")
 
     program_size_set = set()
     if enable_a:
@@ -49,7 +54,7 @@ def app():
         program_size_set.add("F")
 
     program_size_list = sorted(list(program_size_set))
-    st.write(program_size_list)
+    column_for_size.write(program_size_list)
 
     ## コア数の指定(チェックボックス)
     column_for_core.subheader("コア数")
@@ -84,8 +89,9 @@ def app():
     if enable256:
         num_of_core_set.add(256)
     num_of_core_list = sorted(list(num_of_core_set))
-    st.write(num_of_core_list)
+    column_for_core.write(num_of_core_list)
 
+<<<<<<< HEAD
 # TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
     raw_df = returnCollectedExistingData(benchmarkNames=[benchmark_name], classes=program_size_list, processes=num_of_core_list, csvDirPath="./csv_files/")
 ## TODO:抽出条件をもとにDFを取得
@@ -94,15 +100,91 @@ def app():
     # column_names =
 ## TODO:取得した列名をチェックボックス化して、チェックされた変数をリスト化
 ## TODO:リスト化された変数をモデルの構築に使用
+=======
+    # モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
+    ## 抽出条件をもとにDFを取得
+    raw_df = lib.returnCollectedExistingData(benchmarkNames=benchmark_name, classes=program_size_list,
+                                             processes=num_of_core_list, csvDirPath="../csv_files/")
+    ## 取得したDFに初期変数を追加
+    raw_df_with_init = lib.addInitDataToRawDF(raw_df)
+    ## 元データとなるDFから列名を取得
+    column_names = raw_df_with_init.columns.to_list()
+>>>>>>> eb85e2eff12edf5f8b143a0bd60a8ccbbf31986a
 
-# TODO:モデルの選択（線形、反比例、対数、線形飽和...）
-## TODO:モデル名をチェックボックス化して、チェックされた変数をリスト化
-## TODO:リスト化されたモデル名をモデルの構築に使用
+    ## 取得した列名をチェックボックス化して、チェックされた変数をリスト化
+    st.subheader("説明変数の選択")
+    exp_vars = st.multiselect('説明変数として使用する列名を選択:', column_names)
+    st.write(exp_vars)
+    ## 目的変数を選択
+    st.subheader("目的変数の選択")
+    res_vars = st.selectbox('目的変数として使用する列名を選択:', column_names)
+    st.write(res_vars)
 
-# TODO:モデルの構築
-## TODO:{モデル名:モデル}となるようにモデルを格納
+    ## TODO:リスト化された変数をモデルの構築に使用
 
-# TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
-## TODO:元データのプロット
-## TODO:元データの横軸最低値から横軸最大値でモデルを用いて予測
-## TODO:モデルから予測されたデータをプロット
+    # モデルの選択（線形、反比例、対数、線形飽和...）
+
+    st.subheader("モデルの選択")
+    model_names_list = ['線形モデル', '反比例モデル', '対数モデル']
+    model_names = st.multiselect('説明変数として使用する列名を選択:', model_names_list)
+    st.write(model_names)
+
+    # モデルの構築
+    ## {モデル名:モデル}となるようにモデルを格納
+    ### モデル構築
+    model_names_list_en = []
+    #### 線形モデル
+    if "線形モデル" in model_names:
+        model_names_list_en.append("modelLin")
+    #### 反比例モデル
+    if "反比例モデル" in model_names:
+        model_names_list_en.append("modelIp")
+    #### 対数モデル
+    if "対数モデル" in model_names:
+        model_names_list_en.append("modelLog")
+
+    st.write(model_names_list_en)
+    genarated_models = lib.Models(inputDF=raw_df_with_init,
+                                  expVarColNames=exp_vars,
+                                  resVarColNames=res_vars,
+                                  targetDF=None,
+                                  modelNames=model_names_list_en)
+    ### 構築されたモデルを辞書に格納
+    generated_models_dict = {}
+    for model_name in model_names_list_en:
+        st.write(model_name)
+        if "modelLin" == model_name:
+            generated_models_dict[model_name] = genarated_models.objectModelLin
+        elif "modelIp" == model_name:
+            generated_models_dict[model_name] = genarated_models.objectModelIp
+        elif "modelLog" == model_name:
+            generated_models_dict[model_name] = genarated_models.objectModelLog
+    st.write(generated_models_dict)
+
+    # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
+    ## 元データのプロット
+    ### X軸の選択
+    x_axis_name = st.selectbox('X軸として使用する列名を選択:', column_names)
+    ### Y軸の選択
+    y_axis_name = st.selectbox('Y軸として使用する列名を選択:', column_names)
+    ### ラベルとなる列名の選択
+    label_column_name = st.selectbox('ラベルとして使用する列名を選択', column_names)
+    labels_list = sorted(list(set(raw_df_with_init[label_column_name].to_list())))
+    ### 実際にプロット
+    #### ラベルごとにプロットを実施
+    datum_to_be_plotted = []
+    for one_of_label in labels_list:
+        st.write(one_of_label)
+        x_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name]==one_of_label][x_axis_name]
+        y_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name]==one_of_label][y_axis_name]
+        data_to_be_plotted = go.Scatter(x=x_data_to_be_plotted, y=y_data_to_be_plotted)
+        datum_to_be_plotted.append(data_to_be_plotted)
+        fig_tmp = go.Figure(data=datum_to_be_plotted)
+    ## TODO:元データの横軸最低値から横軸最大値でモデルを用いて予測
+
+    fig = px.scatter(raw_df_with_init, x=x_axis_name, y=y_axis_name)
+    ## TODO:モデルから予測されたデータをプロット
+
+    ## 最終的なグラフを画面上に出力
+    st.plotly_chart(fig_tmp)
+    st.plotly_chart(fig)
