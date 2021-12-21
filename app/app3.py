@@ -91,16 +91,6 @@ def app():
     num_of_core_list = sorted(list(num_of_core_set))
     column_for_core.write(num_of_core_list)
 
-<<<<<<< HEAD
-# TODO:モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
-    raw_df = returnCollectedExistingData(benchmarkNames=[benchmark_name], classes=program_size_list, processes=num_of_core_list, csvDirPath="./csv_files/")
-## TODO:抽出条件をもとにDFを取得
-## TODO:取得したDFに初期変数を追加
-## TODO:元データとなるDFから列名を取得
-    # column_names =
-## TODO:取得した列名をチェックボックス化して、チェックされた変数をリスト化
-## TODO:リスト化された変数をモデルの構築に使用
-=======
     # モデル構築及びプロットに用いるデータの種別を指定（コア数、問題サイズ（初期変数））
     ## 抽出条件をもとにDFを取得
     raw_df = lib.returnCollectedExistingData(benchmarkNames=benchmark_name, classes=program_size_list,
@@ -109,7 +99,6 @@ def app():
     raw_df_with_init = lib.addInitDataToRawDF(raw_df)
     ## 元データとなるDFから列名を取得
     column_names = raw_df_with_init.columns.to_list()
->>>>>>> eb85e2eff12edf5f8b143a0bd60a8ccbbf31986a
 
     ## 取得した列名をチェックボックス化して、チェックされた変数をリスト化
     st.subheader("説明変数の選択")
@@ -175,8 +164,8 @@ def app():
     datum_to_be_plotted = []
     for one_of_label in labels_list:
         st.write(one_of_label)
-        x_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name]==one_of_label][x_axis_name]
-        y_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name]==one_of_label][y_axis_name]
+        x_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name] == one_of_label][x_axis_name]
+        y_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name] == one_of_label][y_axis_name]
         data_to_be_plotted = go.Scatter(x=x_data_to_be_plotted, y=y_data_to_be_plotted)
         datum_to_be_plotted.append(data_to_be_plotted)
         fig_tmp = go.Figure(data=datum_to_be_plotted)
