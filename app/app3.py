@@ -3,6 +3,9 @@ import streamlit as st
 import subprocess
 import libLab00 as lib
 # import pandas as pd
+# import plotly.graph_objects as go
+# import plotly.express as px
+import libLab00
 import plotly.graph_objects as go
 import plotly.express as px
 
@@ -161,8 +164,8 @@ def app():
     datum_to_be_plotted = []
     for one_of_label in labels_list:
         st.write(one_of_label)
-        x_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name]==one_of_label][x_axis_name]
-        y_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name]==one_of_label][y_axis_name]
+        x_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name] == one_of_label][x_axis_name]
+        y_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name] == one_of_label][y_axis_name]
         data_to_be_plotted = go.Scatter(x=x_data_to_be_plotted, y=y_data_to_be_plotted)
         datum_to_be_plotted.append(data_to_be_plotted)
         fig_tmp = go.Figure(data=datum_to_be_plotted)
