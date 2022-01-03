@@ -1,0 +1,14 @@
+name: UnitTest
+
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: pytest
+        run: |
+          cd Lab00
+          docker-compose up -d
+          docker-compose exec -T jupyter bash -c "cd /root/src/lib && make"
