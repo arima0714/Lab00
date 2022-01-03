@@ -10,6 +10,6 @@ jobs:
       - name: pytest
         run: |
           ls
-          git brancch
+          git branch
           docker-compose up -d
           docker-compose exec -T jupyter bash -c "cd /root/src/lib && make"
