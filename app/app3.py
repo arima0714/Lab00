@@ -4,6 +4,9 @@ import subprocess
 import libLab00 as lib
 # import pandas as pd
 # import plotly.graph_objects as go
+# import plotly.express as px
+import libLab00
+import plotly.graph_objects as go
 import plotly.express as px
 
 
@@ -148,15 +151,29 @@ def app():
     st.write(generated_models_dict)
 
     # TODO:グラフのプロット（X軸対数化、Y軸対数化、プロット）
-    ## TODO:元データのプロット
+    ## 元データのプロット
     ### X軸の選択
     x_axis_name = st.selectbox('X軸として使用する列名を選択:', column_names)
     ### Y軸の選択
     y_axis_name = st.selectbox('Y軸として使用する列名を選択:', column_names)
+    ### ラベルとなる列名の選択
+    label_column_name = st.selectbox('ラベルとして使用する列名を選択', column_names)
+    labels_list = sorted(list(set(raw_df_with_init[label_column_name].to_list())))
     ### 実際にプロット
-    fig = px.scatter(raw_df_with_init, x=x_axis_name, y=y_axis_name)
+    #### ラベルごとにプロットを実施
+    datum_to_be_plotted = []
+    for one_of_label in labels_list:
+        st.write(one_of_label)
+        x_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name] == one_of_label][x_axis_name]
+        y_data_to_be_plotted = raw_df_with_init[raw_df_with_init[label_column_name] == one_of_label][y_axis_name]
+        data_to_be_plotted = go.Scatter(x=x_data_to_be_plotted, y=y_data_to_be_plotted)
+        datum_to_be_plotted.append(data_to_be_plotted)
+        fig_tmp = go.Figure(data=datum_to_be_plotted)
     ## TODO:元データの横軸最低値から横軸最大値でモデルを用いて予測
+
+    fig = px.scatter(raw_df_with_init, x=x_axis_name, y=y_axis_name)
     ## TODO:モデルから予測されたデータをプロット
 
     ## 最終的なグラフを画面上に出力
+    st.plotly_chart(fig_tmp)
     st.plotly_chart(fig)
