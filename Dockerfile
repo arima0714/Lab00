@@ -14,7 +14,7 @@ ENV TZ JST-9
 ENV TERM xterm
 
 RUN mkdir -p /root/src
-COPY Pipfile.lock Pipfile /root/src
+COPY Pipfile.lock Pipfile /root/src/
 WORKDIR /root/src
 
 RUN pip install --upgrade pip
