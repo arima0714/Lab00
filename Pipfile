@@ -19,6 +19,7 @@ jupyterlab-code-formatter = "*"
 plotly = "*"
 black = "*"
 importlib-resources = "*"
+jupyterlab-notifications = "*"
 
 [dev-packages]
 
