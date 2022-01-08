@@ -14,11 +14,12 @@ ENV TZ JST-9
 ENV TERM xterm
 
 RUN mkdir -p /root/src
-COPY requirements.txt /root/src
+COPY Pipfile.lock Pipfile /root/src/
 WORKDIR /root/src
 
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
-RUN pip install -r requirements.txt
+RUN pip install pipenv
+RUN pipenv install  --system --ignore-pipfile --deploy
 
 
