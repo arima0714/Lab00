@@ -2,8 +2,8 @@ name: AutoMerge
 on:
   workflow_run:
     workflows: ["UnitTest"]
-    types:
-      - completed
+    types: [completed]
+
   pull_request:
     types:
       - labeled
