@@ -21,5 +21,3 @@ RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 RUN pip install pipenv
 RUN pipenv install  --system --ignore-pipfile --deploy
-
-
