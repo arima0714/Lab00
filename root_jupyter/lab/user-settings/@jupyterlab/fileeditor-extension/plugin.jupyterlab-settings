@@ -10,7 +10,7 @@
     // values from current theme are used.
     "editorConfig": {
         "autoClosingBrackets": true,
-        "codeFolding": false,
+        "codeFolding": true,
         "cursorBlinkRate": 530,
         "fontFamily": null,
         "fontSize": null,
