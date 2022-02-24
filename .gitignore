@@ -30,6 +30,7 @@ lib/test_*
 .jupyter
 .local
 .npm
+draft.ipynb
 tmp*
 workspace.code-workspace
 .vscode
