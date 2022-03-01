@@ -31,6 +31,7 @@ import pprint
 import pytest
 import random
 import sys
+from scipy.optimize import curve_fit
 from sklearn import linear_model
 from sklearn.linear_model import HuberRegressor, LinearRegression
 from sklearn.metrics import r2_score
@@ -249,16 +250,16 @@ class ModelBase:
         self.targetX = np.reshape(targetX, (-1, 1))
         self.targetY = np.reshape(targetY, (-1, 1))
 
-    def returnTargetX():
+    def returnTargetX(self):
         return self.targetX
 
-    def returnTargetY():
+    def returnTargetY(self):
         return self.targetY
 
-    def returnTrainX():
+    def returnTrainX(self):
         return self.trainX
 
-    def returnTrainY():
+    def returnTrainY(self):
         return self.trainY
 
 
@@ -1043,12 +1044,12 @@ def returnSeriesOfData(
         dataSeries["objectBranchModel"] = modelBranch
         dataSeries["MAPEOfBranchModel"] = returnMapeScore(predictedY, rawY)
     # 分岐モデル2
-    if "ModelBranch2" in modelNames:
-        modelBranch2 = ModelBranch2(trainX=rawX, trainY=rawY)
-        modelBranch2.calcLr()
-        predictedY = modelBranch2.predict(rawX)
-        dataSeries["objectBranchModel2"] = modelBranch2
-        dataSeries["MAPEOfBranchModel2"] = returnMapeScore(predictedY, rawY)
+    # if "ModelBranch2" in modelNames:
+    #     modelBranch2 = ModelBranch2(trainX=rawX, trainY=rawY)
+    #     modelBranch2.calcLr()
+    #     predictedY = modelBranch2.predict(rawX)
+    #     dataSeries["objectBranchModel2"] = modelBranch2
+    #     dataSeries["MAPEOfBranchModel2"] = returnMapeScore(predictedY, rawY)
 
     # 最適なモデルのモデルのモデル名・MAPE値の算出
     listToCalcBestModel = {}
@@ -2779,7 +2780,7 @@ def returnInitVars(benchmarkName="", programSize=""):
             shift = "5.0d3"
 
         else:
-            Warnings.warn("not correct programSize")
+            warnings.warn("not correct programSize")
 
         retDict = {"na": na, "nonzer": nonzer, "niter": niter, "shift": shift}
 
@@ -2787,7 +2788,7 @@ def returnInitVars(benchmarkName="", programSize=""):
         if programSize in programSizes:
             retDict = {"programSize": programSize}
         else:
-            Warnings.warn("not correct programSize")
+            warnings.warn("not correct programSize")
         pass
     elif benchmarkName == "ft":
         if programSize == "S":
@@ -2832,7 +2833,7 @@ def returnInitVars(benchmarkName="", programSize=""):
             nt = 25
 
         else:
-            Warnings.warn("not correct programSize")
+            warnings.warn("not correct programSize")
         retDict = {"d1": d1, "d2": d2, "d3": d3, "nt": nt}
 
     elif benchmarkName == "is":
@@ -2872,7 +2873,7 @@ def returnInitVars(benchmarkName="", programSize=""):
             MIN_PROCS = 64
             ONE = "1L"
         else:
-            Warnings.warn("not correct programSize")
+            warnings.warn("not correct programSize")
         retDict = {
             "TOTAL_KEYS_LOG_2": TOTAL_KEYS_LOG_2,
             "MAX_KEY_LOG_2": MAX_KEY_LOG_2,
@@ -2885,16 +2886,16 @@ def returnInitVars(benchmarkName="", programSize=""):
         if programSize in programSizes:
             retDict = {"programSize": programSize}
         else:
-            Warnings.warn("not correct programSize")
+            warnings.warn("not correct programSize")
         pass
     elif benchmarkName == "mg":
         if programSize in programSizes:
             retDict = {"programSize": programSize}
         else:
-            Warnings.warn("not correct programSize")
+            warnings.warn("not correct programSize")
         pass
     else:
-        Warnings.warn("not correct benchmarkName")
+        warnings.warn("not correct benchmarkName")
 
     return retDict
 
@@ -3591,7 +3592,7 @@ def addLowestMAPEColumn(inputDF, model_name_list=[], version=1):
         for func_name in func_names:
             lowestInFunc = math.inf
             seriesInFunc = inputDF.loc[func_name]
-            for model_name in model_names:
+            for model_name in model_name_list:
                 elem - seriesInFunc[model_name]
                 if elem < lowestInFunc:
                     lowestInFunc = elem
@@ -4699,7 +4700,7 @@ class Models:
             Dict: calcMAPEで計算した辞書を返す関数。返す辞書がない場合は空の辞書を返す
         """
         if self.MAPEatTrain is None:
-            reutnrn({})
+            return({})
         else:
             return self.MAPEatTrain
 
