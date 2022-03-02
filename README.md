@@ -10,7 +10,7 @@
 
 ## jupyter lab 開発環境
 
-`localhost:8501`
+`vscode` で `/.devcontainer/` を開くようにする。
 
 # テストの実行
 
