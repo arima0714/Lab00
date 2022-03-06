@@ -23,6 +23,7 @@ jupyterlab-notifications = "*"
 jupyterlab-git = "*"
 jupyterlab-lsp = "*"
 pydotplus = "*"
+flake8 = "*"
 
 [dev-packages]
 
