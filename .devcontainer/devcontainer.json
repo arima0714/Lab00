@@ -19,12 +19,10 @@
 	"settings": {},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"Microsoft.Jupyter",
-		"Microsoft.Python",
-		"Microsoft.Pylance",
 		"ms-python.python",
 		"ms-toolsai.jupyter",
 		"ms-python.vscode-pylance",
+		"ms-toolsai.jupyter-renderers",
 	]
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
