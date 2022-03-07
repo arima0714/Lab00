@@ -4449,6 +4449,13 @@ class Models:
                 responseVariableColumnNames=resVarColNames,
                 targetDF=targetDF,
             )
+        if "modelProcessDividedByProblemSize" in self.modelNames:
+            self.objectModelProcessDividedByProblemSize = Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
+                inputDF,
+                explanatoryVariableColumnNames=expVarColNames,
+                responseVariableColumnNames=resVarColNames,
+                targetDF=targetDF,
+            )
         if "modelLinAndIp" in self.modelNames:
             equation_dict = {}
             for expVarElement in expVarColNames:
@@ -4582,6 +4589,8 @@ class Models:
             self.objectModelIp.calcLr()
         if "modelLog" in self.modelNames:
             self.objectModelLog.calcLr()
+        if "modelProcessDividedByProblemSize" in self.modelNames:
+            self.objectModelProcessDividedByProblemSize.build_model()
         if "modelLinAndIp" in self.modelNames:
             self.objectModelLinAndIp.calcLr()
         if "modelLinAndLog" in self.modelNames:
@@ -4632,6 +4641,8 @@ class Models:
             )
             modelLogMAPEatTrain = returnMapeScore(realData, predictedDataAtLog)
             MAPEatTrain["modelLog"] = modelLogMAPEatTrain
+        if "modelProcessDividedByProblemSize" in self.modelNames:
+            MAPEatTrain["modelProcessDividedByProblemSize"] = self.objectModelProcessDividedByProblemSize.returnMAPE()
         if "modelLinAndIp" in self.modelNames:
             predictedDataAtLinAndIp = self.objectModelLinAndIp.predict(
                 self.inputDF[self.expVarColNames]
