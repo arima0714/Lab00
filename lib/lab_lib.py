@@ -4700,7 +4700,7 @@ class Models:
             Dict: calcMAPEで計算した辞書を返す関数。返す辞書がない場合は空の辞書を返す
         """
         if self.MAPEatTrain is None:
-            return({})
+            return {}
         else:
             return self.MAPEatTrain
 
@@ -5138,4 +5138,299 @@ def test_return_MAPE_Table_DF_from_rawDF():
             assert returnedDF.at[0, "modelLinAndIp"] < returnedDF.at[0, model_name]
 
     return
+
+
+# In[ ]:
+
+
+class Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
+    ModelBaseForMultipleRegression
+):
+    """プロセス数を問題サイズの変数群の線形和で割ったモデル
+
+    組み合わせモデルを実現するためのクラス
+
+    Attributes:
+        equationDict (dict): キー・バリューが列名・変形モデル（線形、反比例、対数など）
+        lr : モデルのオブジェクト
+        dataXForPredict : 説明変数のDF
+        dataTForPredict : 目的変数のDF
+    Note:
+        モデルの式は次の通り
+        関数コール回数 = (プロセス数)/(a * 問題サイズ1 + b * 問題サイズ2 + ... + n * 問題サイズn + c)
+    """
+
+    def build_model(self) -> bool:
+        """build_model(self)
+
+        inputDFのデータからモデル構築する。
+
+        Args:
+            self : none
+
+        Returns: boolean。成功ならTrue,失敗ならFalse
+
+        Note:
+            必ず、説明変数を格納したDFにはプロセス数を意味する "process" を入れること。入れないと動作を保証できない。
+        """
+
+        # 説明変数を格納したDFに"process"列名がない場合は警告を出力
+        if ("process" in self.rawExplanaoryVariable.columns.to_list()) == False:
+            warnings.warn("inputDFにprocess列がありません。")
+            return False
+
+        # 説明変数を格納したDFの一列目の列名が"process"でない場合は、一列目を"process"とする
+        if "process" == self.rawExplanaoryVariable.columns.to_list()[0]:
+            process_column = self.rawExplanaoryVariable.pop("process")
+            self.rawExplanaoryVariable.insert(0, "process", process_column)
+
+        # list_exp:説明変数のリスト
+        # list_expをlist_inputとして利用
+        list_exp: np.ndarray = self.rawExplanaoryVariable.to_numpy().T
+        # list_res:目的変数のリスト
+        list_res: np.ndarray = self.rawResponseVariable.to_numpy()
+        # list_resが複数の列を持っていると予測ができるか不確かなため、警告を出す
+        if list_res.shape[1] != 1:
+            warnings.warn("目的変数の個数が想定と異なります")
+            return False
+        list_res = list_res.ravel()
+
+        # モデルの構築
+        self.popt: np.ndarray
+        self.pcov: np.ndarray
+
+        self.dataXForPredict: np.ndarray = list_exp
+        self.dataTForPredict: np.ndarray = list_res
+
+        # 説明変数の数だけp0用の1埋め配列を作成する
+        list_p0: list[float] = [1] * (len(list_exp) + 1)
+
+        self.popt, self.pcov = curve_fit(
+            processesDevidedByProblemSize, list_exp, list_res, list_p0
+        )
+
+        return True
+
+    def predict(self, inputDF) -> np.ndarray:
+        """predict(self, inputDF)
+
+        inputDFのデータから構築されたモデルを使って予測を行う
+
+        Args:
+            self : none
+            inputDF (pandas.DataFrame): 構築されたモデルを用いて予測に使うDF
+
+        Returns:
+            pandas.DataFrame: 構築されたモデルから予測された値。型に確証なし
+
+        Note:
+            必ず、説明変数を格納したDFにはプロセス数を意味する "process" を入れること。入れないと動作を保証できない。
+        """
+
+        # inputDFとモデルの構築に用いた説明変数のDFの列の順番が同じことを確認
+        if inputDF.columns.to_list() != self.rawExplanaoryVariable.columns.to_list():
+            warnings.warn(
+                f"inputDFとモデルの構築に用いた説明変数のDF列の順番が異なります。\ninputDF.columns.to_list()[{inputDF.columns.to_list()}] != self.rawExplanaoryVariable.to_list()[{self.rawExplanaoryVariable.to_list()}]"
+            )
+            return -1
+
+        # inputDFに"process"列名がない場合は警告を出力
+        if ("process" in inputDF.columns.to_list()) == False:
+            warnings.warn("inputDFにprocess列がありません。")
+            return False
+
+        # inputDFの一列目の列名が"process"でない場合は、一列目を"process"とする
+        if "process" == inputDF.columns.to_list()[0]:
+            process_column = inputDF.pop("process")
+            inputDF.insert(0, "process", process_column)
+
+        # inputDFから引数list_inputとして使われる変数ndarray_inputDFを作成
+        ndarray_inputDF: np.ndarray = inputDF.to_numpy().T
+
+        predicted_result: np.ndarray = processesDevidedByProblemSize(
+            ndarray_inputDF, *self.popt
+        )
+        return predicted_result
+
+    def returnMAPE(self) -> float:
+        """calcMAPE(self)
+
+        モデルの構築に使用されたデータからMAPEを算出する
+
+        Args:
+            self : none
+
+        Returns:
+            list: モデルの構築に用いたデータから予測された値
+            int: 失敗した場合、-1
+        """
+
+        predicted_result: list[float] = self.predict(self.rawExplanaoryVariable)
+        real_data: np.ndarray[float] = self.rawResponseVariable.to_numpy().ravel()
+        if len(predicted_result) != len(real_data):
+            warnings.warn(
+                f"予測された値の ndarray 長さ[{len(predicted_result)}]と実際の値の ndarray の長さ[{len(real_data)}]が異なります"
+            )
+        mape: float = returnMapeScore(l1=predicted_result, l2=real_data)
+        return mape
+        # returnMAPE()を必要に応じて実装する
+
+
+# モデル式の宣言
+def processesDevidedByProblemSize(
+    list_input: list[np.ndarray] = [], *list_coef_inte: list[float]
+) -> list[float]:
+    """processesDevidedByProblemSize(list_input: list[np.ndarray] = [], *list_coef_inte :list[float])
+
+    inputDFのデータから構築されたモデルを使って予測を行う
+
+    Args:
+        list_input : 変数の入った行列。現状は一般の行列と異なり [[<列データ1>], [<列データ2>], ... , [<列データn>]]の形式
+        list_coef_inte : 係数と切片の入ったリスト。最後尾の要素が切片でそれ以外は係数。係数とデータの関係はlist_input,list_coef_inteのインデックス番号に一対一対応している。
+
+    Returns:
+        np.ndarray[float] : 計算された値。
+    """
+    # list_inputの要素数と有効なa,b,c,d,eの個数が同じことを確認
+    if len(list_input) != len(list_coef_inte) - 1:
+        warnings.warn(
+            f"len(list_input)[={len(list_input)}] != len(list_coef_inte)-1[={len(list_coef_inte)-1}]"
+        )
+
+    result: list[float] = []
+
+    for i in range(len(list_input[0])):
+        numerator: float = 0
+        denominator: float = 0
+        for j in range(len(list_input)):
+            if j == 0:
+                numerator = list_input[j][i] * list_coef_inte[j]
+            else:
+                denominator += list_input[j][i] * list_coef_inte[j]
+
+        result.append(numerator / denominator + list_coef_inte[-1])
+
+    return result
+
+
+def test_processesDevidedByProblemSize():
+    """test_processesDevidedByProblemSize()
+
+    processesDevidedByProblemSizeのテスト
+    """
+
+    list_A: list[int] = [1, 2, 3, 4]
+    list_B: list[int] = [10, 20, 30, 40]
+    list_C: list[int] = [100, 200, 300, 400]
+
+    a: int = 5
+    b: int = 6
+    c: int = 7
+    d: int = 8
+
+    list_T_expect: list[int] = []
+    for i in range(len(list_A)):
+        numerator: float = a * list_A[i]
+        denominator: float = b * list_B[i] + c * list_C[i]
+        list_T_expect.append(numerator / denominator + d)
+
+    list_input_for_actually: list[list[float]] = [list_A, list_B, list_C]
+    list_T_actually: np.ndarray = processesDevidedByProblemSize(
+        list_input_for_actually, a, b, c, d
+    )
+
+    assert (
+        list_T_expect == list_T_actually
+    ), f"expect = {list_T_expect}, actually = {list_T_actually}"
+
+
+def test_Model_ProcessesDevidedByProblemSize_ForMultipleRegression():
+    """test_ModelMultipleEquationForMultipleRegression()
+
+    ModelMultipleEquationForMultipleRegressionのテスト
+    """
+
+    # ____test_case_01____
+
+    # 説明変数
+    plotX_1 = np.linspace(10, 20, 11)
+    plotX_2 = 10 * np.linspace(10, 20, 11)
+    plotX_3 = 100 * np.linspace(10, 20, 11)
+    plotX_4 = 1000 * np.linspace(10, 20, 11)
+    plotX_5 = 10000 * np.linspace(10, 20, 11)
+    # 目的変数
+    a = 10
+    b = 20
+    c = 30
+    d = 40
+    e = 50
+    f = 50
+    plotT = (a * plotX_1) / (b * plotX_2 + c * plotX_3 + d * plotX_4 + e * plotX_5) + f
+
+    # DFを作成する
+    # カラム名のリスト
+    columnNames = ["process", "plotX_2", "plotX_3", "plotX_4", "plotX_5", "plotT"]
+    datumForDF = [plotX_1, plotX_2, plotX_3, plotX_4, plotX_5, plotT]
+    inputDFForTest = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 目的変数・説明変数のカラム名のリスト
+    # 目的変数のカラム名のリスト
+    columnNamesForExp = ["process", "plotX_2", "plotX_3", "plotX_4", "plotX_5"]
+    # 説明変数のカラム名のリスト
+    columnNamesForRes = ["plotT"]
+
+    # 予測をする
+    # モデルオブジェクトの作成
+    objectModel = Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+    )
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータとのMAPEによって実装がうまくいっているかどうかの判定を行う
+    mape = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape(____test_case_01____) = {mape}"
+
+    # ____test_case_02____
+
+    # 説明変数
+    plotX = np.linspace(10, 20, 11)
+    plotY = np.linspace(20, 30, 11)
+    plotZ = np.linspace(30, 40, 11)
+    # 目的変数
+    a = 11
+    b = 13
+    c = 17
+    d = 19
+    plotT = (a * plotX) / (b * plotY + c * plotZ) + d
+
+    # DFを作成する
+    # カラム名のリスト
+    columnNames = ["process", "plotY", "plotZ", "plotT"]
+    datumForDF = [plotX, plotY, plotZ, plotT]
+    inputDFForTest = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 目的変数・説明変数のカラム名のリスト
+    # 目的変数のカラム名のリスト
+    columnNamesForExp = ["process", "plotY", "plotZ"]
+    # 説明変数のカラム名のリスト
+    columnNamesForRes = ["plotT"]
+
+    # 予測をする
+    # モデルオブジェクトの作成
+    objectModel = Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+    )
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータとのMAPEによって実装がうまくいっているかどうかの判定を行う
+    mape = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape(____test_case_02____) = {mape}"
 
