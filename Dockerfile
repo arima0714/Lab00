@@ -2,10 +2,10 @@ FROM python:3
 USER root
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - 
-RUN apt-get update
-RUN apt-get -y install locales nodejs
+RUN apt update
+RUN apt -y install locales nodejs
 RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 
-RUN apt-get install -y vim less
+RUN apt install -y vim less graphviz-dev graphviz
 
 ENV LANG ja_JP.UTF-8
 ENV LANGUAGE ja_JP:jp
