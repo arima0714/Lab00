@@ -24,6 +24,7 @@ jupyterlab-git = "*"
 jupyterlab-lsp = "*"
 pydotplus = "*"
 flake8 = "*"
+graphviz = "*"
 
 [dev-packages]
 
