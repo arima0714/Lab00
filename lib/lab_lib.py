@@ -1540,6 +1540,17 @@ def test_returnRelativeErrorRate():
 # conditionDictForTest："カラム名":"要素"でテスト用データを指定する
 # targetDF：inputDFとデータ構成は同じだが、予測対象のデータがセットされている
 class ModelBaseForMultipleRegression:
+    """ModelBaseForMultipleRegression
+    
+    複数の説明変数を用いた予測を行うにあたってベースとなるクラス
+
+    Attributes:
+        explanatoryVariableColumnNames :list[str] 説明変数のカラム名のリスト
+        responseVariableColumnNames :list[str]    目的変数のカラム名のリスト
+        rawExplanaoryVariable :pd.DataFrame       説明変数のデータフレーム
+        rawResponseVariable :pd.DataFrame         目的変数のデータフレーム
+    Note:
+    """
     def __init__(
         self,
         inputDF,
