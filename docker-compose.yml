@@ -10,7 +10,7 @@ services:
                         - ${SRC_PATH}:/root/src
                         - ${SETTING_PATH}:/root/.jupyter
                 ports:
-                        - "8080:8080"
+                        - "8585:8080"
                 command: jupyter-lab --ip 0.0.0.0 --port=8080 --allow-root --no-browser --NotebookApp.token=''
         # streamlit:
         #         restart: always
