@@ -69,14 +69,17 @@ class ExceptionInResearchLib(Exception):
 # In[ ]:
 
 
-# 平均絶対パーセント誤差 (MAPE)(Mean Absolute Percent Error (MAPE))を返す関数
-# 引数として長さの同じ二つのリストをとる
-# 引数l1: 実測値のリスト
-# 引数l2: 予測値のリスト
-# 単位：％
-
-
 def returnMapeScore(l1, l2):
+    """ returnMapeScore(l1, l2)
+    平均絶対パーセント誤差 (MAPE)(Mean Absolute Percent Error (MAPE))を返す関数
+
+    Args:
+        引数として長さの同じ二つのリストをとる
+        l1 :list[float] 実測値のリスト
+        l2 :list[float] 予測値のリスト
+    Returns:
+      float : 引数から計算されたMAPEの値（単位％）
+    """
     return_num = 0
     if len(l1) != len(l2):
         warnings.warn("引数のリストの長さが異なります")
@@ -4665,10 +4668,6 @@ class Models:
             MAPEatTrain["modelLinAndIp"] = modelLinAndIpMAPEatTrain
         if "modelLinAndLog" in self.modelNames:
 
-            predictedDataAtLinAndLog = self.objectModelLinAndLog.predict(
-                self.inputDF[self.expVarColNames]
-            )
-
             predictedFromBuildDatum = (
                 self.objectModelLinAndLog.returnPredictedFromDataXForPredict()
             )
@@ -5067,9 +5066,8 @@ def return_MAPE_Table_DF_from_rawDF(
         # MAPEの算出
         dictCalcedMAPE = models.returnCalculatedMAPE()
 
-        # 算出されたMAPEの数値を小数第一位までにする
+        # 算出されたMAPEの数値をfloatにする
         for key in dictCalcedMAPE.keys():
-            # dictCalcedMAPE[key] = int(dictCalcedMAPE[key]*10)/10
             dictCalcedMAPE[key] = float(dictCalcedMAPE[key])
 
         # 関数ごとの結果に格納
