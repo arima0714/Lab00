@@ -44,6 +44,13 @@ from statistics import median_low
 from unittest.mock import MagicMock
 import warnings
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score
+from sklearn import tree
+from IPython.display import Image
+from sklearn.datasets import fetch_california_housing
+import pydotplus
 
 
 # In[ ]:
@@ -70,7 +77,7 @@ class ExceptionInResearchLib(Exception):
 
 
 def returnMapeScore(l1, l2):
-    """ returnMapeScore(l1, l2)
+    """returnMapeScore(l1, l2)
     平均絶対パーセント誤差 (MAPE)(Mean Absolute Percent Error (MAPE))を返す関数
 
     Args:
@@ -1544,7 +1551,7 @@ def test_returnRelativeErrorRate():
 # targetDF：inputDFとデータ構成は同じだが、予測対象のデータがセットされている
 class ModelBaseForMultipleRegression:
     """ModelBaseForMultipleRegression
-    
+
     複数の説明変数を用いた予測を行うにあたってベースとなるクラス
 
     Attributes:
@@ -1554,6 +1561,7 @@ class ModelBaseForMultipleRegression:
         rawResponseVariable :pd.DataFrame         目的変数のデータフレーム
     Note:
     """
+
     def __init__(
         self,
         inputDF,
@@ -4464,11 +4472,13 @@ class Models:
                 targetDF=targetDF,
             )
         if "modelProcessDividedByProblemSize" in self.modelNames:
-            self.objectModelProcessDividedByProblemSize = Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
-                inputDF,
-                explanatoryVariableColumnNames=expVarColNames,
-                responseVariableColumnNames=resVarColNames,
-                targetDF=targetDF,
+            self.objectModelProcessDividedByProblemSize = (
+                Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
+                    inputDF,
+                    explanatoryVariableColumnNames=expVarColNames,
+                    responseVariableColumnNames=resVarColNames,
+                    targetDF=targetDF,
+                )
             )
         if "modelLinAndIp" in self.modelNames:
             equation_dict = {}
@@ -4656,7 +4666,9 @@ class Models:
             modelLogMAPEatTrain = returnMapeScore(realData, predictedDataAtLog)
             MAPEatTrain["modelLog"] = modelLogMAPEatTrain
         if "modelProcessDividedByProblemSize" in self.modelNames:
-            MAPEatTrain["modelProcessDividedByProblemSize"] = self.objectModelProcessDividedByProblemSize.returnMAPE()
+            MAPEatTrain[
+                "modelProcessDividedByProblemSize"
+            ] = self.objectModelProcessDividedByProblemSize.returnMAPE()
         if "modelLinAndIp" in self.modelNames:
             predictedDataAtLinAndIp = self.objectModelLinAndIp.predict(
                 self.inputDF[self.expVarColNames]
@@ -5453,4 +5465,136 @@ def test_Model_ProcessesDevidedByProblemSize_ForMultipleRegression():
     # モデル構築に用いたデータとのMAPEによって実装がうまくいっているかどうかの判定を行う
     mape = objectModel.returnMAPE()
     assert 0 <= mape < 1, f"mape(____test_case_02____) = {mape}"
+
+
+# In[7]:
+
+
+def test_Model_BasicTree():
+    """回帰木による予測を行うモデル
+
+    「回帰木による予測を実現するためのクラス」のテストを実施する
+
+    Attributes:
+
+    Note:
+    """
+
+    # テストデータはsklearn付属のものを使用
+    california_housing = fetch_california_housing()
+    list_exp: list[str] = california_housing.feature_names
+    list_res: list[str] = ["target"]
+    df_data: pd.DataFrame = pd.DataFrame(california_housing.data, columns=list_exp)
+    df_target: pd.DataFrame = pd.DataFrame(california_housing.target, columns=list_res)
+    df_california_housing: pd.DataFrame = pd.concat([df_data, df_target], axis=1)
+    array_california_housing: np.ndarray = df_california_housing.values
+    array_x_california_housing: np.ndarray = array_california_housing[:, 0:-1]
+    array_y_california_housing: np.ndarray = array_california_housing[:, -1]
+    df_california_housing["functionName"] = "functionName"
+    # テストデータによるモデルの構築
+    reg = DecisionTreeRegressor(max_leaf_nodes=20)
+    model: DecisionTreeRegressor = reg.fit(
+        array_x_california_housing, array_y_california_housing
+    )
+    # テストデータによる予測
+    YHat: np.ndarray = model.predict(array_x_california_housing)
+    r2: float = r2_score(array_y_california_housing, YHat)
+    # 構築したモデルによるMAPEの算出
+    mape_expect: float = returnMapeScore(array_y_california_housing, YHat)
+
+    # クラスを用いたモデル構築
+    objectModel = Model_BasicTree(
+        inputDF=df_california_housing,
+        explanatoryVariableColumnNames=list_exp,
+        responseVariableColumnNames=list_res,
+        conditionDictForTest={},
+    )
+    objectModel.build_model()
+    # クラスを用いたMAPEの受け取り
+    mape_actually: float = objectModel.returnMAPE()
+    assert math.isclose(
+        mape_expect, mape_actually
+    ), f"mape_expect({mape_expect}) != mape_actually({mape_actually})"
+
+
+class Model_BasicTree(ModelBaseForMultipleRegression):
+    """回帰木による予測を行うモデル
+
+    回帰木による予測を実現するためのクラス
+
+    Attributes:
+        basicTree : モデルのオブジェクト
+        dataXForPredict : 説明変数のDF
+        dataTForPredict : 目的変数のDF
+    Note:
+    """
+
+    def build_model(self) -> bool:
+        """build_model(self)
+
+        inputDFのデータからモデル構築する。
+
+        Args:
+            self : none
+
+        Returns: boolean。成功ならTrue,失敗ならFalse
+        """
+        self.array_dataXForPredict: np.ndarray = self.rawExplanaoryVariable.values
+        self.array_dataTForPredict: np.ndarray = self.rawResponseVariable.values
+
+        self.reg = DecisionTreeRegressor(max_leaf_nodes=20)
+        self.model: DecisionTreeRegressor = self.reg.fit(
+            self.array_dataXForPredict, self.array_dataTForPredict
+        )
+        return True
+
+    def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
+        """predict(self, inputDF)
+
+        inputDFのデータから構築されたモデルを使って予測を行う
+
+        Args:
+            self : none
+            inputDF (pandas.DataFrame): 構築されたモデルを用いて予測に使うDF
+
+        Returns:
+            pandas.DataFrame: 構築されたモデルから予測された値。型に確証なし
+
+        Note:
+        """
+
+        # モデル構築に用いた説明変数のカラム名と、与えられたDFのカラム名が一致していることを確認
+        if self.explanatoryVariableColumnNames != inputDF.columns.to_list():
+            warnings.warn(
+                f"self.explanatoryVariableColumnNames != inputDF.columns.to_list(), {self.explanatoryVariableColumnNames} != {inputDF.columns.to_list()}"
+            )
+            inputDF = inputDF[self.explanatoryVariableColumnNames]
+        # .predict()する
+        array_forPredicting: np.ndarray = inputDF.values
+        return_value: np.ndarray = self.model.predict(array_forPredicting)
+        # .predict()で返された値を返す
+        return return_value
+
+    def returnMAPE(self) -> float:
+        """calcMAPE(self)
+
+        モデルの構築に使用されたデータからMAPEを算出する
+
+        Args:
+            self : none
+
+        Returns:
+            list: モデルの構築に用いたデータから予測された値
+            int: 失敗した場合、-1
+
+        Note:
+        """
+
+        array_real_data: np.ndarray = self.rawResponseVariable.values
+        array_predicted_data: np.ndarray = self.predict(self.rawExplanaoryVariable)
+        return_num: float = float(
+            returnMapeScore(array_real_data, array_predicted_data)
+        )
+
+        return return_num
 
