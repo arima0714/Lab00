@@ -18,6 +18,10 @@
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"jupyter.debugJustMyCode": true,
+		"python.formatting.provider": "black",
+		"editor.formatOnPaste": true,
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
