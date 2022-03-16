@@ -5903,4 +5903,3 @@ def test_Model_ProblemSizeDevidedByProcesses_ForMultipleRegression():
     # モデル構築に用いたデータとのMAPEによって実装がうまくいっているかどうかの判定を行う
     mape = objectModel.returnMAPE()
     assert 0 <= mape < 1, f"mape(____test_case_02____) = {mape}"
-
