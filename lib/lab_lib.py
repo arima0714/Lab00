@@ -4480,6 +4480,13 @@ class Models:
                     targetDF=targetDF,
                 )
             )
+        if "modelBasicTree" in self.modelNames:
+            self.objectModelBasicTree = Model_BasicTree(
+                inputDF,
+                explanatoryVariableColumnNames=expVarColNames,
+                responseVariableColumnNames=resVarColNames,
+                targetDF=targetDF,
+            )
         if "modelLinAndIp" in self.modelNames:
             equation_dict = {}
             for expVarElement in expVarColNames:
@@ -4627,6 +4634,8 @@ class Models:
             self.objectModelLogAndLin.calcLr()
         if "modelLogAndIp" in self.modelNames:
             self.objectModelLogAndIp.calcLr()
+        if "modelBasicTree" in self.modelNames:
+            self.objectModelBasicTree.build_model()
 
     # inputDF：__init__()でのinputDFとDF構成は同じ
     def predict(self, inputDF):
@@ -4669,6 +4678,8 @@ class Models:
             MAPEatTrain[
                 "modelProcessDividedByProblemSize"
             ] = self.objectModelProcessDividedByProblemSize.returnMAPE()
+        if "modelBasicTree" in self.modelNames:
+            MAPEatTrain["modelBasicTree"] = self.objectModelBasicTree.returnMAPE()
         if "modelLinAndIp" in self.modelNames:
             predictedDataAtLinAndIp = self.objectModelLinAndIp.predict(
                 self.inputDF[self.expVarColNames]
