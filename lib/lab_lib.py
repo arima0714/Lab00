@@ -4480,6 +4480,15 @@ class Models:
                     targetDF=targetDF,
                 )
             )
+        if "modelProblemSizeDividedByProcess" in self.modelNames:
+            self.objectModelProblemSizeDividedByProcess = (
+                Model_ProblemSizeDevidedByProcesses_ForMultipleRegression(
+                    inputDF,
+                    explanatoryVariableColumnNames=expVarColNames,
+                    responseVariableColumnNames=resVarColNames,
+                    targetDF=targetDF,
+                )
+            )
         if "modelBasicTree" in self.modelNames:
             self.objectModelBasicTree = Model_BasicTree(
                 inputDF,
@@ -4622,6 +4631,8 @@ class Models:
             self.objectModelLog.calcLr()
         if "modelProcessDividedByProblemSize" in self.modelNames:
             self.objectModelProcessDividedByProblemSize.build_model()
+        if "modelProblemSizeDividedByProcess" in self.modelNames:
+            self.objectModelProblemSizeDividedByProcess.build_model()
         if "modelLinAndIp" in self.modelNames:
             self.objectModelLinAndIp.calcLr()
         if "modelLinAndLog" in self.modelNames:
@@ -4678,6 +4689,10 @@ class Models:
             MAPEatTrain[
                 "modelProcessDividedByProblemSize"
             ] = self.objectModelProcessDividedByProblemSize.returnMAPE()
+        if "modelProblemSizeDividedByProcess" in self.modelNames:
+            MAPEatTrain[
+                "modelProblemSizeDividedByProcess"
+            ] = self.objectModelProblemSizeDividedByProcess.returnMAPE()
         if "modelBasicTree" in self.modelNames:
             MAPEatTrain["modelBasicTree"] = self.objectModelBasicTree.returnMAPE()
         if "modelLinAndIp" in self.modelNames:
