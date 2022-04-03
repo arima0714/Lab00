@@ -4496,6 +4496,20 @@ class Models:
                 responseVariableColumnNames=resVarColNames,
                 targetDF=targetDF,
             )
+        if "modelInfiniteProductOfProblemSizeDividedByProcesses" in self.modelNames:
+            self.objectModelInfiniteProductOfProblemSizeDividedByProcesses = Model_InfiniteProductOfProblemSizeDividedByProcesses_ForMultipleRegression(
+                inputDF,
+                explanatoryVariableColumnNames=expVarColNames,
+                responseVariableColumnNames=resVarColNames,
+                targetDF=targetDF,
+            )
+        if "modelInfiniteProductOfProblemSizeMultipliedByProcesses" in self.modelNames:
+            self.objectModelInfiniteProductOfProblemSizeMultipliedByProcesses = Model_InfiniteProductOfProblemSizeMultipliedByProcesses_ForMultipleRegression(
+                inputDF,
+                explanatoryVariableColumnNames=expVarColNames,
+                responseVariableColumnNames=resVarColNames,
+                targetDF=targetDF,
+            )
         if "modelLinAndIp" in self.modelNames:
             equation_dict = {}
             for expVarElement in expVarColNames:
@@ -4647,6 +4661,10 @@ class Models:
             self.objectModelLogAndIp.calcLr()
         if "modelBasicTree" in self.modelNames:
             self.objectModelBasicTree.build_model()
+        if "modelInfiniteProductOfProblemSizeMultipliedByProcesses" in self.modelNames:
+            self.objectModelInfiniteProductOfProblemSizeMultipliedByProcesses.build_model()
+        if "modelInfiniteProductOfProblemSizeDividedByProcesses" in self.modelNames:
+            self.objectModelInfiniteProductOfProblemSizeDividedByProcesses.build_model()
 
     # inputDF：__init__()でのinputDFとDF構成は同じ
     def predict(self, inputDF):
@@ -4695,6 +4713,18 @@ class Models:
             ] = self.objectModelProblemSizeDividedByProcess.returnMAPE()
         if "modelBasicTree" in self.modelNames:
             MAPEatTrain["modelBasicTree"] = self.objectModelBasicTree.returnMAPE()
+        if "modelInfiniteProductOfProblemSizeDividedByProcesses" in self.modelNames:
+            MAPEatTrain[
+                "modelInfiniteProductOfProblemSizeDividedByProcesses"
+            ] = (
+                self.objectModelInfiniteProductOfProblemSizeDividedByProcesses.returnMAPE()
+            )
+        if "modelInfiniteProductOfProblemSizeMultipliedByProcesses" in self.modelNames:
+            MAPEatTrain[
+                "modelInfiniteProductOfProblemSizeMultipliedByProcesses"
+            ] = (
+                self.objectModelInfiniteProductOfProblemSizeMultipliedByProcesses.returnMAPE()
+            )
         if "modelLinAndIp" in self.modelNames:
             predictedDataAtLinAndIp = self.objectModelLinAndIp.predict(
                 self.inputDF[self.expVarColNames]
