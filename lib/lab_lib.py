@@ -6480,3 +6480,181 @@ class Model_InfiniteProductOfProblemSizeDividedByProcesses_ForMultipleRegression
         mape: float = returnMapeScore(l1=predicted_result, l2=real_data)
 
         return mape
+
+
+# In[ ]:
+
+
+def returnAverageMAPEfromConditions(
+    list_benchmarkNames: list[str],
+    list_problemSizes: list[str],
+    list_processes: list[int],
+    list_modelNames: list[str],
+) -> pd.DataFrame:
+    """returnAverageMAPEfromConditions
+
+    指定した条件から下記のような表を作成する関数
+
+    | <ベンチマーク名> | <平均MAPE> |
+
+    Args:
+        list_benchmarkNames (list[str])
+        list_problemSizes (list[str])
+        list_processes (list[int])
+        list_modelNames (list[str])
+
+    Returns:
+        pd.DataFrame : 上記の説明通りのデータフレーム
+        int : なんらかの障害により実行できなくなったとき
+    """
+
+    if len(list_benchmarkNames) == 0:
+        warnings.warn("ベンチマークプログラム名が指定されていません")
+        return -1
+    if len(list_problemSizes) == 0:
+        warnings.warn("問題サイズが指定されていません")
+        return -1
+    if len(list_processes) == 0:
+        warnings.warn("プロセス数が指定されていません")
+        return -1
+    if len(list_modelNames) == 0:
+        warnings.warn("モデル名が指定されていません")
+        return -1
+
+    list_result_col_benchmarkNames: list[str] = []
+    list_result_col_averageMAPE: list[float] = []
+    dict_resultForDF: dict[list] = {}
+
+    # ベンチマークプログラム名でループ
+    for benchmarkName in list_benchmarkNames:
+        # 生データを取得
+        rawDF = return_rawDF_with_init_param(
+            benchmark_name=benchmarkName,
+            classes=list_problemSizes,
+            processes=list_processes,
+            csv_dir_path="./csv_files/",
+        )
+        # returnMAPEDFFromRawDF()を実行
+        _MAPEtable = returnMAPEDFFromRawDF(
+            input_rawDF=rawDF, model_names_list=list_modelNames
+        )
+        # returnAverageMAPEfromDF()を実行
+        _averageMAPEfrom_MAPEtable = returnAverageMAPEfromDF(input_DF=_MAPEtable)
+        # list_ret_col* に値を格納
+        list_result_col_benchmarkNames.append(benchmarkName)
+        list_result_col_averageMAPE.append(_averageMAPEfrom_MAPEtable)
+
+    dict_resultForDF["benchmarkName"] = list_result_col_benchmarkNames
+    dict_resultForDF["averageMAPE"] = list_result_col_averageMAPE
+
+    return pd.DataFrame(data=dict_resultForDF)
+
+
+# In[ ]:
+
+
+def returnAverageMAPEfromDF(input_DF: pd.DataFrame) -> float:
+    """returnAverageMAPEfromDF
+
+    MAPE表からMAPEの最小値の平均を返す
+
+    Args:
+        input_rawDF(pd.DataFrame): 入力データフレーム。カラム名には "functionName" が必須で、ほかのカラム名はモデル名になっている
+
+    Returns:
+        float : 渡されたデータフレームの平均MAPE
+    """
+
+    # 関数名の列をインデックスにする
+    indexed_df: pd.DataFrame = input_DF.set_index("functionName")
+    # 統計値のDFを作成
+    describeDF: pd.DataFrame = indexed_df.T.describe()
+    # 作成したDFの最低値の列から平均を算出
+    mins: pd.Series = describeDF.T["min"]
+    mean: float = float(mins.mean())
+    # 算出された平均を返す
+    return mean
+
+
+def test_returnAverageMAPEfromDF():
+    """test_returnAverageMAPEfromDF()
+
+
+    returnAverageMAPEfromDF()のテスト
+    """
+    functionName: list[str] = ["func_a", "func_b", "func_c"]
+    model_1: list[int] = [1, 2, 2]
+    model_2: list[int] = [2, 1, 3]
+    model_3: list[int] = [3, 3, 1]
+
+    test_data: dict = {
+        "functionName": functionName,
+        "model_1": model_1,
+        "model_2": model_2,
+        "model_3": model_3,
+    }
+
+    test_inputDF = pd.DataFrame(data=test_data)
+    ret = returnAverageMAPEfromDF(input_DF=test_inputDF)
+    assert ret == 1
+
+    functionName: list[str] = ["func_a", "func_b", "func_c"]
+    model_1: list[int] = [2, 2, 2]
+    model_2: list[int] = [2, 2, 2]
+    model_3: list[int] = [2, 2, 2]
+
+    test_data: dict = {
+        "functionName": functionName,
+        "model_1": model_1,
+        "model_2": model_2,
+        "model_3": model_3,
+    }
+
+    test_inputDF = pd.DataFrame(data=test_data)
+    ret = returnAverageMAPEfromDF(input_DF=test_inputDF)
+    assert ret == 2
+
+
+def returnMAPEDFFromRawDF(
+    input_rawDF: pd.DataFrame,
+    model_names_list: list[str],
+) -> pd.DataFrame:
+    """returnMAPEDFFromRawDF
+
+    入力DFからMAPE表を作成する関数
+
+    Args:
+        input_rawDF(pd.DataFrame): 入力データフレーム。カラム名には "functionName", "functionCallNum", "benchmarkName", "process", "intBenchmarkClass" などがある
+        model_names_list(list[str]): モデル名を格納したリスト。要素の例として "modelLin", "modelLog", "modelIp" などがある
+
+    Returns:
+        pd.DataFrame : 下記のようなDataFrameが返される。
+
+        <関数名>| <モデル名1>| ... <モデル名n>|
+    """
+
+    exp_var: list[str] = input_rawDF.columns.tolist()
+
+    # ベンチマーク名が複数存在する場合は警告を出して -1 を返す
+    if len(set(input_rawDF["benchmarkName"].to_list())) != 1:
+        warnings.warn("複数のベンチマークが入力されたDFに格納されています")
+        return -1
+
+    for element_be_removed in [
+        "functionName",
+        "functionCallNum",
+        "intBenchmarkClass",
+        "benchmarkName",
+        "benchmarkClass",
+    ]:
+        exp_var.remove(element_be_removed)
+    res_var: list[str] = ["functionCallNum"]
+
+    returnDF: pd.DataFrame = return_MAPE_Table_DF_from_rawDF(
+        rawDF=input_rawDF,
+        exp_var_list=exp_var,
+        res_var_list=res_var,
+        model_name_list=model_names_list,
+    )
+
+    return returnDF
