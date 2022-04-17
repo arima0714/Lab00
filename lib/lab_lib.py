@@ -4601,6 +4601,15 @@ class Models:
                 targetDF=targetDF,
                 equationDict=equation_dict,
             )
+        if "modelLinearSumOf2elementCombination" in self.modelNames:
+            self.objectModelLinearSumOf2elementCombination = (
+                Model_LinearSumOf2elementCombination_ForMultipleRegression(
+                    inputDF,
+                    explanatoryVariableColumnNames=expVarColNames,
+                    responseVariableColumnNames=resVarColNames,
+                    targetDF=targetDF,
+                )
+            )
 
     def setUpDataBeforeCalcLr(self):
         """setUpDataBeforeCalcLr(self)
@@ -4666,6 +4675,8 @@ class Models:
             self.objectModelInfiniteProductOfProblemSizeMultipliedByProcesses.build_model()
         if "modelInfiniteProductOfProblemSizeDividedByProcesses" in self.modelNames:
             self.objectModelInfiniteProductOfProblemSizeDividedByProcesses.build_model()
+        if "modelLinearSumOf2elementCombination" in self.modelNames:
+            self.objectModelLinearSumOf2elementCombination.build_model()
 
     # inputDF：__init__()でのinputDFとDF構成は同じ
     def predict(self, inputDF):
@@ -4778,6 +4789,10 @@ class Models:
                 realData, predictedDataAtLogAndIp
             )
             MAPEatTrain["modelLogAndIp"] = modelLogAndIpMAPEatTrain
+        if "modelLinearSumOf2elementCombination" in self.modelNames:
+            MAPEatTrain[
+                "modelLinearSumOf2elementCombination"
+            ] = self.objectModelLinearSumOf2elementCombination.returnMAPE()
         self.MAPEatTrain = MAPEatTrain
 
     def returnCalculatedMAPE(self):
