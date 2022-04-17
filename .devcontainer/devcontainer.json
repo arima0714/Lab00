@@ -14,13 +14,14 @@
 	"service": "jupyter",
 	// The optional 'workspaceFolder' property is the path VS Code should open by default when
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/workspace",
+	"workspaceFolder": "/workspace-for-research",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"python.formatting.provider": "black",
 		"editor.formatOnPaste": true,
 		"editor.formatOnSave": true,
-		"editor.formatOnType": true
+		"editor.formatOnType": true,
+		"notebook.lineNumbers": "on",
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [

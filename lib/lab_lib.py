@@ -16,6 +16,7 @@
 
 import copy
 import glob
+import itertools
 import japanize_matplotlib
 import math
 import matplotlib as mpl
@@ -6658,3 +6659,171 @@ def returnMAPEDFFromRawDF(
     )
 
     return returnDF
+
+
+# In[ ]:
+
+
+class Model_LinearSumOf2elementCombination_ForMultipleRegression(
+    ModelBaseForMultipleRegression
+):
+
+    """説明変数2つの組み合わせの総和モデル
+    Model_LinearSumOf2elementCombination_ForMultipleRegression(ModelBaseForMultipleRegression)
+    Attributes:
+        explanatoryVariableColumnNames (list[str]): 説明変数の列名のリスト
+        rawExplanatoryVariable (pd.DataFrame): 説明変数のデータフレーム
+        rawExplanatoryVariableForTest (pd.DataFrame): テスト用の説明変数のデータフレーム。説明変数のデータフレームと同様の値が入っている(?)
+        rawResponseVariable (pd.DataFrame): 目的変数のデータフレーム
+        rawResponseVariableForTest (pd.DataFrame): テスト用の目的変数のデータフレーム。目的変数のデータフレームと同様の値が入っている(?)
+        responseVariableColumnNames (list[str]): 目的変数の列名のリスト
+
+    Note:
+        不要な列が含まれている場合は適切に「モデルの構築」・「モデルを利用した予測」などが行えない。
+    """
+
+    def build_model(self) -> bool:
+        """build_model(self) -> bool
+        オブジェクトの初期化時に生成された、インスタンスの説明変数およびインスタンスの目的変数からモデルを構築する
+
+        Args:
+            self : none
+
+        Returns: boolean。成功ならTrue。失敗ならFalse。
+        """
+
+        df_mid_var: pd.DataFrame = self.return_df_for_2comibnations(
+            self.rawExplanaoryVariable
+        )
+
+        self.lr = LinearRegression()
+
+        self.lr.fit(df_mid_var, self.rawResponseVariable)
+
+        return True
+
+    def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
+        """predict(self, inputDF: pd.DataFrame) -> np.ndarray
+
+        Args:
+            self : none
+            inputDF (pd.DataFrame) : 構築されたモデルを使って予測を行うDF
+
+        Returns:
+            np.ndarray
+        """
+
+        df_mid_var: pd.DataFrame = self.return_df_for_2comibnations(inputDF)
+        resultDF = self.lr.predict(df_mid_var)
+
+        return resultDF
+
+    def returnMAPE(self) -> float:
+        """returnMAPE(self) -> float
+
+        モデルに構築されたデータからMAPEを算出する。
+
+        Args:
+            self: none
+
+        Returns:
+            float: 「モデルの構築に用いたデータから予測された値」と「実際の値」から算出されたMAPE
+            int: 失敗した場合、-1
+        """
+
+        return_expect: np.ndarray = self.rawResponseVariable[
+            self.responseVariableColumnNames
+        ].values
+        return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
+
+        mape: float = returnMapeScore(return_expect, return_actually)
+
+        return mape
+
+    def return_df_for_2comibnations(
+        self,
+        inputDF: pd.DataFrame,
+    ) -> pd.DataFrame:
+        """return_df_for_2comibnations()
+
+        入力DFから説明変数の組み合わせを算出し、その組み合わせの要素同士を乗算した列で構成されたDFを返す関数
+
+        """
+
+        # 学習用PDを作成する
+        # 0. 学習用DFを入力DFからコピーする
+        # 1. 列名二つずつの組み合わせを作成
+        # 2. 列名の組み合わせで計算し、それを学習用DFに入れる
+
+        returnDF: pd.DataFrame = inputDF.copy(deep=True)
+        returnDF_columns = returnDF.columns.tolist()
+        returnDF = returnDF.drop(returnDF_columns, axis=1)
+
+        list_combinations: list[set[str]] = list(
+            itertools.combinations(self.explanatoryVariableColumnNames, 2)
+        )
+        for combination_index in range(len(list_combinations)):
+            combination: set[str, str] = list_combinations[combination_index]
+            exp_name0: str = combination[0]
+            exp_name1: str = combination[1]
+            returnDF[str(combination_index)] = inputDF[exp_name0] * inputDF[exp_name1]
+
+        return returnDF
+
+
+# In[ ]:
+
+
+def test_Model_LinearSumOf2elementCombination_ForMultipleRegression():
+    """test_Model_LinearSumOf2elementCombination_ForMultipleRegression()
+    Model_LinearSumOf2elementCombination_ForMultipleRegressionのテスト
+    """
+
+    # 説明変数
+    plotX_1: np.ndarray = np.linspace(10, 20, 11)
+    plotX_2: np.ndarray = 10 * np.linspace(10, 20, 11)
+    plotX_3: np.ndarray = 100 * np.linspace(10, 20, 11)
+    # 目的変数
+    a: int = 100
+    b: int = 90
+    c: int = 80
+    k: int = -500
+    plotT: np.ndarray = (
+        (a * plotX_1 * plotX_2) + (b * plotX_1 * plotX_3) + (c * plotX_2 * plotX_3) + k
+    )
+
+    # DFを作成する
+    # カラム名のリスト
+    columnNames: list[str] = [
+        "process",
+        "plotX_2",
+        "plotX_3",
+        "plotT",
+    ]
+    datumForDF: list[np.ndarray] = [plotX_1, plotX_2, plotX_3, plotT]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 目的変数・説明変数のカラム名のリスト
+    # 目的変数のカラム名のリスト
+    columnNamesForExp: list[str] = [
+        "process",
+        "plotX_2",
+        "plotX_3",
+    ]
+    # 説明変数のカラム名のリスト
+    columnNamesForRes: list[str] = ["plotT"]
+
+    # 予測をする
+    # モデルオブジェクトの作成
+    objectModel = Model_LinearSumOf2elementCombination_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+    )
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータとのMAPEによって実装がうまくいっているかどうかの判定を行う
+    mape = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape = {mape}"
