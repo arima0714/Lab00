@@ -6842,3 +6842,142 @@ def test_Model_LinearSumOf2elementCombination_ForMultipleRegression():
     # モデル構築に用いたデータとのMAPEによって実装がうまくいっているかどうかの判定を行う
     mape = objectModel.returnMAPE()
     assert 0 <= mape < 1, f"mape = {mape}"
+
+
+# In[ ]:
+
+
+def test_returnDFaboutDifferenceBetweenInput2DFs():
+    """test_returnDFaboutDifferenceBetweenInput2DFs()
+
+    returnDFaboutDifferenceBetweenInput2DFs() のテスト
+    """
+
+    functionName: list[str] = ["A()", "B()", "C()", "D()", "E()"]
+
+    mape_model_1: list[float] = [4, 6, 6, 6, 8]
+    mape_model_2: list[float] = [5, 5, 7, 5, 9]
+    mape_model_3: list[float] = [6, 7, 5, 7, 4]
+    mape_model_4: list[float] = [2, 3, 8, 8, 1]
+
+    inputDF_1: pd.DataFrame = pd.DataFrame(
+        {
+            "functionName": functionName,
+            "model_1": mape_model_1,
+            "model_2": mape_model_2,
+            "model_3": mape_model_3,
+        }
+    )
+    inputDF_2: pd.DataFrame = pd.DataFrame(
+        {
+            "functionName": functionName,
+            "model_1": mape_model_1,
+            "model_2": mape_model_2,
+            "model_3": mape_model_3,
+            "model_4": mape_model_4,
+        }
+    )
+
+    functionName_expected: list[str] = ["A()", "B()", "E()"]
+    mape_model_1_expected: list[float] = [4, 6, 8]
+    mape_model_2_expected: list[float] = [5, 5, 9]
+    mape_model_3_expected: list[float] = [6, 7, 4]
+    mape_model_4_expected: list[float] = [2, 3, 1]
+    expectedDF: pd.DataFrame = pd.DataFrame(
+        {
+            "functionName": functionName_expected,
+            "model_1": mape_model_1_expected,
+            "model_2": mape_model_2_expected,
+            "model_3": mape_model_3_expected,
+            "model_4": mape_model_4_expected,
+        }
+    )
+
+    inputDF_1 = inputDF_1.set_index("functionName")
+    inputDF_2 = inputDF_2.set_index("functionName")
+    expectedDF = expectedDF.set_index("functionName")
+
+    model_name_list_1: list[str] = ["model_1", "model_2", "model_3"]
+    model_name_list_2: list[str] = ["model_1", "model_2", "model_3", "model_4"]
+
+    inputDF_1 = addLowestMAPEsModelNameColumn(
+        inputDF=inputDF_1, model_name_list=model_name_list_1, version=2
+    )
+    inputDF_2 = addLowestMAPEsModelNameColumn(
+        inputDF=inputDF_2, model_name_list=model_name_list_2, version=2
+    )
+
+    actuallyDF: pd.DataFrame = returnDFaboutDifferenceBetweenInput2DFs(
+        inputDF_1=inputDF_1, inputDF_2=inputDF_2
+    )
+
+    assert actuallyDF.equals(expectedDF)
+
+
+def returnDFaboutDifferenceBetweenInput2DFs(
+    inputDF_1: pd.DataFrame, inputDF_2: pd.DataFrame
+) -> pd.DataFrame:
+    """returnDFaboutDifferenceBetweenInput2DFs(inputDF_1 :pd.DataFrame, inputDF_2 :pd.DataFrame)
+
+    引数で渡された2つのDataFrameからDataFrameを返す。具体例は下記の通り。
+
+    * 入力DF1
+
+    | 関数名(index) | ... | 最適モデル  |
+    |-----|-----|--------|
+    | A() | ... | model1 |
+    | B() | ... | model1 |
+    | C() | ... | model1 |
+
+    * 入力DF1
+
+    | 関数名(index) | ... | 最適モデル  |
+    |-----|-----|--------|
+    | A() | ... | model1 |
+    | B() | ... | model2 |
+    | C() | ... | model1 |
+
+    * 返値DF
+
+    | 関数名(index) | model1      | model2      |
+    |-----|-------------|-------------|
+    | B() | mape@model1 | mape@model2 |
+
+    Args:
+        inputDF_1 (pd.DataFrame): 入力DF1
+        inputDF_2 (pd.DataFrame): 入力DF2
+
+    Returns:
+        pd.DataFrame: 渡された入力DFどうしの違いがわかるDF
+
+    """
+
+    inputDF_1_tmp = inputDF_1.copy()
+    inputDF_2_tmp = inputDF_2.copy()
+
+    if len(inputDF_1_tmp) > len(inputDF_2_tmp):
+        warnings.warn("inputDF_1のカラム数がinputDF_2のカラム数より多いです")
+        return False
+
+    set_inputDF_1_column: set[str] = set(inputDF_1_tmp.columns.tolist())
+    set_inputDF_2_column: set[str] = set(inputDF_2_tmp.columns.tolist())
+
+    if set_inputDF_1_column > set_inputDF_2_column:
+        warnings.warn("inputDF_2のカラムはinputDF_1のカラムを完全に包含していません")
+        return False
+
+    inputDFs_diff = inputDF_1["最適モデル"] != inputDF_2["最適モデル"]
+
+    inputDF_1_diff: pd.DataFrame = inputDF_1_tmp[inputDFs_diff]
+    inputDF_2_diff: pd.DataFrame = inputDF_2_tmp[inputDFs_diff]
+
+    set_best_model_names: set[str] = set(inputDF_1_diff["最適モデル"]) | set(
+        inputDF_2_diff["最適モデル"]
+    )
+    set_all_model_names: set[str] = set_inputDF_2_column
+    set_unBest_model_names: set[str] = set_all_model_names - set_best_model_names
+
+    retDF: pd.DataFrame = inputDF_2_tmp.drop(columns=set_unBest_model_names)
+    retDF = retDF[inputDFs_diff]
+
+    return retDF
