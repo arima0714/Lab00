@@ -18,10 +18,13 @@
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"python.formatting.provider": "black",
+		"python.languageServer": "Pylance",
+		"python.analysis.typeCheckingMode": "strict",
 		"editor.formatOnPaste": true,
 		"editor.formatOnSave": true,
 		"editor.formatOnType": true,
 		"notebook.lineNumbers": "on",
+		"editor.wordWrap": "on"
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
