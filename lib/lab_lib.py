@@ -3583,25 +3583,38 @@ def test_returnExplanatoryVariablesList(csvDirPath="../csv_files/"):
 # In[ ]:
 
 
-# 引数として渡されたDFに最低MAPEの列を追加する関数
-# 引数 inputDF：DF[関数名(列名ではなくインデックス), モデル名1, ... , モデル名n], model_name_list
-# 引数 model_name_list：モデル名が要素のリスト
-# 引数 version：バージョン。1がオリジナル。
-# 返値：DF[関数名(列名ではなくインデックス), モデル名1, ... , モデル名n, 最低MAPE]
+def addLowestMAPEColumn(
+    inputDF: pd.DataFrame, model_name_list: list[str] = [], version: int = 1
+) -> pd.DataFrame:
+    """addLowestMAPEColumn(inputDF, model_name_list=[], version=1)
 
+    引数として渡されたDFに最低MAPEの列を追加する関数
 
-def addLowestMAPEColumn(inputDF, model_name_list=[], version=1):
+    Args:
+        引数の名前 (引数の型): 引数の説明
+        引数の名前 (:obj:`引数の型`, optional): 引数の説明.
+        inputDF (pd.DataFrame): 列構成が次を満たすDF[関数名(列名ではなくインデックス), モデル名1, ... , モデル名n]
+        model_name_list (list[str]): モデル名が要素のリスト
+        version (int): バージョン。1がオリジナル。
+
+    Returns:
+        pd.DataFrame: 列構成が次を満たすDF[関数名(列名ではなくインデックス), モデル名1, ... , モデル名n, 最低MAPE]
+    Note:
+        なし
+
+    """
+
     if len(model_name_list) == 0 or version == 1:
-        funcNames = inputDF.index.to_list()
-        modelNames = inputDF.columns.to_list()
+        funcNames: list[str] = inputDF.index.to_list()
+        modelNames: list[str] = inputDF.columns.to_list()
 
         inputDF["最低値"] = math.inf
 
         for funcName in funcNames:
-            lowestInFunc = math.inf
-            seriesInFunc = inputDF.loc[funcName]
+            lowestInFunc: float = math.inf
+            seriesInFunc: pd.Series = inputDF.loc[funcName]
             for modelName in modelNames:
-                elem = seriesInFunc[modelName]
+                elem: float = seriesInFunc[modelName]
                 if elem < lowestInFunc:
                     lowestInFunc = elem
                 inputDF.at[funcName, "最低値"] = lowestInFunc
@@ -3610,16 +3623,16 @@ def addLowestMAPEColumn(inputDF, model_name_list=[], version=1):
     elif version == 2:
         inputDF["最低値"] = math.inf
 
-        func_names = inputDF.index.to_list()
+        func_names: list[str] = inputDF.index.to_list()
 
         for func_name in func_names:
-            lowestInFunc = math.inf
-            seriesInFunc = inputDF.loc[func_name]
+            lowestInFunc: float = math.inf
+            seriesInFunc: pd.Series = inputDF.loc[func_name]
             for model_name in model_name_list:
-                elem - seriesInFunc[model_name]
+                elem: float = seriesInFunc[model_name]
                 if elem < lowestInFunc:
                     lowestInFunc = elem
-                inputDF.at[funcName, "最低値"] = lowestInFunc
+                inputDF.at[func_name, "最低値"] = lowestInFunc
         return inputDF
 
 
@@ -3665,7 +3678,7 @@ def test_addLowestMAPEColumn():
         "log": [1, 2, 2, 1, 1, 3],
     }
     model_name_list = ["lin", "ip", "log"]
-    version = 1
+    version = 2
     input_DF = pd.DataFrame.from_dict(data=base_dict)
     input_DF = input_DF.set_index("functionName")
     # テスト結果を手動で作成
