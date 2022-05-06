@@ -4623,6 +4623,15 @@ class Models:
                     targetDF=targetDF,
                 )
             )
+        if "modelLinearSumOfElementCombinations" in self.modelNames:
+            self.objectModelLinearSumOfElementCombinations = (
+                Model_LinearSumOfElementCombinations_ForMultipleRegression(
+                    inputDF,
+                    explanatoryVariableColumnNames=expVarColNames,
+                    responseVariableColumnNames=resVarColNames,
+                    targetDF=targetDF,
+                )
+            )
 
     def setUpDataBeforeCalcLr(self):
         """setUpDataBeforeCalcLr(self)
@@ -4690,6 +4699,8 @@ class Models:
             self.objectModelInfiniteProductOfProblemSizeDividedByProcesses.build_model()
         if "modelLinearSumOf2elementCombination" in self.modelNames:
             self.objectModelLinearSumOf2elementCombination.build_model()
+        if "modelLinearSumOfElementCombinations" in self.modelNames:
+            self.objectModelLinearSumOfElementCombinations.build_model()
 
     # inputDF：__init__()でのinputDFとDF構成は同じ
     def predict(self, inputDF):
@@ -4806,6 +4817,10 @@ class Models:
             MAPEatTrain[
                 "modelLinearSumOf2elementCombination"
             ] = self.objectModelLinearSumOf2elementCombination.returnMAPE()
+        if "modelLinearSumOfElementCombinations" in self.modelNames:
+            MAPEatTrain[
+                "modelLinearSumOfElementCombinations"
+            ] = self.objectModelLinearSumOfElementCombinations.returnMAPE()
         self.MAPEatTrain = MAPEatTrain
 
     def returnCalculatedMAPE(self):
@@ -6994,3 +7009,274 @@ def returnDFaboutDifferenceBetweenInput2DFs(
     retDF = retDF[inputDFs_diff]
 
     return retDF
+
+
+# In[ ]:
+
+
+def test_Model_LinearSumOfElementCombinations_ForMultipleRegression():
+    """test_Model_LinearSumOfElementCombinations_ForMultipleRegression()
+
+    Model_LinearSumOfElementCombinations_ForMultipleRegression() のテスト
+    """
+
+    # 説明変数
+    plotX_1: np.ndarray = np.linspace(10, 20, 11)
+    plotX_2: np.ndarray = 13 * np.linspace(10, 20, 11)
+    plotX_3: np.ndarray = 17 * np.linspace(10, 20, 11)
+
+    # 係数・切片
+    a: int = 17
+    b: int = 19
+    c: int = 23
+    d: int = 29
+    e: int = 17
+    f: int = 19
+    g: int = 23
+    h: int = 29
+    i: int = 17
+    j: int = 19
+    k: int = 23
+    l: int = 29
+    l: int = 17
+    m: int = 19
+    n: int = 23
+    o: int = 29
+    p: int = -17
+
+    # 目的変数
+    plotT: np.ndarray = (
+        (a * plotX_1)
+        + (b * 1 / plotX_1 * plotX_2)
+        + (c * plotX_1 * plotX_2)
+        + (d * plotX_1 * 1 / plotX_1)
+        + (e * 1 / plotX_1 * plotX_1 * plotX_2)
+        + (f * 1 / plotX_1)
+        + (g * plotX_2)
+        + h
+    )
+
+    # DFを作成する
+    columnNames: list[str] = ["process", "plotX_2", "plotT"]
+    datumForDF: list[np.ndarray] = [plotX_1, plotX_2, plotT]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 目的変数のカラム名のリスト
+    columnNamesForExp: list[str] = ["process", "plotX_2"]
+    # 説明変数のカラム名のリスト
+    columnNamesForRes: list[str] = ["plotT"]
+
+    # 予測の実施
+    objectModel = Model_LinearSumOfElementCombinations_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+    )
+
+    # モデルの構築時に使用されるメソッドのテスト
+    col0: np.ndarray = 1 / plotX_1
+    col1: np.ndarray = 1 / plotX_1 * plotX_2
+    col2: np.ndarray = 1 / plotX_1 * plotX_2 * plotX_1
+    col3: np.ndarray = 1 / plotX_1 * plotX_1
+    col4: np.ndarray = plotX_2
+    col5: np.ndarray = plotX_2 * plotX_1
+    col6: np.ndarray = plotX_1
+    inputDictForExpectedDF: dict[str, np.ndarray] = {
+        "col0": col0,
+        "col1": col1,
+        "col2": col2,
+        "col3": col3,
+        "col4": col4,
+        "col5": col5,
+        "col6": col6,
+    }
+    expectedDF: pd.DataFrame = pd.DataFrame(data=inputDictForExpectedDF)
+
+    actuallyDF: pd.DataFrame = objectModel.return_df_for_combinations(inputDFForTest)
+    assert actuallyDF.equals(
+        expectedDF
+    ), f"actuallyDF = \n{actuallyDF}\nexpectedDF = \n{expectedDF}"
+
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装ができているかを判定する
+    mape = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape = {mape}"
+
+    # 目的変数
+    plotT: np.ndarray = (
+        (a * plotX_1)
+        + (b * plotX_1 * plotX_3)
+        + (c * 1 / plotX_1 * plotX_2)
+        + (d * plotX_1 * plotX_2)
+        + (e * 1 / plotX_1 * plotX_1)
+        + (f * 1 / plotX_1 * plotX_3)
+        + (g * plotX_2 * plotX_3)
+        + (h * 1 / plotX_1 * plotX_1 * plotX_2)
+        + (i * 1 / plotX_1 * plotX_1 * plotX_3)
+        + (j * 1 / plotX_1 * plotX_1 * plotX_2 * plotX_3)
+        + (k * 1 / plotX_1 * plotX_2 * plotX_3)
+        + (l * 1 / plotX_1)
+        + (m * plotX_2)
+        + (n * plotX_1 * plotX_2 * plotX_3)
+        + (o * plotX_3)
+        + p
+    )
+
+    # DFを作成する
+    columnNames = ["process", "plotX_2", "plotX_3", "plotT"]
+    datumForDF = [plotX_1, plotX_2, plotX_3, plotT]
+    inputDFForTest = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 目的変数のカラム名のリスト
+    columnNamesForExp = ["process", "plotX_2", "plotX_3"]
+    # 説明変数のカラム名のリスト
+    columnNamesForRes = ["plotT"]
+
+    # 予測の実施
+    objectModel = Model_LinearSumOfElementCombinations_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+    )
+
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装できているかを判定する
+    mape = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape = {mape}"
+
+
+class Model_LinearSumOfElementCombinations_ForMultipleRegression(
+    ModelBaseForMultipleRegression
+):
+    """説明変数の組み合わせの線形和モデル
+
+    Model_LinearSumOfElementCombinations_ForMultipleRegression(ModelBaseForMultipleRegression)
+
+    Attributes:
+        explanatoryVariableColumnNames (list[str]): 説明変数の列名のリスト
+        rawExplanatoryVariable (pd.DataFrame): 説明変数のデータフレーム
+        rawExplanatoryVariableForTest (pd.DataFrame): テスト用の説明変数のデータフレーム。説明変数のデータフレームと同様の値が入っている(?)
+        rawResponseVariable (pd.DataFrame): 目的変数のデータフレーム
+        rawResponseVariableForTest (pd.DataFrame): テスト用の目的変数のデータフレーム。目的変数のデータフレームと同様の値が入っている(?)
+        responseVariableColumnNames (list[str]): 目的変数の列名のリスト
+    """
+
+    def build_model(self) -> bool:
+        """build_model(self) -> bool
+
+        オブジェクトの初期化時に生成された、インスタンスの説明変数及びインスタンスの目的変数からモデルを構築する
+
+        Args:
+            self :none
+
+        Returns: boolean。成功ならTrue,失敗ならFalse
+        """
+
+        df_mid_var: pd.DataFrame = self.return_df_for_combinations(
+            self.rawExplanaoryVariable
+        )
+
+        self.lr = LinearRegression()
+
+        self.lr.fit(df_mid_var, self.rawResponseVariable)
+
+        return test_returnCollectedExistingData
+
+    def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
+        """predict(self, inputDF :pd.DataFrame) -> np.ndarray
+
+        Args:
+            self :none
+            inputDF (pd.DataFrame) : 構築されたモデルを使って予測を行うDF
+
+        Returns:
+            np.ndarray
+        """
+
+        df_mid_var: pd.DataFrame = self.return_df_for_combinations(inputDF)
+        resultDF: pd.DataFrame = self.lr.predict(df_mid_var)
+
+        return resultDF
+
+    def returnMAPE(self) -> float:
+        """returnMAPE(self) -> float
+
+        モデルに構築されたデータからMAPEを算出する。
+
+        Args:
+            self :none
+
+        Returns:
+            float: 「モデルの構築に用いたデータから予測された値」と「実際の値」から算出されたMAPE
+            int: 失敗した場合、-1
+        """
+
+        return_expect: np.ndarray = self.rawResponseVariable[
+            self.responseVariableColumnNames
+        ].values
+        return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
+
+        mape: float = returnMapeScore(return_expect, return_actually)
+
+        return mape
+
+    def return_df_for_combinations(self, inputDF: pd.DataFrame) -> pd.DataFrame:
+        """return_df_for_combinations()
+
+        入力DFから説明変数の組み合わせの全通りを算出し、その組み合わせの要素同士を乗算した列で構成されたDFを返す関数
+
+        Args:
+            self :none
+            inputDF (pd.DataFrame) : 説明変数の列を含んだDF
+
+        Returns:
+            pd.DataFrame: 説明通りのDF
+            int: 失敗した場合、-1
+        """
+
+        # 入力DFが説明変数・説明変数のすべてを内包しているか
+        set_input_column_names: set[str] = set(inputDF.columns.tolist())
+        set_exp_column_names: set[str] = set(self.explanatoryVariableColumnNames)
+        if set_input_column_names < set_exp_column_names:
+            return -1
+
+        # 説明変数のセットおよび入力DFのカラム名として "process" があるか
+        if "process" not in set_exp_column_names:
+            warnings.warn("説明変数の集合にプロセス数を表す process がありません")
+            return -1
+        if "process" not in set_input_column_names:
+            warnings.warn("入力DFのカラム名にプロセス数を表す process がありません")
+            return -1
+
+        # 「プロセス数の逆数」に関連する処理
+        _inputDF = inputDF.copy(deep=True)
+        _inputDF["inverse_process"] = 1 / inputDF["process"]
+        set_exp_column_names.add("inverse_process")
+        set_exp_column_names = sorted(set_exp_column_names)
+
+        returnDF: pd.DataFrame = pd.DataFrame(index=np.arange(len(_inputDF)))
+
+        # 組み合わせを生成
+        list_combinations: list[set[str]] = []
+        for i in range(len(set_exp_column_names) + 1):
+            if i != 0:
+                for set_combination in itertools.combinations(set_exp_column_names, i):
+                    list_combinations.append(set_combination)
+
+        list_combinations = sorted(list_combinations)
+
+        # 組み合わせを計算しながら
+        for combination_index in range(len(list_combinations)):
+            combination: set[str] = list_combinations[combination_index]
+            element: np.ndarray = np.ones(len(_inputDF))
+            for each_combination_index in range(len(combination)):
+                element *= _inputDF[combination[each_combination_index]].values
+            returnDF[f"col{combination_index}"] = element
+
+        return returnDF
