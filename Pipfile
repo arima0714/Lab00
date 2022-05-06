@@ -26,6 +26,7 @@ pydotplus = "*"
 flake8 = "*"
 graphviz = "*"
 jupyter-server = "==1.16.0"
+nbdime = "*"
 
 [dev-packages]
 
