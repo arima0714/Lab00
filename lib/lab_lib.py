@@ -7039,21 +7039,16 @@ def test_Model_LinearSumOfElementCombinations_ForMultipleRegression():
     k: int = 23
     l: int = 29
     l: int = 17
-    m: int = 19
-    n: int = 23
-    o: int = 29
-    p: int = -17
 
     # 目的変数
+
     plotT: np.ndarray = (
-        (a * plotX_1)
+        (a * plotX_1 * plotX_2)
         + (b * 1 / plotX_1 * plotX_2)
-        + (c * plotX_1 * plotX_2)
-        + (d * plotX_1 * 1 / plotX_1)
-        + (e * 1 / plotX_1 * plotX_1 * plotX_2)
-        + (f * 1 / plotX_1)
-        + (g * plotX_2)
-        + h
+        + (c * plotX_1)
+        + (d * plotX_2)
+        + (e * 1 / plotX_1)
+        + f
     )
 
     # DFを作成する
@@ -7062,9 +7057,9 @@ def test_Model_LinearSumOfElementCombinations_ForMultipleRegression():
     inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
     inputDFForTest["functionName"] = "functionName"
 
-    # 目的変数のカラム名のリスト
-    columnNamesForExp: list[str] = ["process", "plotX_2"]
     # 説明変数のカラム名のリスト
+    columnNamesForExp: list[str] = ["process", "plotX_2"]
+    # 目的変数のカラム名のリスト
     columnNamesForRes: list[str] = ["plotT"]
 
     # 予測の実施
@@ -7076,24 +7071,21 @@ def test_Model_LinearSumOfElementCombinations_ForMultipleRegression():
     )
 
     # モデルの構築時に使用されるメソッドのテスト
+
     col0: np.ndarray = 1 / plotX_1
+    col2: np.ndarray = plotX_2
     col1: np.ndarray = 1 / plotX_1 * plotX_2
-    col2: np.ndarray = 1 / plotX_1 * plotX_2 * plotX_1
-    col3: np.ndarray = 1 / plotX_1 * plotX_1
-    col4: np.ndarray = plotX_2
-    col5: np.ndarray = plotX_2 * plotX_1
-    col6: np.ndarray = plotX_1
+    col4: np.ndarray = plotX_1
+    col3: np.ndarray = plotX_1 * plotX_2
+
     inputDictForExpectedDF: dict[str, np.ndarray] = {
         "col0": col0,
         "col1": col1,
         "col2": col2,
         "col3": col3,
         "col4": col4,
-        "col5": col5,
-        "col6": col6,
     }
     expectedDF: pd.DataFrame = pd.DataFrame(data=inputDictForExpectedDF)
-
     actuallyDF: pd.DataFrame = objectModel.return_df_for_combinations(inputDFForTest)
     assert actuallyDF.equals(
         expectedDF
@@ -7105,24 +7097,19 @@ def test_Model_LinearSumOfElementCombinations_ForMultipleRegression():
     mape = objectModel.returnMAPE()
     assert 0 <= mape < 1, f"mape = {mape}"
 
-    # 目的変数
     plotT: np.ndarray = (
-        (a * plotX_1)
-        + (b * plotX_1 * plotX_3)
-        + (c * 1 / plotX_1 * plotX_2)
-        + (d * plotX_1 * plotX_2)
-        + (e * 1 / plotX_1 * plotX_1)
+        (a * plotX_1 * plotX_2 * plotX_3)
+        + (b * 1 / plotX_1 * plotX_2 * plotX_3)
+        + (c * plotX_1 * plotX_2)
+        + (d * plotX_1 * plotX_3)
+        + (e * 1 / plotX_1 * plotX_2)
         + (f * 1 / plotX_1 * plotX_3)
         + (g * plotX_2 * plotX_3)
-        + (h * 1 / plotX_1 * plotX_1 * plotX_2)
-        + (i * 1 / plotX_1 * plotX_1 * plotX_3)
-        + (j * 1 / plotX_1 * plotX_1 * plotX_2 * plotX_3)
-        + (k * 1 / plotX_1 * plotX_2 * plotX_3)
-        + (l * 1 / plotX_1)
-        + (m * plotX_2)
-        + (n * plotX_1 * plotX_2 * plotX_3)
-        + (o * plotX_3)
-        + p
+        + (h * plotX_1)
+        + (i * plotX_2)
+        + (j * plotX_3)
+        + (k * 1 / plotX_1)
+        + l
     )
 
     # DFを作成する
@@ -7245,7 +7232,6 @@ class Model_LinearSumOfElementCombinations_ForMultipleRegression(
         set_exp_column_names: set[str] = set(self.explanatoryVariableColumnNames)
         if set_input_column_names < set_exp_column_names:
             return -1
-
         # 説明変数のセットおよび入力DFのカラム名として "process" があるか
         if "process" not in set_exp_column_names:
             warnings.warn("説明変数の集合にプロセス数を表す process がありません")
@@ -7255,28 +7241,75 @@ class Model_LinearSumOfElementCombinations_ForMultipleRegression(
             return -1
 
         # 「プロセス数の逆数」に関連する処理
-        _inputDF = inputDF.copy(deep=True)
+        set_another_exp_column_names: set[str] = set(
+            self.explanatoryVariableColumnNames
+        )
+        set_another_exp_column_names.remove("process")
+        set_another_exp_column_names.add("inverse_process")
+        _inputDF: pd.DataFrame = inputDF.copy()
         _inputDF["inverse_process"] = 1 / inputDF["process"]
-        set_exp_column_names.add("inverse_process")
-        set_exp_column_names = sorted(set_exp_column_names)
+
+        """
+        list_combinations1 list:
+            モデル構築用リスト1  
+        list_combinations2 list:
+            モデル構築用リスト2
+        set_combinations_for_model set:
+            モデル構築用集合。モデル構築用集合1とモデル構築用集合2の和集合。
+        list_combinations_for_model list:
+            set_combinations_for_model をリスト化したリスト
+        DF_for_model pd.DataFrame:
+            モデル構築用DF
+        """
 
         returnDF: pd.DataFrame = pd.DataFrame(index=np.arange(len(_inputDF)))
 
-        # 組み合わせを生成
-        list_combinations: list[set[str]] = []
-        for i in range(len(set_exp_column_names) + 1):
-            if i != 0:
-                for set_combination in itertools.combinations(set_exp_column_names, i):
-                    list_combinations.append(set_combination)
-
-        list_combinations = sorted(list_combinations)
-
-        # 組み合わせを計算しながら
-        for combination_index in range(len(list_combinations)):
-            combination: set[str] = list_combinations[combination_index]
+        # モデル構築用集合1の作成
+        list_combinations1: list[set[str]] = self.return_list_combinations(
+            inputSet=set_exp_column_names
+        )
+        # モデル構築用集合2の作成
+        list_combinations2: list[set[str]] = self.return_list_combinations(
+            inputSet=set_another_exp_column_names
+        )
+        # モデル構築用集合の作成
+        set_combinations_for_model: set[set[str]] = set(list_combinations1) | set(
+            list_combinations2
+        )
+        list_combinations_for_model: list[list[str]] = list(set_combinations_for_model)
+        for i in range(len(list_combinations_for_model)):
+            list_combinations_for_model[i] = sorted(
+                list(list_combinations_for_model[i])
+            )
+        list_combinations_for_model = sorted(list_combinations_for_model)
+        # モデル構築用DF1とモデル構築用DF2からモデル構築用DFの作成
+        for combination_index in range(len(list_combinations_for_model)):
+            combination: set[str] = list_combinations_for_model[combination_index]
             element: np.ndarray = np.ones(len(_inputDF))
             for each_combination_index in range(len(combination)):
                 element *= _inputDF[combination[each_combination_index]].values
             returnDF[f"col{combination_index}"] = element
 
         return returnDF
+
+    def return_list_combinations(self, inputSet: set[str]) -> list[set[str]]:
+        """return_list_combinations(self, inputSet: set[str]) -> list[set[str]]
+
+        入力setから入力setの組み合わせの全通りを算出し、リストに格納した結果を返す関数
+
+        Args:
+            self :none
+            inputSet (set[str]) : 入力set。説明変数の値名が想定されている。
+
+        Returns:
+            pd.DataFrame: 説明通りのSet
+            int: 失敗した場合、-1
+        """
+
+        return_list: list[set[str]] = []
+        for i in range(len(inputSet) + 1):
+            if i != 0:
+                for set_combination in itertools.combinations(inputSet, i):
+                    return_list.append(set_combination)
+
+        return sorted(return_list)
