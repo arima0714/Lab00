@@ -32,6 +32,7 @@
 		"ms-toolsai.jupyter",
 		"ms-python.vscode-pylance",
 		"ms-toolsai.jupyter-renderers",
+		"bierner.markdown-mermaid"
 	]
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
