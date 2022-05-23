@@ -7313,3 +7313,59 @@ class Model_LinearSumOfElementCombinations_ForMultipleRegression(
                     return_list.append(set_combination)
 
         return sorted(return_list)
+
+
+# In[ ]:
+
+
+def returnWeightedMapeScore(real: list[float], predicted: list[float]) -> float:
+    """returnWeightedMapeScore(real :list[float], predicted :list[float]) -> float
+
+    重み付き平均絶対パーセント誤差 (weightedMAPE)(weighted Mean Absolute Percent Error)を返す関数
+
+    Args:
+        引数として長さの同じ二つのリストをとる
+        real :list[float] 実測値のリスト
+        predicted :list[float] 予測値のリスト
+
+    Returns:
+      float : 引数から計算されたweightedMAPEの値（単位％）
+    """
+
+    # 分母
+    returnNumNumerator: float = 0
+    # 分子
+    returnNumDenominator: float = 0
+
+    if len(real) != len(predicted):
+        warnings.warn("引数のリストの長さが異なります")
+        return -1
+
+    for i in range(len(real)):
+        real_num = real[i]
+        predicted_num = predicted[i]
+
+        returnNumNumerator += abs(real_num - predicted_num)
+        returnNumDenominator += real_num
+
+    return returnNumNumerator / returnNumDenominator
+
+
+def test_returnWeightedMapeScore():
+    test_real: list[float] = [1, 2, 3, 4, 5]
+    test_predicted: list[float] = [1, 2, 3, 4, 5]
+    expected: float = 0
+    actually: float = returnWeightedMapeScore(real=test_real, predicted=test_predicted)
+    assert expected == actually, f"expected = {expected}, actually = {actually}"
+
+    test_real: list[float] = [10, 20, 30, 40, 50]
+    test_predicted: list[float] = [1, 2, 3, 4, 5]
+    expected: float = (9 + 18 + 27 + 36 + 45) / (10 + 20 + 30 + 40 + 50)
+    actually: float = returnWeightedMapeScore(real=test_real, predicted=test_predicted)
+    assert expected == actually, f"expected = {expected}, actually = {actually}"
+
+    test_real: list[float] = [1, 2, 3, 4, 5]
+    test_predicted: list[float] = [11, 22, 33, 44, 55]
+    expected: float = (10 + 20 + 30 + 40 + 50) / (1 + 2 + 3 + 4 + 5)
+    actually: float = returnWeightedMapeScore(real=test_real, predicted=test_predicted)
+    assert expected == actually, f"expected = {expected}, actually = {actually}"
