@@ -4823,6 +4823,48 @@ class Models:
             ] = self.objectModelLinearSumOfElementCombinations.returnMAPE()
         self.MAPEatTrain = MAPEatTrain
 
+    def calcWeightedMAPE(self):
+        """calcWeightedMAPE(self)
+
+        学習用データへの重み付きMAPEを計算する
+
+        Args:
+            self
+        """
+
+        WeightedMAPEatTrain: dict[float] = {}
+
+        if len(self.resVarColNames) > 1:
+            warnings.warn("目的変数が複数カラムに及んでいるため、正常な動作を期待できません。")
+        realData: list[float] = self.inputDF[self.resVarColNames[0]].tolist()
+
+        if "modelLin" in self.modelNames:
+            predictedDataAtLin: list[float] = self.objectModelLin.predict(
+                self.inputDF[self.expVarColNames]
+            )
+            modelLinWeightedMAPEatTrain: float = returnWeightedMapeScore(
+                real=realData, predicted=predictedDataAtLin
+            )
+            WeightedMAPEatTrain["modelLin"] = modelLinWeightedMAPEatTrain
+
+        if "modelIp" in self.modelNames:
+            predictedDataAtIp: list[float] = self.objectModelIp.predict(
+                self.inputDF[self.expVarColNames]
+            )
+            modelIpWeightedMAPEatTrain: float = returnWeightedMapeScore(
+                real=realData, predicted=predictedDataAtIp
+            )
+            WeightedMAPEatTrain["modelIp"] = modelIpWeightedMAPEatTrain
+
+        if "modelLog" in self.modelNames:
+            predictedDataAtLog: list[float] = self.objectModelLog.predic(
+                self.inputDF[self.expVarColNames]
+            )
+            modelLogWeightedMAPEatTrain = returnWeightedMapeScore(
+                real=realData, predicted=predictedDataAtLog
+            )
+            WeightedMAPEatTrain["modelLog"] = modelLogWeightedMAPEatTrain
+
     def returnCalculatedMAPE(self):
         """returnCalculatedMAPE(self)
 
@@ -7369,3 +7411,62 @@ def test_returnWeightedMapeScore():
     expected: float = (10 + 20 + 30 + 40 + 50) / (1 + 2 + 3 + 4 + 5)
     actually: float = returnWeightedMapeScore(real=test_real, predicted=test_predicted)
     assert expected == actually, f"expected = {expected}, actually = {actually}"
+
+
+# In[ ]:
+
+
+def return_rawDFinLULESH(
+    processes: list[int], iterations: list[int], sizes: list[int], csvDirPath: str
+) -> pd.DataFrame:
+    """return_rawDFinLULESH(processes :list[int], iterations :list[int], sizes :list[int]) -> pd.DataFrame
+
+    ベンチマークプログラムLULESHの生データを取得するプログラム
+
+    Args:
+        processes (list[int]): プロセス数のリスト。要素数は1以上。
+        iterations (list[int]): イテレーション数のリスト。要素数は1以上。
+        sizes (list[int]): 問題サイズのリスト。要素数は1以上。
+        csvDirPath (str): CSVファイルのディレクトリ
+
+    Returns:
+        pd.DataFrame: 下記の列構成のデータフレーム
+
+    | 関数名 | 関数コール回数 | イテレーションサイズ | 問題サイズ |
+    |-----|---------|------------|-------|
+    |     |         |            |       |
+
+    """
+
+    whole_processes: list[int] = [8, 27, 64, 125, 216, 343, 512]
+    whole_iterations: list[int] = [8, 16, 32, 64, 128, 256]
+    whole_sizes: list[int] = [16, 24, 32, 48, 64, 128]
+
+    # プロセス数・問題サイズ・イテレーション数を集合化してwhole_*と同等かそれ未満であるのを確認
+    if set(processes).issubset(set(whole_processes)) == False:
+        warnings.warn("プロセス数の指定に誤りがあります")
+        return False
+    if set(iterations).issubset(set(whole_iterations)) == False:
+        warnings.warn("イテレーション数の指定に誤りがあります")
+        return False
+    if set(sizes).issubset(set(whole_sizes)) == False:
+        warnings.warn("問題サイズの指定に誤りがあります")
+        return False
+
+    datumCSV: list[pd.DataFrame] = []
+
+    for process in processes:
+        for iteration in iterations:
+            for size in sizes:
+                # candidateFileNames[f"pprof_lulesh_p{process}i{iteration}s{size}"] = {}
+                fileName: str = f"pprof_lulesh_p{process}i{iteration}s{size}.csv"
+                filePath: pathlib.Path = os.path.join(csvDirPath, fileName)
+                if os.path.exists(filePath) and os.stat(filePath).st_size != 0:
+                    data_pd: pd.DataFrame = pd.read_csv(filePath)
+                    data_pd["process"] = process
+                    data_pd["iteration"] = iteration
+                    data_pd["size"] = size
+                    datumCSV.append(data_pd)
+
+    returnDF = pd.concat(datumCSV, axis=0)
+    return returnDF
