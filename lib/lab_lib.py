@@ -4857,13 +4857,82 @@ class Models:
             WeightedMAPEatTrain["modelIp"] = modelIpWeightedMAPEatTrain
 
         if "modelLog" in self.modelNames:
-            predictedDataAtLog: list[float] = self.objectModelLog.predic(
+            predictedDataAtLog: list[float] = self.objectModelLog.predict(
                 self.inputDF[self.expVarColNames]
             )
             modelLogWeightedMAPEatTrain = returnWeightedMapeScore(
                 real=realData, predicted=predictedDataAtLog
             )
             WeightedMAPEatTrain["modelLog"] = modelLogWeightedMAPEatTrain
+
+        if "modelProcessDividedByProblemSize" in self.modelNames:
+            WeightedMAPEatTrain[
+                "modelProcessDividedByProblemSize"
+            ] = self.objectModelProcessDividedByProblemSize.returnWeightedMAPE()
+        if "modelProblemSizeDividedByProcess" in self.modelNames:
+            WeightedMAPEatTrain[
+                "modelProblemSizeDividedByProcess"
+            ] = self.objectModelProblemSizeDividedByProcess.returnWeightedMAPE()
+
+        if "modelLinearSumOf2elementCombination" in self.modelNames:
+            WeightedMAPEatTrain[
+                "modelLinearSumOf2elementCombination"
+            ] = self.objectModelLinearSumOf2elementCombination.returnWeightedMAPE()
+        if "modelLinearSumOfElementCombinations" in self.modelNames:
+            WeightedMAPEatTrain[
+                "modelLinearSumOfElementCombinations"
+            ] = self.objectModelLinearSumOfElementCombinations.returnWeightedMAPE()
+
+        if "modelLinAndIp" in self.modelNames:
+            predictedDataAtLinAndIp = self.objectModelLinAndIp.predict(
+                self.inputDF[self.expVarColNames]
+            )
+            modelLinAndIpMAPEatTrain = returnWeightedMapeScore(
+                realData, predictedDataAtLinAndIp
+            )
+            WeightedMAPEatTrain["modelLinAndIp"] = modelLinAndIpMAPEatTrain
+        if "modelLinAndLog" in self.modelNames:
+            predictedFromBuildDatum = (
+                self.objectModelLinAndLog.returnPredictedFromDataXForPredict()
+            )
+            modelLinAndLogMAPEatTrain = returnWeightedMapeScore(
+                realData, predictedFromBuildDatum
+            )
+            WeightedMAPEatTrain["modelLinAndLog"] = modelLinAndLogMAPEatTrain
+        if "modelIpAndLin" in self.modelNames:
+            predictedDataAtIpAndLin = self.objectModelIpAndLin.predict(
+                self.inputDF[self.expVarColNames]
+            )
+            modelIpAndLinMAPEatTrain = returnWeightedMapeScore(
+                realData, predictedDataAtIpAndLin
+            )
+            WeightedMAPEatTrain["modelIpAndLin"] = modelIpAndLinMAPEatTrain
+        if "modelIpAndLog" in self.modelNames:
+            predictedDataAtIpAndLog = self.objectModelIpAndLog.predict(
+                self.inputDF[self.expVarColNames]
+            )
+            modelIpAndLogMAPEatTrain = returnWeightedMapeScore(
+                realData, predictedDataAtIpAndLog
+            )
+            WeightedMAPEatTrain["modelIpAndLog"] = modelIpAndLogMAPEatTrain
+        if "modelLogAndLin" in self.modelNames:
+            predictedDataAtLogAndLin = self.objectModelLogAndLin.predict(
+                self.inputDF[self.expVarColNames]
+            )
+            modelLogAndLinMAPEatTrain = returnWeightedMapeScore(
+                realData, predictedDataAtLogAndLin
+            )
+            WeightedMAPEatTrain["modelLogAndLin"] = modelLogAndLinMAPEatTrain
+        if "modelLogAndIp" in self.modelNames:
+            predictedDataAtLogAndIp = self.objectModelLogAndIp.predict(
+                self.inputDF[self.expVarColNames]
+            )
+            modelLogAndIpMAPEatTrain = returnWeightedMapeScore(
+                realData, predictedDataAtLogAndIp
+            )
+            WeightedMAPEatTrain["modelLogAndIp"] = modelLogAndIpMAPEatTrain
+
+        self.WeightedMAPEatTrain = WeightedMAPEatTrain
 
     def returnCalculatedMAPE(self):
         """returnCalculatedMAPE(self)
@@ -4878,6 +4947,20 @@ class Models:
             return {}
         else:
             return self.MAPEatTrain
+
+    def returnCalculatedWeightedMAPE(self):
+        """returnCalculatedWeightedMAPE(self)
+
+        Args:
+            self : none
+
+        Returns:
+            Dict: calcMAPEで計算した辞書を返す関数。返す辞書がない場合は空の辞書を返す
+        """
+        if self.WeightedMAPEatTrain is None:
+            return {}
+        else:
+            return self.WeightedMAPEatTrain
 
     # 引数 targetDF:本オブジェクト構築時に必要になるinputDFをデータ構造が同じDF
     def calcRelativeErrorRate(self, targetDF=None):
@@ -5435,7 +5518,7 @@ class Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
             self : none
 
         Returns:
-            list: モデルの構築に用いたデータから予測された値
+            float: MAPE
             int: 失敗した場合、-1
         """
 
@@ -5447,7 +5530,30 @@ class Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
             )
         mape: float = returnMapeScore(l1=predicted_result, l2=real_data)
         return mape
-        # returnMAPE()を必要に応じて実装する
+
+    def returnWeightedMAPE(self) -> float:
+        """returnWeightedMAPE(self) -> float
+
+        モデルの構築に使用されたデータからweightedMAPEを算出する
+
+        Args:
+            self: none
+
+        Returns:
+            float: weightedMAPE
+            int: 失敗した場合、-1
+        """
+
+        predicted_result: list[float] = self.predict(self.rawExplanaoryVariable)
+        real_data: np.ndarray[float] = self.rawResponseVariable.to_numpy().ravel()
+        if len(predicted_result) != len(real_data):
+            warnings.warn(
+                f"予測された値の ndarray 長さ[{len(predicted_result)}]と実際の値の ndarray の長さ[{len(real_data)}]が異なります"
+            )
+        weightedMape: float = returnWeightedMapeScore(
+            real=real_data, predicted=predicted_result
+        )
+        return weightedMape
 
 
 # モデル式の宣言
@@ -5874,7 +5980,30 @@ class Model_ProblemSizeDevidedByProcesses_ForMultipleRegression(
             )
         mape: float = returnMapeScore(l1=predicted_result, l2=real_data)
         return mape
-        # returnMAPE()を必要に応じて実装する
+
+    def returnWeightedMAPE(self) -> float:
+        """returnWeightedMAPE(self) -> float
+
+        モデルの構築に使用されたデータからweightedMAPEを算出する
+
+        Args:
+            self: none
+
+        Returns:
+            float: weightedMAPE
+            int: 失敗した場合、-1
+        """
+
+        predicted_result: list[float] = self.predict(self.rawExplanaoryVariable)
+        real_data: np.ndarray[float] = self.rawResponseVariable.to_numpy().ravel()
+        if len(predicted_result) != len(real_data):
+            warnings.warn(
+                f"予測された値の ndarray 長さ[{len(predicted_result)}]と実際の値の ndarray の長さ[{len(real_data)}]が異なります"
+            )
+        weightedMape: float = returnWeightedMapeScore(
+            real=real_data, predicted=predicted_result
+        )
+        return weightedMape
 
 
 # モデル式の宣言
@@ -6825,6 +6954,28 @@ class Model_LinearSumOf2elementCombination_ForMultipleRegression(
 
         return mape
 
+    def returnWeightedMAPE(self) -> float:
+        """returnWeightedMAPE(self) -> float
+
+        モデルの構築に使用されたデータからweightedMAPEを算出する
+
+        Args:
+            self: none
+
+        Returns:
+            float: weightedMAPE
+            int: 失敗した場合、-1
+        """
+
+        return_expect: np.ndarray = self.rawResponseVariable[
+            self.responseVariableColumnNames
+        ].values
+        return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
+        weightedMape: float = returnWeightedMapeScore(
+            real=return_expect, predicted=return_actually
+        )
+        return weightedMape
+
     def return_df_for_2comibnations(
         self,
         inputDF: pd.DataFrame,
@@ -7254,6 +7405,28 @@ class Model_LinearSumOfElementCombinations_ForMultipleRegression(
         mape: float = returnMapeScore(return_expect, return_actually)
 
         return mape
+
+    def returnWeightedMAPE(self) -> float:
+        """returnWeightedMAPE(self) -> float
+
+        モデルの構築に使用されたデータからweightedMAPEを算出する
+
+        Args:
+            self: none
+
+        Returns:
+            float: weightedMAPE
+            int: 失敗した場合、-1
+        """
+
+        return_expect: np.ndarray = self.rawResponseVariable[
+            self.responseVariableColumnNames
+        ].values
+        return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
+        weightedMape: float = returnWeightedMapeScore(
+            real=return_expect, predicted=return_actually
+        )
+        return weightedMape
 
     def return_df_for_combinations(self, inputDF: pd.DataFrame) -> pd.DataFrame:
         """return_df_for_combinations()
