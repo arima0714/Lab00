@@ -4857,7 +4857,7 @@ class Models:
             WeightedMAPEatTrain["modelIp"] = modelIpWeightedMAPEatTrain
 
         if "modelLog" in self.modelNames:
-            predictedDataAtLog: list[float] = self.objectModelLog.predic(
+            predictedDataAtLog: list[float] = self.objectModelLog.predict(
                 self.inputDF[self.expVarColNames]
             )
             modelLogWeightedMAPEatTrain = returnWeightedMapeScore(
@@ -4868,20 +4868,20 @@ class Models:
         if "modelProcessDividedByProblemSize" in self.modelNames:
             WeightedMAPEatTrain[
                 "modelProcessDividedByProblemSize"
-            ] = self.objectModelProcessDividedByProblemSize.returnWeightedMape()
+            ] = self.objectModelProcessDividedByProblemSize.returnWeightedMAPE()
         if "modelProblemSizeDividedByProcess" in self.modelNames:
             WeightedMAPEatTrain[
                 "modelProblemSizeDividedByProcess"
-            ] = self.objectModelProblemSizeDividedBYProcess.returnWeightedMape()
+            ] = self.objectModelProblemSizeDividedByProcess.returnWeightedMAPE()
 
         if "modelLinearSumOf2elementCombination" in self.modelNames:
             WeightedMAPEatTrain[
                 "modelLinearSumOf2elementCombination"
-            ] = self.objectModelLinearSumOf2elementCombination.returnWeightedMape()
+            ] = self.objectModelLinearSumOf2elementCombination.returnWeightedMAPE()
         if "modelLinearSumOfElementCombinations" in self.modelNames:
             WeightedMAPEatTrain[
                 "modelLinearSumOfElementCombinations"
-            ] = self.objectModelLinearSumOfElementCombinations.returnWeightedMape()
+            ] = self.objectModelLinearSumOfElementCombinations.returnWeightedMAPE()
 
         if "modelLinAndIp" in self.modelNames:
             predictedDataAtLinAndIp = self.objectModelLinAndIp.predict(
@@ -4931,6 +4931,8 @@ class Models:
                 realData, predictedDataAtLogAndIp
             )
             WeightedMAPEatTrain["modelLogAndIp"] = modelLogAndIpMAPEatTrain
+
+        self.WeightedMAPEatTrain = WeightedMAPEatTrain
 
     def returnCalculatedMAPE(self):
         """returnCalculatedMAPE(self)
