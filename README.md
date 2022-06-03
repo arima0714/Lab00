@@ -24,6 +24,19 @@
     1. `cd /workspace/lib`
     2. `make`
 
+# 提案手法のフロー図
+
+```mermaid
+flowchart TD
+step1[関数コール回数を取得]
+step2[各関数ごとにモデルを構築]
+step3[最適なモデルを用いて予測]
+
+step1 --> step2
+step2 --> step3
+
+```
+
 # モデル「`Model_LinearSumOfElementCombinations_ForMultipleRegression`」について
 
 ## モデル構築における各用語について
