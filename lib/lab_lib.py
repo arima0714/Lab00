@@ -7643,3 +7643,76 @@ def return_rawDFinLULESH(
 
     returnDF = pd.concat(datumCSV, axis=0)
     return returnDF
+
+
+# In[ ]:
+
+
+def returnMAPEtableInLULESH(
+    rawDF: pd.DataFrame,
+    list_expVar: list[str],
+    list_resVar: list[str],
+    list_modelName: list[str],
+) -> pd.DataFrame:
+    """returnMAPEtableInLULESH
+
+    LULESHでのMAPE表を返す関数
+
+    Args:
+        rawDF (pd.DataFrame) : "functionName" が列名の一つとして入っていることが条件
+        list_expVar (list[str]) : 説明変数のリスト
+        list_modelName (list[str]) : 目的変数のリスト
+
+    Returns:
+        pd.DataFrame
+        int : なんらかの不備・障害により正常な返り値を返すことができなくなったとき
+    """
+
+    if len(list_expVar) == 0 or (
+        set(list_expVar).issubset(set(rawDF.columns.tolist())) == False
+    ):
+        warnings.warn("説明変数の指定に誤りがあります")
+        return -1
+    if len(list_resVar) == 0 or (
+        set(list_resVar).issubset(set(rawDF.columns.tolist())) == False
+    ):
+        warnings.warn("目的変数の指定に誤りがあります")
+        return -1
+
+    function_names: list[str] = list(set(rawDF["functionName"].tolist()))
+    if len(function_names) == 0:
+        warnings.warn("与えられたDFに関数名がありません")
+        return -1
+
+    result_series_list: list[pd.Series] = []
+
+    for function_name in function_names:
+        # 関数ごとの生データ
+        rawDF_per_function = rawDF[rawDF["functionName"] == function_name]
+        # モデルの構築
+        models = Models(
+            inputDF=rawDF_per_function,
+            expVarColNames=list_expVar,
+            resVarColNames=list_resVar,
+            modelNames=list_modelName,
+        )
+
+        models.setUpDataBeforeCalcLr()
+        models.calcLr()
+        models.calcMAPE()
+
+        dictCalcedMAPE = models.returnCalculatedMAPE()
+
+        # 算出されたMAPEの数値をfloatにする
+        for key in dictCalcedMAPE.keys():
+            dictCalcedMAPE[key] = float(dictCalcedMAPE[key])
+
+        # 関数ごとの結果に格納
+        dict_for_series: dict = copy.deepcopy(dictCalcedMAPE)
+        dict_for_series["functionName"] = function_name
+
+        series = pd.Series(dict_for_series)
+        result_series_list.append(series)
+
+    resultDF: pd.DataFrame = pd.DataFrame(result_series_list)
+    return resultDF

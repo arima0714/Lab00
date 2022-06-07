@@ -30,7 +30,6 @@ profile.*
 draft.ipynb
 tmp*
 workspace.code-workspace
-.vscode
 __pycache__
 root_jupyter/lab/workspaces
 root_jupyter/migrated
