@@ -5062,6 +5062,49 @@ class Models:
             )
         self.relativeErrorRateDict = relativeErrorRateDict
 
+    def returnObject(self, modelName: str):
+
+        """returnObject(self, modelName :str)
+
+        構築したモデルオブジェクトを返す関数
+
+        Args:
+            self : none
+            modelName (str) : モデル名
+        """
+        if "modelLin" == modelName:
+            return self.objectModelLin
+        if "modelIp" == modelName:
+            return self.objectModelIp
+        if "modelLog" == modelName:
+            return self.objectModelLog
+        if "modelProcessDividedByProblemSize" == modelName:
+            return self.objectModelProcessDividedByProblemSize
+        if "modelProblemSizeDividedByProcess" == modelName:
+            return objectModelProblemSizeDividedByProcess
+        if "modelLinAndIp" == modelName:
+            return self.objectModelLinAndIp
+        if "modelLinAndLog" == modelName:
+            return self.objectModelLinAndLog
+        if "modelIpAndLin" == modelName:
+            return self.objectModelIpAndLin
+        if "modelIpAndLog" == modelName:
+            return self.objectModelIpAndLog
+        if "modelLogAndLin" == modelName:
+            return self.objectModelLogAndLin
+        if "modelLogAndIp" == modelName:
+            return self.objectModelLogAndIp
+        if "modelBasicTree" == modelName:
+            return self.objectModelBasicTree
+        if "modelInfiniteProductOfProblemSizeMultipliedByProcesses" == modelName:
+            return self.objectModelInfiniteProductOfProblemSizeMultipliedByProcesses
+        if "modelInfiniteProductOfProblemSizeDividedByProcesses" == modelName:
+            return self.objectModelInfiniteProductOfProblemSizeDividedByProcesses
+        if "modelLinearSumOf2elementCombination" == modelName:
+            return self.objectModelLinearSumOf2elementCombination
+        if "modelLinearSumOfElementCombinations" == modelName:
+            return self.objectModelLinearSumOfElementCombinations
+
     def returnRelativeErrorRateDict(self):
         """returnRelativeErrorRateDict(self)
 
