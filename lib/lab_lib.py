@@ -5081,7 +5081,7 @@ class Models:
         if "modelProcessDividedByProblemSize" == modelName:
             return self.objectModelProcessDividedByProblemSize
         if "modelProblemSizeDividedByProcess" == modelName:
-            return objectModelProblemSizeDividedByProcess
+            return self.objectModelProblemSizeDividedByProcess
         if "modelLinAndIp" == modelName:
             return self.objectModelLinAndIp
         if "modelLinAndLog" == modelName:
