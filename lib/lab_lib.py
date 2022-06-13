@@ -5062,6 +5062,49 @@ class Models:
             )
         self.relativeErrorRateDict = relativeErrorRateDict
 
+    def returnObject(self, modelName: str):
+
+        """returnObject(self, modelName :str)
+
+        構築したモデルオブジェクトを返す関数
+
+        Args:
+            self : none
+            modelName (str) : モデル名
+        """
+        if "modelLin" == modelName:
+            return self.objectModelLin
+        if "modelIp" == modelName:
+            return self.objectModelIp
+        if "modelLog" == modelName:
+            return self.objectModelLog
+        if "modelProcessDividedByProblemSize" == modelName:
+            return self.objectModelProcessDividedByProblemSize
+        if "modelProblemSizeDividedByProcess" == modelName:
+            return self.objectModelProblemSizeDividedByProcess
+        if "modelLinAndIp" == modelName:
+            return self.objectModelLinAndIp
+        if "modelLinAndLog" == modelName:
+            return self.objectModelLinAndLog
+        if "modelIpAndLin" == modelName:
+            return self.objectModelIpAndLin
+        if "modelIpAndLog" == modelName:
+            return self.objectModelIpAndLog
+        if "modelLogAndLin" == modelName:
+            return self.objectModelLogAndLin
+        if "modelLogAndIp" == modelName:
+            return self.objectModelLogAndIp
+        if "modelBasicTree" == modelName:
+            return self.objectModelBasicTree
+        if "modelInfiniteProductOfProblemSizeMultipliedByProcesses" == modelName:
+            return self.objectModelInfiniteProductOfProblemSizeMultipliedByProcesses
+        if "modelInfiniteProductOfProblemSizeDividedByProcesses" == modelName:
+            return self.objectModelInfiniteProductOfProblemSizeDividedByProcesses
+        if "modelLinearSumOf2elementCombination" == modelName:
+            return self.objectModelLinearSumOf2elementCombination
+        if "modelLinearSumOfElementCombinations" == modelName:
+            return self.objectModelLinearSumOfElementCombinations
+
     def returnRelativeErrorRateDict(self):
         """returnRelativeErrorRateDict(self)
 
@@ -7716,3 +7759,328 @@ def returnMAPEtableInLULESH(
 
     resultDF: pd.DataFrame = pd.DataFrame(result_series_list)
     return resultDF
+
+
+# In[ ]:
+
+
+def calcWeightedMAPEscore(
+    inputDF: pd.DataFrame,
+    inputColumnDict: dict,
+) -> float:
+    """calcWeightedMAPEscore()
+
+    重み付き平均MAPEを算出する関数
+
+    Args:
+        inputDF (pd.DataFrame) : 下記のようなテーブル構成
+        |<関数名>|<コール回数>|<MAPE>|
+        inputColumnDict (dict) : 上記のテーブル構成を前提に、次の辞書を構成する。{"funcName":<関数名>,"call":<コール回数>,"MAPE":<MAPE>,}
+
+    Returns:
+        float: 重み付き平均MAPE
+
+    """
+    _col_funcName: str = inputColumnDict["funcName"]
+    _col_call: str = inputColumnDict["call"]
+    _col_MAPE: str = inputColumnDict["MAPE"]
+
+    _ser_funcName: pd.Series = inputDF[_col_funcName]
+    _ser_call: pd.Series = inputDF[_col_call]
+    _ser_MAPE: pd.Series = inputDF[_col_MAPE]
+
+    _ret_numerator: float = 0
+    _ret_denominator: float = sum(_ser_call)
+
+    for index in range(len(_ser_funcName)):
+        _ret_numerator += _ser_call[index] * _ser_MAPE[index]
+
+    return _ret_numerator / _ret_denominator
+
+
+def test_calcWeightedMAPEscore():
+    関数名: list[str] = ["name0", "name1", "name2", "name3"]
+    inputColumnDict = {"funcName": "関数名", "call": "コール回数", "MAPE": "MAPE"}
+    # テストケース1
+    コール回数: list[float] = [1, 2, 3, 4]
+    MAPE: list[float] = [1, 2, 3, 4]
+    inputDF: pd.DataFrame = pd.DataFrame.from_dict(
+        {"関数名": 関数名, "コール回数": コール回数, "MAPE": MAPE}
+    )
+    expected_result = 3.0
+    actually_result = calcWeightedMAPEscore(
+        inputDF=inputDF, inputColumnDict=inputColumnDict
+    )
+    # print(inputDF)
+    assert (
+        expected_result == actually_result
+    ), f"expected_result={expected_result},actually_result={actually_result}"
+    # テストケース2
+    コール回数: list[float] = [5, 4, 3, 2]
+    MAPE: list[float] = [7, 7, 7, 7]
+    inputDF: pd.DataFrame = pd.DataFrame.from_dict(
+        {"関数名": 関数名, "コール回数": コール回数, "MAPE": MAPE}
+    )
+    expected_result = 7.0
+    actually_result = calcWeightedMAPEscore(
+        inputDF=inputDF, inputColumnDict=inputColumnDict
+    )
+    # print(inputDF)
+    assert (
+        expected_result == actually_result
+    ), f"expected_result={expected_result},actually_result={actually_result}"
+    # テストケース3
+    コール回数: list[float] = [1, 2, 3, 4]
+    MAPE: list[float] = [5, 4, 3, 2]
+    inputDF: pd.DataFrame = pd.DataFrame.from_dict(
+        {"関数名": 関数名, "コール回数": コール回数, "MAPE": MAPE}
+    )
+    expected_result = 3.0
+    actually_result = calcWeightedMAPEscore(
+        inputDF=inputDF, inputColumnDict=inputColumnDict
+    )
+    # print(inputDF)
+    assert (
+        expected_result == actually_result
+    ), f"expected_result={expected_result},actually_result={actually_result}"
+
+
+# In[ ]:
+
+
+def return_bestModelObject(
+    inputDF: pd.DataFrame,
+    list_expVar: list[str],
+    list_resVar: list[str],
+    list_modelName: list[str],
+):
+    """return_bestModelObject()
+
+    入力に対して最適なモデルを返す関数
+
+    Args:
+        inputDF (pd.DataFrame) : 下記のようなテーブル構成
+        |<説明変数1>|<説明変数2>|...|<目的変数>|
+        list_expVar (list[str]) : 説明変数のリスト
+        list_resVar (list[str]) : 目的変数のリスト
+        list_modelName (list[str]) : モデル名のリスト
+
+    Returns:
+        dict : {"object":各モデルのオブジェクト, "modelName":モデル名}
+
+    """
+
+    models = Models(
+        inputDF=inputDF,
+        expVarColNames=list_expVar,
+        resVarColNames=list_resVar,
+        modelNames=list_modelName,
+    )
+
+    models.setUpDataBeforeCalcLr()
+    models.calcLr()
+    models.calcMAPE()
+
+    retObject = None
+    retModelName: str = None
+
+    dict_MAPE: dict[float] = models.returnCalculatedMAPE()
+
+    retModelName = min(dict_MAPE, key=dict_MAPE.get)
+    retObject = models.returnObject(modelName=retModelName)
+
+    return {"object": retObject, "modelName": retModelName}
+
+
+def test_return_bestModelObject():
+
+    exp_1: np.ndarray = np.linspace(1, 10, 10)
+    exp_2: np.ndarray = np.linspace(10, 1, 10)
+    exp_3: np.ndarray = np.linspace(20, 10, 10)
+
+    coefficient_1: int = 7
+    coefficient_2: int = 5
+    coefficient_3: int = -3
+
+    list_modelName: list[str] = ["modelLin", "modelIp", "modelLog"]
+    list_expVar: list[str] = ["process", "exp_2", "exp_3"]
+    list_resVar: list[str] = ["res_"]
+
+    # 線形モデル
+    res_: np.ndarray = (
+        coefficient_1 * exp_1 + coefficient_2 * exp_2 + coefficient_3 * exp_3
+    )
+    inputDF: pd.DataFrame = pd.DataFrame.from_dict(
+        {"process": exp_1, "exp_2": exp_2, "exp_3": exp_3, "res_": res_}
+    )
+    inputDF["functionName"] = "functionName"
+    retDict = return_bestModelObject(
+        inputDF=inputDF,
+        list_expVar=list_expVar,
+        list_resVar=list_resVar,
+        list_modelName=list_modelName,
+    )
+
+    expected: str = "modelLin"
+    actually: str = retDict["modelName"]
+    assert actually == expected, f"expected={expected}, actually={actually}"
+    assert retDict["object"] != None
+
+    # 反比例モデル
+    res_: np.ndarray = (
+        coefficient_1 / exp_1 + coefficient_2 / exp_2 + coefficient_3 / exp_3
+    )
+    inputDF: pd.DataFrame = pd.DataFrame.from_dict(
+        {"process": exp_1, "exp_2": exp_2, "exp_3": exp_3, "res_": res_}
+    )
+    inputDF["functionName"] = "functionName"
+    retDict = return_bestModelObject(
+        inputDF=inputDF,
+        list_expVar=list_expVar,
+        list_resVar=list_resVar,
+        list_modelName=list_modelName,
+    )
+
+    expected: str = "modelIp"
+    actually: str = retDict["modelName"]
+    assert actually == expected, f"expected={expected}, actually={actually}"
+    assert retDict["object"] != None
+
+    # 対数モデル
+    res_: np.ndarray = (
+        coefficient_1 * np.log10(exp_1)
+        + coefficient_2 * np.log10(exp_2)
+        + coefficient_3 * np.log10(exp_3)
+    )
+    inputDF: pd.DataFrame = pd.DataFrame.from_dict(
+        {"process": exp_1, "exp_2": exp_2, "exp_3": exp_3, "res_": res_}
+    )
+    inputDF["functionName"] = "functionName"
+    retDict = return_bestModelObject(
+        inputDF=inputDF,
+        list_expVar=list_expVar,
+        list_resVar=list_resVar,
+        list_modelName=list_modelName,
+    )
+
+    expected: str = "modelLog"
+    actually: str = retDict["modelName"]
+    assert actually == expected, f"expected={expected}, actually={actually}"
+    assert retDict["object"] != None
+
+
+# In[ ]:
+
+
+def returnWeightedMAPEScoreFromDF(
+    inputDFtrain: pd.DataFrame,
+    inputDFtest: pd.DataFrame,
+    list_expVar: list[str],
+    list_resVar: list[str],
+    list_modelName,
+):
+    return -1
+
+
+def returnWeightedMapeScoreFromCondition(
+    benchmarkName: str,
+    trainCondition: dict,
+    testCondition: dict,
+    csvDirPath: str,
+    list_modelName: list[str],
+):
+    if benchmarkName == "lulesh":
+        # lulesh の生データ取得処理
+        rawDF_train: pd.DataFrmae = return_rawDFinLULESH(
+            processes=trainCondition["processes"],
+            iterations=trainCondition["iterations"],
+            sizes=trainCondition["sizes"],
+            csvDirPath=csvDirPath,
+        )
+        rawDF_test: pd.DataFrmae = return_rawDFinLULESH(
+            processes=testCondition["processes"],
+            iterations=testCondition["iterations"],
+            sizes=testCondition["sizes"],
+            csvDirPath=csvDirPath,
+        )
+        rawDF_train = rawDF_train.rename(columns={"Name": "functionName"})
+        rawDF_test = rawDF_test.rename(columns={"Name": "functionName"})
+
+        # 説明変数及び目的変数の処理
+        list_expVar: list[str] = ["process", "iteration", "size"]
+        list_resVar: list[str] = ["#Call"]
+
+        functionNames: list[str] = list(set(rawDF_train["functionName"]))
+
+    elif benchmarkName in ["cg", "ep", "ft", "is", "lu", "mg"]:
+        # NPB の生データ取得処理
+        rawDF_train: pd.DataFrame = return_rawDF_with_init_param(
+            benchmark_name=benchmarkName,
+            classes=trainCondition["sizes"],
+            processes=trainCondition["processes"],
+        )
+        rawDF_test: pd.DataFrame = return_rawDF_with_init_param(
+            benchmark_name=benchmarkName,
+            classes=testCondition["sizes"],
+            processes=testCondition["processes"],
+        )
+
+        # 説明変数及び目的変数の処理
+        list_expVar: list[str] = rawDF_train.columns.tolist()
+        for element_be_removed in [
+            "functionName",
+            "functionCallNum",
+            "intBenchmarkClass",
+            "benchmarkName",
+            "benchmarkClass",
+        ]:
+            list_expVar.remove(element_be_removed)
+        list_resVar: list[str] = ["functionCallNum"]
+
+        functionNames: list[str] = list(set(rawDF_train["functionName"]))
+
+    else:
+        warnings.warn(f"{benchmarkName}は想定外のベンチマークプログラム名です")
+        return -1
+
+    list_series: list[pd.Series] = []
+
+    # 関数ごとのDFを作成
+    for functionName in functionNames:
+        rawDF_per_function_train: pd.DataFrame = rawDF_train[
+            rawDF_train["functionName"] == functionName
+        ]
+        rawDF_per_function_test: pd.DataFrame = rawDF_test[
+            rawDF_test["functionName"] == functionName
+        ]
+
+        bestModelDict: dict = return_bestModelObject(
+            inputDF=rawDF_per_function_train,
+            list_expVar=list_expVar,
+            list_resVar=list_resVar,
+            list_modelName=list_modelName,
+        )
+        bestModel = bestModelDict["object"]
+        predicted = float(
+            np.array(bestModel.predict(inputDF=rawDF_per_function_test[list_expVar]))
+        )
+        _call: float = float(rawDF_per_function_test.iloc[0][list_resVar[0]])
+        _MAPE: float = float(returnMapeScore(l1=[_call], l2=[predicted]))
+        _series: pd.Series = pd.Series(
+            {
+                "functionName": functionName,
+                "call": _call,
+                "MAPE": _MAPE,
+                "predicted_call": predicted,
+            }
+        )
+        list_series.append(_series)
+
+    DF_toCalcWeightedMAPE: pd.DataFrame = pd.concat(list_series, axis=1).T
+
+    retNum: float = calcWeightedMAPEscore(
+        inputDF=DF_toCalcWeightedMAPE,
+        inputColumnDict={"funcName": "functionName", "call": "call", "MAPE": "MAPE"},
+    )
+
+    return retNum
