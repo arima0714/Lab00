@@ -2,6 +2,15 @@
 
 ## `Real_t CalcElemVolume()`
 
+引数は3つの配列で、行うことは「与えられた引数の要素から値を算出し、その値を返す」。
+
+コードリーディングおよび実データの観察からも、
+
+$
+関数コール回数 = イテレーション数 \times 問題サイズ ^ 3
+$
+
+であると考えられる。
 
 ```mermaid
 flowchart TD
@@ -9,16 +18,14 @@ funcRoot[Real_t CalcElemVolume]
 func1[void CalcKinematicsForElems]
 func2[void CalcLagrangeElements]
 func3[void LagrangeElements]
-func4[void CalcTimeConstraintsForElems]
-func5[void LagrangeLeapFrog]
+func4_[LagrangeLeapFrog]
 func6[int main]
 
-func6 --> func5
-func5 --> func4
-func4 --> func3
-func3 --> func2
-func2 --> func1
-func1 --> funcRoot
+func6 -- 関数mainにおいて変数locDomのクラス内変数から構成される条件を満たす場合に関数LagrangeLeapFrogを呼び出す --> func4_
+func4_ -- 関数LagrangeLeapFrogは関数LagrangeElementsを呼び出す --> func3
+func3 -- 関数LagrangeElementsは関数CalcKinematicsForElemsを呼び出す --> func2
+func2 -- 関数CalcLagrangeElementsの引数domainのnumElemメソッドの返り値が0以上の場合に関数CalcKinematicsForElemsを呼び出す --> func1
+func1 -- 関数CalcKinematicsForElemsの引数numElemの数だけCalcElemVolumeを呼び出す --> funcRoot
 
 ```
 
