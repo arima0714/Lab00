@@ -42,6 +42,7 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from statistics import median_low
+from typing import Dict
 from unittest.mock import MagicMock
 import warnings
 from mpl_toolkits.mplot3d import Axes3D
@@ -1565,11 +1566,11 @@ class ModelBaseForMultipleRegression:
 
     def __init__(
         self,
-        inputDF,
-        explanatoryVariableColumnNames,
-        responseVariableColumnNames,
-        conditionDictForTest={},
-        targetDF=None,
+        inputDF: pd.DataFrame,
+        explanatoryVariableColumnNames: list[str],
+        responseVariableColumnNames: list[str],
+        conditionDictForTest: Dict[str, str] = {},
+        targetDF: pd.DataFrame = None,
     ):
 
         # 関数名が複数種類ある場合は警告
