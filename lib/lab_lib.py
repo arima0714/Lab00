@@ -7410,7 +7410,7 @@ class Model_LinearSumOfElementCombinations_ForMultipleRegression(
 
         self.lr.fit(df_mid_var, self.rawResponseVariable)
 
-        return test_returnCollectedExistingData
+        return True
 
     def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
         """predict(self, inputDF :pd.DataFrame) -> np.ndarray
