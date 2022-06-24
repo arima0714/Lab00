@@ -8380,7 +8380,7 @@ def test_Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression():
         "col5": col5,
     }
     expectedDF: pd.DataFrame = pd.DataFrame(data=inputDictForExpectedDF)
-    actuallyDF: pd.DataFrame = objectModel.return_df_for_combinations(inputDFForTest, 2)
+    actuallyDF: pd.DataFrame = objectModel.return_df_for_combinations(inputDFForTest, 3)
 
     assert actuallyDF.equals(
         expectedDF
