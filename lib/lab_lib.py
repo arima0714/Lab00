@@ -42,6 +42,7 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from statistics import median_low
+from typing import Dict
 from unittest.mock import MagicMock
 import warnings
 from mpl_toolkits.mplot3d import Axes3D
@@ -1565,11 +1566,11 @@ class ModelBaseForMultipleRegression:
 
     def __init__(
         self,
-        inputDF,
-        explanatoryVariableColumnNames,
-        responseVariableColumnNames,
-        conditionDictForTest={},
-        targetDF=None,
+        inputDF: pd.DataFrame,
+        explanatoryVariableColumnNames: list[str],
+        responseVariableColumnNames: list[str],
+        conditionDictForTest: Dict[str, str] = {},
+        targetDF: pd.DataFrame = None,
     ):
 
         # 関数名が複数種類ある場合は警告
@@ -4632,6 +4633,48 @@ class Models:
                     targetDF=targetDF,
                 )
             )
+        if "modelLinearSumOf2elementCombinationWithCubed" in self.modelNames:
+            self.objectModelLinearSumOf2elementCombinationWithCubed = (
+                Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression(
+                    inputDF,
+                    explanatoryVariableColumnNames=expVarColNames,
+                    responseVariableColumnNames=resVarColNames,
+                    targetDF=targetDF,
+                    exponent=3,
+                )
+            )
+        if "modelLinearSumOf2elementCombinationWithSquared" in self.modelNames:
+            self.objectModelLinearSumOf2elementCombinationWithSquared = (
+                Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression(
+                    inputDF,
+                    explanatoryVariableColumnNames=expVarColNames,
+                    responseVariableColumnNames=resVarColNames,
+                    targetDF=targetDF,
+                    exponent=2,
+                )
+            )
+        if (
+            "modelLinearSumOf2elementCombinationWithCubedWithoutProcess"
+            in self.modelNames
+        ):
+            self.objectModelLinearSumOf2elementCombinationWithCubedWithoutProcess = Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleRegression(
+                inputDF,
+                explanatoryVariableColumnNames=expVarColNames,
+                responseVariableColumnNames=resVarColNames,
+                targetDF=targetDF,
+                exponent=3,
+            )
+        if (
+            "modelLinearSumOf2elementCombinationWithSquaredWithoutProcess"
+            in self.modelNames
+        ):
+            self.objectModelLinearSumOf2elementCombinationWithSquaredWithoutProcess = Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleRegression(
+                inputDF,
+                explanatoryVariableColumnNames=expVarColNames,
+                responseVariableColumnNames=resVarColNames,
+                targetDF=targetDF,
+                exponent=2,
+            )
 
     def setUpDataBeforeCalcLr(self):
         """setUpDataBeforeCalcLr(self)
@@ -4701,6 +4744,20 @@ class Models:
             self.objectModelLinearSumOf2elementCombination.build_model()
         if "modelLinearSumOfElementCombinations" in self.modelNames:
             self.objectModelLinearSumOfElementCombinations.build_model()
+        if "modelLinearSumOf2elementCombinationWithSquared" in self.modelNames:
+            self.objectModelLinearSumOf2elementCombinationWithSquared.build_model()
+        if "modelLinearSumOf2elementCombinationWithCubed" in self.modelNames:
+            self.objectModelLinearSumOf2elementCombinationWithCubed.build_model()
+        if (
+            "modelLinearSumOf2elementCombinationWithCubedWithoutProcess"
+            in self.modelNames
+        ):
+            self.objectModelLinearSumOf2elementCombinationWithCubedWithoutProcess.build_model()
+        if (
+            "modelLinearSumOf2elementCombinationWithSquaredWithoutProcess"
+            in self.modelNames
+        ):
+            self.objectModelLinearSumOf2elementCombinationWithSquaredWithoutProcess.build_model()
 
     # inputDF：__init__()でのinputDFとDF構成は同じ
     def predict(self, inputDF):
@@ -4821,6 +4878,33 @@ class Models:
             MAPEatTrain[
                 "modelLinearSumOfElementCombinations"
             ] = self.objectModelLinearSumOfElementCombinations.returnMAPE()
+        if "modelLinearSumOf2elementCombinationWithSquared" in self.modelNames:
+            MAPEatTrain[
+                "modelLinearSumOf2elementCombinationWithSquared"
+            ] = self.objectModelLinearSumOf2elementCombinationWithSquared.returnMAPE()
+        if "modelLinearSumOf2elementCombinationWithCubed" in self.modelNames:
+            MAPEatTrain[
+                "modelLinearSumOf2elementCombinationWithCubed"
+            ] = self.objectModelLinearSumOf2elementCombinationWithCubed.returnMAPE()
+        if (
+            "modelLinearSumOf2elementCombinationWithCubedWithoutProcess"
+            in self.modelNames
+        ):
+            MAPEatTrain[
+                "modelLinearSumOf2elementCombinationWithCubedWithoutProcess"
+            ] = (
+                self.objectModelLinearSumOf2elementCombinationWithCubedWithoutProcess.returnMAPE()
+            )
+        if (
+            "modelLinearSumOf2elementCombinationWithSquaredWithoutProcess"
+            in self.modelNames
+        ):
+            MAPEatTrain[
+                "modelLinearSumOf2elementCombinationWithSquaredWithoutProcess"
+            ] = (
+                self.objectModelLinearSumOf2elementCombinationWithSquaredWithoutProcess.returnMAPE()
+            )
+
         self.MAPEatTrain = MAPEatTrain
 
     def calcWeightedMAPE(self):
@@ -5104,6 +5188,16 @@ class Models:
             return self.objectModelLinearSumOf2elementCombination
         if "modelLinearSumOfElementCombinations" == modelName:
             return self.objectModelLinearSumOfElementCombinations
+        if "modelLinearSumOf2elementCombinationWithSquared" == modelName:
+            return self.objectModelLinearSumOf2elementCombinationWithSquared
+        if "modelLinearSumOf2elementCombinationWithCubed" == modelName:
+            return self.objectModelLinearSumOf2elementCombinationWithCubed
+        if "modelLinearSumOf2elementCombinationWithCubedWithoutProcess" == modelName:
+            return self.objectModelLinearSumOf2elementCombinationWithCubedWithoutProcess
+        if "modelLinearSumOf2elementCombinationWithSquaredWithoutProcess" == modelName:
+            return (
+                self.objectModelLinearSumOf2elementCombinationWithSquaredWithoutProcess
+            )
 
     def returnRelativeErrorRateDict(self):
         """returnRelativeErrorRateDict(self)
@@ -7409,7 +7503,7 @@ class Model_LinearSumOfElementCombinations_ForMultipleRegression(
 
         self.lr.fit(df_mid_var, self.rawResponseVariable)
 
-        return test_returnCollectedExistingData
+        return True
 
     def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
         """predict(self, inputDF :pd.DataFrame) -> np.ndarray
@@ -8084,3 +8178,502 @@ def returnWeightedMapeScoreFromCondition(
     )
 
     return retNum
+
+
+# In[ ]:
+
+
+class Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression(
+    ModelBaseForMultipleRegression
+):
+    """説明変数の組み合わせたうえで片方をn乗にするモデル
+
+    Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression
+
+    Attributes:
+        explanatoryVariableColumnNames (list[str]): 説明変数の列名のリスト
+        rawExplanatoryVariable (pd.DataFrame): 説明変数のデータフレーム
+        rawExplanatoryVariableForTest (pd.DataFrame): テスト用の説明変数のデータフレーム。説明変数のデータフレームと同様の値が入っている(?)
+        rawResponseVariable (pd.DataFrame): 目的変数のデータフレーム
+        rawResponseVariableForTest (pd.DataFrame): テスト用の目的変数のデータフレーム。目的変数のデータフレームと同様の値が入っている(?)
+        responseVariableColumnNames (list[str]): 目的変数の列名のリスト
+    """
+
+    def __init__(
+        self,
+        inputDF,
+        explanatoryVariableColumnNames: list[str],
+        exponent: int,
+        responseVariableColumnNames: list[str],
+        conditionDictForTest: Dict[str, str] = {},
+        targetDF: pd.DataFrame = None,
+    ):
+        super().__init__(
+            inputDF=inputDF,
+            explanatoryVariableColumnNames=explanatoryVariableColumnNames,
+            responseVariableColumnNames=responseVariableColumnNames,
+            conditionDictForTest=conditionDictForTest,
+            targetDF=targetDF,
+        )
+        self.exponent: int = exponent
+
+    def build_model(self) -> bool:
+        """build_model(self) -> bool
+
+        オブジェクトの初期化時に生成された、インスタンスの説明変数及びインスタンスの目的変数からモデルを構築する
+
+        Args:
+            self :none
+
+        Returns: boolean。成功ならTrue,失敗ならFalse
+        """
+
+        df_mid_var: pd.DataFrame = self.return_df_for_combinations(
+            inputDF=self.rawExplanaoryVariable, exponent=self.exponent
+        )
+
+        self.lr = LinearRegression()
+        self.lr.fit(df_mid_var, self.rawResponseVariable)
+
+        return True
+
+    def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
+        """predict(self, inputDF: pd.DataFrame) -> np.ndarray
+
+        Args:
+            self: none
+            inputDF (pd.DataFrame) :構築されたモデルを使って予測を行うDF
+
+        Returns:
+            np.ndarray
+        """
+
+        df_mid_var: pd.DataFrame = self.return_df_for_combinations(
+            inputDF, exponent=self.exponent
+        )
+        resultDF = self.lr.predict(df_mid_var)
+
+        return resultDF
+
+    def returnMAPE(self) -> float:
+        """returnMAPE() -> float
+
+        モデルに構築に使用したデータからMAPEを算出する。
+
+        Args:
+            self: none
+
+        Returns:
+            float: 「モデルの構築に用いたデータから予測された値」と「実際の値」から算出されたMAPE
+            int: 失敗した場合,-1
+
+        """
+
+        return_expect: np.ndarray = self.rawResponseVariable[
+            self.responseVariableColumnNames
+        ].values
+        return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
+
+        return returnMapeScore(return_expect, return_actually)
+
+    def return_df_for_combinations(
+        self, inputDF: pd.DataFrame, exponent: int
+    ) -> pd.DataFrame:
+        """return_df_for_combinations(self, inputDF: pd.DataFrame) -> pd.DataFrame
+
+        入力DFから説明変数の組み合わせを算出し、その組み合わせの要素同士を累乗計算をしつつかけ合わせた列で構成されたDFを返す関数
+
+        Args:
+            inputDF (pd.DataFrame):入力DF
+            exponent (int): 累乗計算時に用いる指数
+        """
+
+        returnDF: pd.DataFrame = inputDF.copy(deep=True)
+        returnDF_columns = returnDF.columns.tolist()
+        returnDF = returnDF.drop(returnDF_columns, axis=1)
+
+        list_combinations: list[set[str]] = list(
+            itertools.combinations(self.explanatoryVariableColumnNames, 2)
+        )
+        for combination_index in range(len(list_combinations)):
+            combination: set[str, str] = list_combinations[combination_index]
+            exp_name0: str = combination[0]
+            exp_name1: str = combination[1]
+            returnDF["col" + str(combination_index)] = (
+                inputDF[exp_name0] ** exponent * inputDF[exp_name1]
+            )
+        for combination_index in range(len(list_combinations)):
+            combination: set[str, str] = list_combinations[combination_index]
+            exp_name0: str = combination[0]
+            exp_name1: str = combination[1]
+            returnDF["col" + str(combination_index + len(list_combinations))] = (
+                inputDF[exp_name0] * inputDF[exp_name1] ** exponent
+            )
+
+        return returnDF
+
+
+def test_Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression():
+    """test_Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression()
+
+    クラス Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression のテスト
+
+    """
+
+    # 説明変数
+    plotX_1: np.ndarray = np.linspace(10, 20, 11)
+    plotX_2: np.ndarray = 13 * np.linspace(20, 10, 11)
+    plotX_3: np.ndarray = 23 * np.linspace(10, 20, 11)
+    plotX_4: np.ndarray = 29 * np.linspace(30, 40, 11)
+
+    # 係数・切片
+    a: int = 17
+    b: int = 19
+    c: int = 23
+    d: int = 29
+    e: int = 17
+    f: int = 19
+    z: int = 31
+
+    # 目的変数
+    plotT: np.ndarray = (
+        (a * plotX_1 * plotX_1 * plotX_2)
+        + (b * plotX_1 * plotX_1 * plotX_3)
+        + (c * plotX_2 * plotX_2 * plotX_3)
+        + (d * plotX_1 * plotX_2 * plotX_2)
+        + (e * plotX_1 * plotX_3 * plotX_3)
+        + (f * plotX_2 * plotX_3 * plotX_3)
+        + z
+    )
+
+    # DFの作成
+    columnNames: list[str] = ["process", "plotX_2", "plotX_3", "plotT"]
+    datumForDF: list[np.ndarray] = [plotX_1, plotX_2, plotX_3, plotT]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 説明変数のカラム名のリスト
+    columnNamesForExp: list[str] = ["process", "plotX_2", "plotX_3"]
+    # 目的変数のカラム名のリスト
+    columnNamesForRes: list[str] = ["plotT"]
+
+    # 予測の実施
+    objectModel = Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+        exponent=2,
+    )
+
+    # モデルの構築時に使用されるメソッドのテスト
+    col0: np.ndarray = plotX_1 * plotX_1 * plotX_2
+    col1: np.ndarray = plotX_1 * plotX_1 * plotX_3
+    col2: np.ndarray = plotX_2 * plotX_2 * plotX_3
+    col3: np.ndarray = plotX_1 * plotX_2 * plotX_2
+    col4: np.ndarray = plotX_1 * plotX_3 * plotX_3
+    col5: np.ndarray = plotX_2 * plotX_3 * plotX_3
+    inputDictForExpectedDF: dict[str, np.ndarray] = {
+        "col0": col0,
+        "col1": col1,
+        "col2": col2,
+        "col3": col3,
+        "col4": col4,
+        "col5": col5,
+    }
+    expectedDF: pd.DataFrame = pd.DataFrame(data=inputDictForExpectedDF)
+    actuallyDF: pd.DataFrame = objectModel.return_df_for_combinations(inputDFForTest, 2)
+
+    assert actuallyDF.equals(
+        expectedDF
+    ), f"actuallyDF.head()=\n{actuallyDF.head()}\nexpectedDF.head()=\n{expectedDF.head()}"
+
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装ができているかを確認する
+    mape: float = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape = {mape}"
+
+    # 目的変数
+    plotT: np.ndarray = (
+        (a * plotX_1 * plotX_1 * plotX_1 * plotX_2)
+        + (b * plotX_1 * plotX_1 * plotX_1 * plotX_3)
+        + (c * plotX_2 * plotX_2 * plotX_2 * plotX_3)
+        + (d * plotX_1 * plotX_2 * plotX_2 * plotX_2)
+        + (e * plotX_1 * plotX_3 * plotX_3 * plotX_3)
+        + (f * plotX_2 * plotX_3 * plotX_3 * plotX_3)
+        + z
+    )
+
+    # DFの作成
+    columnNames: list[str] = ["process", "plotX_2", "plotX_3", "plotT"]
+    datumForDF: list[np.ndarray] = [plotX_1, plotX_2, plotX_3, plotT]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 説明変数のカラム名のリスト
+    columnNamesForExp: list[str] = ["process", "plotX_2", "plotX_3"]
+    # 目的変数のカラム名のリスト
+    columnNamesForRes: list[str] = ["plotT"]
+
+    # 予測の実施
+    objectModel = Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+        exponent=3,
+    )
+
+    # モデルの構築時に使用されるメソッドのテスト
+    col0: np.ndarray = plotX_1 * plotX_1 * plotX_1 * plotX_2
+    col1: np.ndarray = plotX_1 * plotX_1 * plotX_1 * plotX_3
+    col2: np.ndarray = plotX_2 * plotX_2 * plotX_2 * plotX_3
+    col3: np.ndarray = plotX_1 * plotX_2 * plotX_2 * plotX_2
+    col4: np.ndarray = plotX_1 * plotX_3 * plotX_3 * plotX_3
+    col5: np.ndarray = plotX_2 * plotX_3 * plotX_3 * plotX_3
+    inputDictForExpectedDF: dict[str, np.ndarray] = {
+        "col0": col0,
+        "col1": col1,
+        "col2": col2,
+        "col3": col3,
+        "col4": col4,
+        "col5": col5,
+    }
+    expectedDF: pd.DataFrame = pd.DataFrame(data=inputDictForExpectedDF)
+    actuallyDF: pd.DataFrame = objectModel.return_df_for_combinations(inputDFForTest, 3)
+
+    assert actuallyDF.equals(
+        expectedDF
+    ), f"actuallyDF.head()=\n{actuallyDF.head()}\nexpectedDF.head()=\n{expectedDF.head()}"
+
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装ができているかを確認する
+    mape: float = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape = {mape}"
+
+
+# In[ ]:
+
+
+class Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleRegression(
+    ModelBaseForMultipleRegression
+):
+    """説明変数の組み合わせたうえで片方をn乗にするモデル
+
+    Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleRegression
+
+    Attributes:
+        explanatoryVariableColumnNames (list[str]): 説明変数の列名のリスト
+        rawExplanatoryVariable (pd.DataFrame): 説明変数のデータフレーム
+        rawExplanatoryVariableForTest (pd.DataFrame): テスト用の説明変数のデータフレーム。説明変数のデータフレームと同様の値が入っている(?)
+        rawResponseVariable (pd.DataFrame): 目的変数のデータフレーム
+        rawResponseVariableForTest (pd.DataFrame): テスト用の目的変数のデータフレーム。目的変数のデータフレームと同様の値が入っている(?)
+        responseVariableColumnNames (list[str]): 目的変数の列名のリスト
+    """
+
+    def __init__(
+        self,
+        inputDF,
+        explanatoryVariableColumnNames: list[str],
+        exponent: int,
+        responseVariableColumnNames: list[str],
+        conditionDictForTest: Dict[str, str] = {},
+        targetDF: pd.DataFrame = None,
+    ):
+        super().__init__(
+            inputDF=inputDF,
+            explanatoryVariableColumnNames=explanatoryVariableColumnNames,
+            responseVariableColumnNames=responseVariableColumnNames,
+            conditionDictForTest=conditionDictForTest,
+            targetDF=targetDF,
+        )
+        self.exponent: int = exponent
+        self._explanatoryVariableColumnNames = copy.copy(
+            self.explanatoryVariableColumnNames
+        )
+        self._explanatoryVariableColumnNames.remove("process")
+        self._rawExplanaoryVariable: pd.DataFrame = self.rawExplanaoryVariable[
+            self._explanatoryVariableColumnNames
+        ]
+        self._rawExplanaoryVariableForTest: pd.DataFrame = (
+            self.rawExplanaoryVariableForTest[self._explanatoryVariableColumnNames]
+        )
+
+    def build_model(self) -> bool:
+        """build_model(self) -> bool
+
+        オブジェクトの初期化時に生成された、インスタンスの説明変数及びインスタンスの目的変数からモデルを構築する
+
+        Args:
+            self :none
+
+        Returns: boolean。成功ならTrue,失敗ならFalse
+        """
+
+        df_mid_var: pd.DataFrame = self.return_df_for_combinations(
+            inputDF=self.rawExplanaoryVariable, exponent=self.exponent
+        )
+
+        self.lr = LinearRegression()
+        self.lr.fit(df_mid_var, self.rawResponseVariable)
+
+        return True
+
+    def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
+        """predict(self, inputDF: pd.DataFrame) -> np.ndarray
+
+        Args:
+            self: none
+            inputDF (pd.DataFrame) :構築されたモデルを使って予測を行うDF
+
+        Returns:
+            np.ndarray
+        """
+
+        df_mid_var: pd.DataFrame = self.return_df_for_combinations(
+            inputDF, exponent=self.exponent
+        )
+        resultDF = self.lr.predict(df_mid_var)
+
+        return resultDF
+
+    def returnMAPE(self) -> float:
+        """returnMAPE() -> float
+
+        モデルに構築に使用したデータからMAPEを算出する。
+
+        Args:
+            self: none
+
+        Returns:
+            float: 「モデルの構築に用いたデータから予測された値」と「実際の値」から算出されたMAPE
+            int: 失敗した場合,-1
+
+        """
+
+        return_expect: np.ndarray = self.rawResponseVariable[
+            self.responseVariableColumnNames
+        ].values
+        return_actually: np.ndarray = self.predict(self._rawExplanaoryVariable)
+
+        return returnMapeScore(return_expect, return_actually)
+
+    def return_df_for_combinations(
+        self, inputDF: pd.DataFrame, exponent: int
+    ) -> pd.DataFrame:
+        """return_df_for_combinations(self, inputDF: pd.DataFrame) -> pd.DataFrame
+
+        入力DFから説明変数の組み合わせを算出し、その組み合わせの要素同士を累乗計算をしつつかけ合わせた列で構成されたDFを返す関数
+
+        Args:
+            inputDF (pd.DataFrame):入力DF
+            exponent (int): 累乗計算時に用いる指数
+        """
+
+        returnDF: pd.DataFrame = inputDF.copy(deep=True)
+        returnDF_columns = returnDF.columns.tolist()
+        returnDF = returnDF.drop(returnDF_columns, axis=1)
+
+        list_combinations: list[set[str]] = list(
+            itertools.combinations(self._explanatoryVariableColumnNames, 2)
+        )
+        for combination_index in range(len(list_combinations)):
+            combination: set[str, str] = list_combinations[combination_index]
+            exp_name0: str = combination[0]
+            exp_name1: str = combination[1]
+            returnDF["col" + str(combination_index)] = (
+                inputDF[exp_name0] ** exponent * inputDF[exp_name1]
+            )
+        for combination_index in range(len(list_combinations)):
+            combination: set[str, str] = list_combinations[combination_index]
+            exp_name0: str = combination[0]
+            exp_name1: str = combination[1]
+            returnDF["col" + str(combination_index + len(list_combinations))] = (
+                inputDF[exp_name0] * inputDF[exp_name1] ** exponent
+            )
+
+        return returnDF
+
+
+def test_Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleRegression():
+    """test_Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleRegression()
+
+    クラス Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleRegression のテスト
+
+    """
+
+    # 説明変数
+    plotX_1: np.ndarray = np.linspace(10, 20, 11)
+    plotX_2: np.ndarray = 13 * np.linspace(20, 10, 11)
+    plotX_3: np.ndarray = 23 * np.linspace(10, 20, 11)
+    plotX_4: np.ndarray = 29 * np.linspace(30, 40, 11)
+
+    # 係数・切片
+    a: int = 17
+    b: int = 19
+    c: int = 23
+    d: int = 29
+    e: int = 17
+    f: int = 19
+    z: int = 31
+
+    # 目的変数
+    plotT: np.ndarray = (
+        (a * plotX_2**3 * plotX_3)
+        + (b * plotX_2**3 * plotX_4)
+        + (c * plotX_3**3 * plotX_4)
+        + (d * plotX_2 * plotX_3**3)
+        + (e * plotX_2 * plotX_4**3)
+        + (f * plotX_3 * plotX_4**3)
+        + z
+    )
+
+    # DFの作成
+    columnNames: list[str] = ["process", "plotX_2", "plotX_3", "plotX_4", "plotT"]
+    datumForDF: list[np.ndarray] = [plotX_1, plotX_2, plotX_3, plotX_4, plotT]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 説明変数のカラム名のリスト
+    columnNamesForExp: list[str] = ["process", "plotX_2", "plotX_3", "plotX_4"]
+    # 目的変数のカラム名のリスト
+    columnNamesForRes: list[str] = ["plotT"]
+
+    # 予測の実施
+    objectModel = Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+        exponent=2,
+    )
+
+    # モデルの構築時に使用されるメソッドのテスト
+    col0: np.ndarray = plotX_2**3 * plotX_3
+    col1: np.ndarray = plotX_2**3 * plotX_4
+    col2: np.ndarray = plotX_3**3 * plotX_4
+    col3: np.ndarray = plotX_2 * plotX_3**3
+    col4: np.ndarray = plotX_2 * plotX_4**3
+    col5: np.ndarray = plotX_3 * plotX_4**3
+    inputDictForExpectedDF: dict[str, np.ndarray] = {
+        "col0": col0,
+        "col1": col1,
+        "col2": col2,
+        "col3": col3,
+        "col4": col4,
+        "col5": col5,
+    }
+    expectedDF: pd.DataFrame = pd.DataFrame(data=inputDictForExpectedDF)
+    actuallyDF: pd.DataFrame = objectModel.return_df_for_combinations(inputDFForTest, 3)
+
+    assert actuallyDF.equals(
+        expectedDF
+    ), f"actuallyDF.head()=\n{actuallyDF.head()}\nexpectedDF.head()=\n{expectedDF.head()}"
+
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装ができているかを確認する
+    mape: float = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape = {mape}"
