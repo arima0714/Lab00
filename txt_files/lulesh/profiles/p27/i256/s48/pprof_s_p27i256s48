@@ -1,0 +1,77 @@
+Reading Profile files in profile.*
+
+FUNCTION SUMMARY (total):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0        0.097    22:02.376          27          27   48976919 .TAU application
+100.0    12:37.101    22:02.376          27       76357   48976915 int main(int, char **) 
+ 20.4     2:37.638     4:30.075        6912 7.64412E+08      39073 void CalcKinematicsForElems(Domain &, Real_t, Index_t) 
+  8.9     1:58.145     1:58.145          27           0    4375742 MPI_Finalize() 
+  8.5     1:52.972     1:52.972 7.67398E+08           0          0 Real_t CalcElemVolume(const Real_t *, const Real_t *, const Real_t *) 
+  6.0     1:19.253     1:19.253        6885           0      11511 MPI_Allreduce() 
+  3.9        5,553       51,286       20763      190834       2470 void CommSend(Domain &, Int_t, Index_t, Domain_member *, Index_t, Index_t, Index_t, bool, bool) 
+  3.4       45,145       45,145       20763           0       2174 MPI_Waitall() 
+  1.6       20,714       20,714      149308           0        139 MPI_Wait() 
+  1.2        1,674       15,913        6939       88151       2293 void CommSBN(Domain &, Int_t, Domain_member *) 
+  1.2       15,288       15,288          27           0     566238 MPI_Init() 
+  0.9        5,738       12,210        6912       47360       1767 void CommSyncPosVel(Domain &) 
+  0.1        1,079        1,752          27 2.98615E+06      64894 void Domain::Domain(Int_t, Index_t, Index_t, Index_t, Index_t, Int_t, Int_t, Int_t, Int_t) 
+  0.1        1,044        1,056        6912       34560        153 void CommMonoQ(Domain &) 
+  0.0          563          563      149308           0          4 MPI_Isend() 
+  0.0           65          242       20763      170071         12 void CommRecv(Domain &, Int_t, Index_t, Index_t, Index_t, Index_t, bool, bool) 
+  0.0          162          162      149308           0          1 MPI_Irecv() 
+  0.0           52           52          27           0       1941 void Domain::BuildMesh(Int_t, Int_t, Int_t) 
+  0.0           44           44       62343           0          1 MPI_Comm_rank() 
+  0.0           40           40          27           0       1496 MPI_Reduce() 
+  0.0           35           35          27          27       1328 void Domain::CreateRegionIndexSets(Int_t, Int_t) 
+  0.0           25           25          27           0        944 void Domain::SetupElementConnectivities(Int_t) 
+  0.0           16           16          27           0        626 void Domain::SetupCommBuffers(Int_t) 
+  0.0            9            9          27           0        370 MPI_Barrier() 
+  0.0            6            6          27           0        243 void Domain::SetupBoundaryConditions(Int_t) 
+  0.0            1            1          27           0         63 void Domain::~Domain() 
+  0.0        0.322        0.322          27           0         12 void InitMeshDecomp(Int_t, Int_t, Int_t *, Int_t *, Int_t *, Int_t *) 
+  0.0        0.144        0.144          27           0          5 void Domain::SetupSymmetryPlanes(Int_t) 
+  0.0        0.045        0.097          27          54          4 void ParseCommandLineOptions(int, char **, Int_t, cmdLineOpts *) 
+  0.0        0.094        0.094           1           0         94 void VerifyAndWriteFinalOutput(Real_t, Domain &, Int_t, Int_t) 
+  0.0        0.052        0.052          54           0          1 StrToInt 
+  0.0        0.013        0.013          27           0          0 MPI_Comm_size() 
+
+FUNCTION SUMMARY (mean):
+---------------------------------------------------------------------------------------
+%Time    Exclusive    Inclusive       #Call      #Subrs  Inclusive Name
+              msec   total msec                          usec/call 
+---------------------------------------------------------------------------------------
+100.0      0.00359       48,976           1           1   48976919 .TAU application
+100.0       28,040       48,976           1     2828.04   48976915 int main(int, char **) 
+ 20.4        5,838       10,002         256 2.83116E+07      39073 void CalcKinematicsForElems(Domain &, Real_t, Index_t) 
+  8.9        4,375        4,375           1           0    4375742 MPI_Finalize() 
+  8.5        4,184        4,184 2.84221E+07           0          0 Real_t CalcElemVolume(const Real_t *, const Real_t *, const Real_t *) 
+  6.0        2,935        2,935         255           0      11511 MPI_Allreduce() 
+  3.9          205        1,899         769     7067.93       2470 void CommSend(Domain &, Int_t, Index_t, Domain_member *, Index_t, Index_t, Index_t, bool, bool) 
+  3.4        1,672        1,672         769           0       2174 MPI_Waitall() 
+  1.6          767          767     5529.93           0        139 MPI_Wait() 
+  1.2           62          589         257     3264.85       2293 void CommSBN(Domain &, Int_t, Domain_member *) 
+  1.2          566          566           1           0     566238 MPI_Init() 
+  0.9          212          452         256     1754.07       1767 void CommSyncPosVel(Domain &) 
+  0.1           39           64           1      110598      64894 void Domain::Domain(Int_t, Index_t, Index_t, Index_t, Index_t, Int_t, Int_t, Int_t, Int_t) 
+  0.1           38           39         256        1280        153 void CommMonoQ(Domain &) 
+  0.0           20           20     5529.93           0          4 MPI_Isend() 
+  0.0            2            8         769     6298.93         12 void CommRecv(Domain &, Int_t, Index_t, Index_t, Index_t, Index_t, bool, bool) 
+  0.0            6            6     5529.93           0          1 MPI_Irecv() 
+  0.0            1            1           1           0       1941 void Domain::BuildMesh(Int_t, Int_t, Int_t) 
+  0.0            1            1        2309           0          1 MPI_Comm_rank() 
+  0.0            1            1           1           0       1496 MPI_Reduce() 
+  0.0            1            1           1           1       1328 void Domain::CreateRegionIndexSets(Int_t, Int_t) 
+  0.0        0.944        0.944           1           0        944 void Domain::SetupElementConnectivities(Int_t) 
+  0.0        0.626        0.626           1           0        626 void Domain::SetupCommBuffers(Int_t) 
+  0.0         0.37         0.37           1           0        370 MPI_Barrier() 
+  0.0        0.243        0.243           1           0        243 void Domain::SetupBoundaryConditions(Int_t) 
+  0.0        0.063        0.063           1           0         63 void Domain::~Domain() 
+  0.0       0.0119       0.0119           1           0         12 void InitMeshDecomp(Int_t, Int_t, Int_t *, Int_t *, Int_t *, Int_t *) 
+  0.0      0.00533      0.00533           1           0          5 void Domain::SetupSymmetryPlanes(Int_t) 
+  0.0      0.00167      0.00359           1           2          4 void ParseCommandLineOptions(int, char **, Int_t, cmdLineOpts *) 
+  0.0      0.00348      0.00348    0.037037           0         94 void VerifyAndWriteFinalOutput(Real_t, Domain &, Int_t, Int_t) 
+  0.0      0.00193      0.00193           2           0          1 StrToInt 
+  0.0     0.000481     0.000481           1           0          0 MPI_Comm_size() 
