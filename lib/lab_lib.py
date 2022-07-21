@@ -8166,6 +8166,7 @@ def returnWeightedMapeScoreFromCondition(
                 "call": _call,
                 "MAPE": _MAPE,
                 "predicted_call": predicted,
+                "bestModelName" : bestModelDict["modelName"]
             }
         )
         list_series.append(_series)
