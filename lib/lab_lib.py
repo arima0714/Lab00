@@ -8166,7 +8166,6 @@ def returnWeightedMapeScoreFromCondition(
                 "call": _call,
                 "MAPE": _MAPE,
                 "predicted_call": predicted,
-                "bestModelName" : bestModelDict["modelName"]
             }
         )
         list_series.append(_series)
@@ -8678,3 +8677,88 @@ def test_Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleR
     # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装ができているかを確認する
     mape: float = objectModel.returnMAPE()
     assert 0 <= mape < 1, f"mape = {mape}"
+
+
+# In[3]:
+
+
+def return_rawDF_cg(
+    list_process: list[int],
+    list_na: list[int],
+    list_nonzer: list[int],
+    list_niter: list[int],
+    list_shift: list[int],
+    csvDir: str,
+) -> pd.DataFrame:
+    pass
+    """return_rawDF_cg()
+    
+    ベンチマークプログラムCGの手動で変更した初期変数におけるプロファイルを取得する関数
+
+    Args:
+        list_process(list[int]):プロセス数のリスト
+        list_na(list[int]):初期変数naのリスト
+        list_nonzer(list[int]):初期変数nonzerのリスト
+        list_niter(list[int]):初期変数niterのリスト
+        list_shift(list[int]):初期変数shiftのリスト
+        csvDir(str):CSVファイルを格納したディレクトリのパスを表す文字列
+
+    Returns:
+        pd.DataFrame
+    
+    """
+
+    list_before_concat_DF: list[pd.DataFrame] = []
+    # col_name :list[str] = ["%Time", "Exclusive", "Inclusive", "#Call", "#Subrs", "Inclusive", "Name"]
+
+    for elem_process in list_process:
+        for elem_na in list_na:
+            for elem_nonzer in list_nonzer:
+                for elem_niter in list_niter:
+                    for elem_shift in list_shift:
+                        filePath: str = f"{csvDir}cg_na{elem_na}_nonzer{elem_nonzer}_niter{elem_niter}_shift{elem_shift}_process{elem_process}.csv"
+                        DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+                        DF_read_raw["process"] = elem_process
+                        if os.path.isfile(filePath):
+                            list_before_concat_DF.append(DF_read_raw)
+                        else:
+                            warnings.warn(f"{filePath} doesn't exist")
+    return pd.concat(objs=list_before_concat_DF, axis=0)
+
+
+# In[5]:
+
+
+def return_rawDF_mg(
+    list_process: list[int],
+    list_problem_size: list[int],
+    list_nit: list[int],
+    csvDir: str,
+) -> pd.DataFrame:
+    """return_rawDF_cg()
+
+    ベンチマークプログラムMGの手動で変更した初期変数におけるプロファイルを取得する関数
+
+    Args:
+        list_process(list[int]):プロセス数のリスト
+        list_problem_size(list[int]):初期変数problem_sizeのリスト
+        list_nit(list[int]):初期変数nitのリスト
+
+    Returns:
+        pd.DataFrame
+
+    """
+
+    list_before_concat_DF: list[pd.DataFrame] = []
+
+    for elem_process in list_process:
+        for elem_problem_size in list_problem_size:
+            for elem_nit in list_nit:
+                filePath: str = f"{csvDir}mg_problem_size{elem_problem_size}_nit{elem_nit}_process{elem_process}.csv"
+                DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+                DF_read_raw["process"] = elem_process
+                if os.path.isfile(filePath):
+                    list_before_concat_DF.append(DF_read_raw)
+                else:
+                    warnings.warn(f"{filePath} doesn't exist")
+    return pd.concat(objs=list_before_concat_DF, axis=0)
