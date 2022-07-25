@@ -1576,7 +1576,7 @@ class ModelBaseForMultipleRegression:
         # 関数名が複数種類ある場合は警告
         functionName = set(inputDF["functionName"].tolist())
         if len(functionName) != 1:
-            warnings.warn("関数が複数種類存在します")
+            warnings.warn(f"関数が複数種類存在します\nfunctionName={functionName}")
 
         # 各種カラム名を保持
         self.explanatoryVariableColumnNames = explanatoryVariableColumnNames
@@ -8717,10 +8717,17 @@ def return_rawDF_cg(
                 for elem_niter in list_niter:
                     for elem_shift in list_shift:
                         filePath: str = f"{csvDir}cg_na{elem_na}_nonzer{elem_nonzer}_niter{elem_niter}_shift{elem_shift}_process{elem_process}.csv"
-                        DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
-                        DF_read_raw["process"] = elem_process
                         if os.path.isfile(filePath):
-                            list_before_concat_DF.append(DF_read_raw)
+                            try:
+                                DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+                                DF_read_raw["process"] = elem_process
+                                DF_read_raw["na"] = elem_na
+                                DF_read_raw["nonzer"] = elem_nonzer
+                                DF_read_raw["niter"] = elem_niter
+                                DF_read_raw["shift"] = elem_shift
+                                list_before_concat_DF.append(DF_read_raw)
+                            except:
+                                warnings.warn(f"{filePath} is empty.")
                         else:
                             warnings.warn(f"{filePath} doesn't exist")
     return pd.concat(objs=list_before_concat_DF, axis=0)
@@ -8735,7 +8742,7 @@ def return_rawDF_mg(
     list_nit: list[int],
     csvDir: str,
 ) -> pd.DataFrame:
-    """return_rawDF_cg()
+    """return_rawDF_g()
 
     ベンチマークプログラムMGの手動で変更した初期変数におけるプロファイルを取得する関数
 
@@ -8755,10 +8762,15 @@ def return_rawDF_mg(
         for elem_problem_size in list_problem_size:
             for elem_nit in list_nit:
                 filePath: str = f"{csvDir}mg_problem_size{elem_problem_size}_nit{elem_nit}_process{elem_process}.csv"
-                DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
-                DF_read_raw["process"] = elem_process
                 if os.path.isfile(filePath):
-                    list_before_concat_DF.append(DF_read_raw)
+                    try:
+                        DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+                        DF_read_raw["process"] = elem_process
+                        DF_read_raw["problem_size"] = elem_problem_size
+                        DF_read_raw["nit"] = elem_nit
+                        list_before_concat_DF.append(DF_read_raw)
+                    except:
+                        warnings.warn(f"{filePath} is empty.")
                 else:
                     warnings.warn(f"{filePath} doesn't exist")
     return pd.concat(objs=list_before_concat_DF, axis=0)
