@@ -8679,7 +8679,7 @@ def test_Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleR
     assert 0 <= mape < 1, f"mape = {mape}"
 
 
-# In[3]:
+# In[ ]:
 
 
 def return_rawDF_cg(
@@ -8733,7 +8733,7 @@ def return_rawDF_cg(
     return pd.concat(objs=list_before_concat_DF, axis=0)
 
 
-# In[5]:
+# In[ ]:
 
 
 def return_rawDF_mg(
@@ -8774,3 +8774,133 @@ def return_rawDF_mg(
                 else:
                     warnings.warn(f"{filePath} doesn't exist")
     return pd.concat(objs=list_before_concat_DF, axis=0)
+
+
+# In[ ]:
+
+
+class Model_squareRootOfProcess_ForMultipleRegression(ModelBaseForMultipleRegression):
+    """プロセス数を表す説明変数に平方根をかけたモデル
+
+    Y = a * X ** 1/2 + b
+
+    Attributes:
+        explanatoryVariableColumnNames (list[str]): 説明変数の列名のリスト
+        rawExplanatoryVariable (pd.DataFrame): 説明変数のデータフレーム
+        rawExplanatoryVariableForTest (pd.DataFrame): テスト用の説明変数のデータフレーム。説明変数のデータフレームと同様の値が入っている(?)
+        rawResponseVariable (pd.DataFrame): 目的変数のデータフレーム
+        rawResponseVariableForTest (pd.DataFrame): テスト用の目的変数のデータフレーム。目的変数のデータフレームと同様の値が入っている(?)
+        responseVariableColumnNames (list[str]): 目的変数の列名のリスト
+
+    """
+
+    def build_model(self) -> bool:
+        """build_model(self) -> bool
+
+        オブジェクトの初期化時に生成された、インスタンスの説明変数およびインスタンスの目的変数からモデルを構築する
+        """
+
+        df_mid_var: pd.DataFrame = self.process_df(inputDF=self.rawExplanaoryVariable)
+        self.lr = LinearRegression()
+        self.lr.fit(df_mid_var, self.rawResponseVariable)
+
+        return True
+
+    def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
+        """predict(self, inputDF: pd.DataFrame)->np.ndarray
+
+        構築したモデルを用いて予測をする
+
+        Args:
+            self: none
+            inputDF (pd.DataFrame) :構築されたモデルを用いて予測を行うDF
+
+        Returns:
+            np.ndarray
+        """
+
+        df_mid_var: pd.DataFrame = self.process_df(inputDF)
+        result_ndarray: np.ndarray = self.lr.predict(df_mid_var)
+
+        return result_ndarray
+
+    def returnMAPE(self) -> float:
+        """returnMAPE() -> float
+
+        モデル構築のための学習用データからMAPEを算出する。
+
+        Args:
+            self: none
+
+        Returns:
+            float: 「モデルの構築に用いたデータから予測された値」と「実際の値」から算出されたMAPE
+            int: 失敗した場合,-1
+
+        """
+
+        return_expect: np.ndarray = self.rawResponseVariable[
+            self.responseVariableColumnNames
+        ].values
+        return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
+
+        return returnMapeScore(return_expect, return_actually)
+
+    def process_df(self, inputDF: pd.DataFrame) -> pd.DataFrame:
+        """process_df(self, inputDF:pd.DataFrame) -> pd.DataFrame
+
+        inputDF内にあるprocess列を1/2乗した列を追加する
+
+        Args:
+            inputDF (pd.DataFrame) : 入力DF
+
+        """
+
+        returnDF: pd.DataFrame = inputDF.copy(deep=True)
+        returnDF["square_root_of_process"] = np.sqrt(returnDF["process"])
+        reutrnDF = returnDF.drop("process", axis=1)
+
+        return returnDF
+
+
+def test_Model_squareRootOfProcess_ForMultipleRegression():
+    """test_Model_squareRootOfProcess_ForMultipleRegression()
+
+    クラスModel_squareRootOfProcess_ForMultipleRegressionのテスト
+    """
+
+    # 説明変数
+    plot_process: np.ndarray = np.linspace(10, 20, 11)
+    plot_other: np.ndarray = -1 * plot_process
+    plot_other2: np.ndarray = 5 * plot_process
+
+    # 切片・係数
+    a: int = 8
+    b: int = -37
+
+    # 目的変数
+    plot_call: np.ndarray = np.sqrt(plot_process)
+
+    # DFの作成
+    columnNames: list[str] = ["process", "plot_other", "plot_other2", "plot_call"]
+    datumForDF: list[np.ndarray] = [plot_process, plot_other, plot_other2, plot_call]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 説明変数のカラム名のリスト
+    columnNamesForExp: list[str] = ["process", "plot_other", "plot_other2"]
+    # 目的変数のカラム名のリスト
+    columnNamesForRes: list[str] = ["plot_call"]
+
+    # 予測の実施
+    objectModel = Model_squareRootOfProcess_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+    )
+
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装ができているかを確認
+    mape: float = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape = {mape}"
