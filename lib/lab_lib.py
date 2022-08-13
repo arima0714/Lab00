@@ -2026,6 +2026,9 @@ def test_returnListAboutInformation():
 # In[ ]:
 
 
+# In[ ]:
+
+
 # 引数として渡されたDFから、関数ごとに「関数名 | ベンチマーク名 | 説明変数 | 目的変数 | 集計結果」を保持したDFを作成する関数
 # 引数として渡されたDFにはベンチマーク・関数はそれぞれ１種類のデータが格納されている
 # 単回帰分析のため、説明変数は1種類のみ
@@ -4675,6 +4678,15 @@ class Models:
                 targetDF=targetDF,
                 exponent=2,
             )
+        if "modelSquareRootOfProcess" in self.modelNames:
+            self.objectModelSquareRootOfProcess = (
+                Model_squareRootOfProcess_ForMultipleRegression(
+                    inputDF,
+                    explanatoryVariableColumnNames=expVarColNames,
+                    responseVariableColumnNames=resVarColNames,
+                    targetDF=targetDF,
+                )
+            )
 
     def setUpDataBeforeCalcLr(self):
         """setUpDataBeforeCalcLr(self)
@@ -4758,6 +4770,8 @@ class Models:
             in self.modelNames
         ):
             self.objectModelLinearSumOf2elementCombinationWithSquaredWithoutProcess.build_model()
+        if "modelSquareRootOfProcess" in self.modelNames:
+            self.objectModelSquareRootOfProcess.build_model()
 
     # inputDF：__init__()でのinputDFとDF構成は同じ
     def predict(self, inputDF):
@@ -4904,6 +4918,10 @@ class Models:
             ] = (
                 self.objectModelLinearSumOf2elementCombinationWithSquaredWithoutProcess.returnMAPE()
             )
+        if "modelSquareRootOfProcess" in self.modelNames:
+            MAPEatTrain[
+                "modelSquareRootOfProcess"
+            ] = self.objectModelSquareRootOfProcess.returnMAPE()
 
         self.MAPEatTrain = MAPEatTrain
 
