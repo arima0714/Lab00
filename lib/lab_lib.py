@@ -8820,6 +8820,7 @@ class Model_squareRootOfProcess_ForMultipleRegression(ModelBaseForMultipleRegres
 
         df_mid_var: pd.DataFrame = self.process_df(inputDF=self.rawExplanaoryVariable)
         self.lr = LinearRegression()
+        df_mid_var = df_mid_var.drop(columns="process")
         self.lr.fit(df_mid_var, self.rawResponseVariable)
 
         return True
@@ -8838,6 +8839,7 @@ class Model_squareRootOfProcess_ForMultipleRegression(ModelBaseForMultipleRegres
         """
 
         df_mid_var: pd.DataFrame = self.process_df(inputDF)
+        df_mid_var = df_mid_var.drop(columns="process")
         result_ndarray: np.ndarray = self.lr.predict(df_mid_var)
 
         return result_ndarray
