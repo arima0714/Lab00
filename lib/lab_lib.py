@@ -75,9 +75,6 @@ class ExceptionInResearchLib(Exception):
     "ライブラリノートでの例外処理用のクラス"
 
 
-# In[ ]:
-
-
 def returnMapeScore(l1, l2):
     """returnMapeScore(l1, l2)
     平均絶対パーセント誤差 (MAPE)(Mean Absolute Percent Error (MAPE))を返す関数
@@ -4687,6 +4684,15 @@ class Models:
                     targetDF=targetDF,
                 )
             )
+        if "modelSquareRootTimesOtherElems" in self.modelNames:
+            self.objectModelSquareRootTimesOtherElems = (
+                Model_squareRootOfProcess_ForMultipleRegression(
+                    inputDF,
+                    explanatoryVariableColumnNames=expVarColNames,
+                    responseVariableColumnNames=resVarColNames,
+                    targetDF=targetDF,
+                )
+            )
 
     def setUpDataBeforeCalcLr(self):
         """setUpDataBeforeCalcLr(self)
@@ -4772,6 +4778,8 @@ class Models:
             self.objectModelLinearSumOf2elementCombinationWithSquaredWithoutProcess.build_model()
         if "modelSquareRootOfProcess" in self.modelNames:
             self.objectModelSquareRootOfProcess.build_model()
+        if "modelSquareRootTimesOtherElems" in self.modelNames:
+            self.objectModelSquareRootTimesOtherElems.build_model()
 
     # inputDF：__init__()でのinputDFとDF構成は同じ
     def predict(self, inputDF):
@@ -4922,6 +4930,10 @@ class Models:
             MAPEatTrain[
                 "modelSquareRootOfProcess"
             ] = self.objectModelSquareRootOfProcess.returnMAPE()
+        if "modelSquareRootTimesOtherElems" in self.modelNames:
+            MAPEatTrain[
+                "modelSquareRootTimesOtherElems"
+            ] = self.objectModelSquareRootTimesOtherElems.returnMAPE()
 
         self.MAPEatTrain = MAPEatTrain
 
@@ -8922,5 +8934,154 @@ def test_Model_squareRootOfProcess_ForMultipleRegression():
     # モデルの構築
     objectModel.build_model()
     # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装ができているかを確認
+    mape: float = objectModel.returnMAPE()
+    assert 0 <= mape < 1, f"mape = {mape}"
+
+
+# In[ ]:
+
+
+class Model_sqrtProcessTimesOtherExpElem_ForMultipleRegression(
+    ModelBaseForMultipleRegression
+):
+    """プロセス数の平方根にほかの初期変数をかけたモデル
+
+    Y = a * sqrt(X) * Z + b
+
+    Attributes:
+        explanatoryVariableColumnNames (list[str]): 説明変数の列名のリスト
+        rawExplanatoryVariable (pd.DataFrame): 説明変数のデータフレーム
+        rawExplanatoryVariableForTest (pd.DataFrame): テスト用の説明変数のデータフレーム。説明変数のデータフレームと同様の値が入っている(?)
+        rawResponseVariable (pd.DataFrame): 目的変数のデータフレーム
+        rawResponseVariableForTest (pd.DataFrame): テスト用の目的変数のデータフレーム。目的変数のデータフレームと同様の値が入っている(?)
+        responseVariableColumnNames (list[str]): 目的変数の列名のリスト
+
+    """
+
+    def build_model(self) -> bool:
+        """build_model(self) -> bool
+
+        オブジェクトの初期化時に生成された、インスタンスの説明変数およびインスタンスの目的変数からモデルを構築する
+
+        """
+
+        df_mid_var: pd.DataFrame = self.process_df(inputDF=self.rawExplanaoryVariable)
+
+        self.lr = LinearRegression()
+        self.lr.fit(df_mid_var, self.rawResponseVariable)
+
+        return True
+
+    def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
+        """predict(self, inputDFF: pd.DataFrame) -> np.ndarray
+
+        構築したモデルを用いて予測をする
+
+        Args:
+            self: none
+            inputDF (pd.DataFrame) :構築したモデルを用いて予測を行うDF
+
+        Returns:
+            np.ndarray
+
+        """
+
+        df_mid_var: pd.DataFrame = self.process_df(inputDF=inputDF)
+        predicted_result = self.lr.predict(df_mid_var)
+
+        return predicted_result
+
+    def process_df(self, inputDF: pd.DataFrame) -> pd.DataFrame:
+        """process_df(self, inputDFF: pd.DataFrame): -> pd.DataFrame
+
+        | functionName | process | other_exp | other_exp2 |
+        |--------------|---------|-----------|------------|
+        | 関数名          | プロセス数   |  説明変数     |  説明変数2     |
+        | 関数名          | プロセス数   |  説明変数     |  説明変数2     |
+
+        関数コール回数 = a * sqrt(process) * other_exp + b * sqrt(process) * other_exp2 + c
+
+        上記のモデル式を満たすためのDFを作成する。
+
+        """
+
+        returnDF: pd.DataFrame = inputDF.copy(deep=True)
+        returnDF_columns = returnDF.columns.tolist()
+        returnDF = returnDF.drop(columns=returnDF_columns)
+
+        # プロセス数とほかの説明変数の要素をかけてreturnDF_columnsに入れる
+        _process = inputDF["process"]
+        for expElem_index in range(len(self.explanatoryVariableColumnNames)):
+            expElem: str = self.explanatoryVariableColumnNames[expElem_index]
+            if expElem == "process":
+                continue
+            _expCol: np.ndarray = inputDF[expElem]
+            returnDF["col" + str(expElem_index)] = _process * _expCol
+
+        return returnDF
+
+    def returnMAPE(self) -> float:
+        """returnMAPE(self) -> float
+
+        モデル構築のための学習用データからMAPEを算出する。
+
+        Args:
+            self: none
+
+        Returns:
+            float: 「モデルの構築に用いたデータから予測された値」と「実際の値」から算出されたMAPE
+            int: 失敗した場合,-1
+
+
+        """
+
+        return_expect: np.ndarray = self.rawResponseVariable[
+            self.responseVariableColumnNames
+        ].values
+        return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
+
+        return returnMapeScore(return_expect, return_actually)
+
+
+def test_Model_sqrtProcessTimesOtherExpElem_ForMultipleRegression():
+    """test_Model_sqrtProcessTimesOtherExpElem_ForMultipleRegression(ModelBaseForMultipleRegression)
+
+    Model_sqrtProcessTimesOtherExpElem_ForMultipleRegression(ModelBaseForMultipleRegression)のテスト
+    """
+
+    # 説明変数
+    plot_process: np.ndarray = np.linspace(210, 220, 11)
+    plot_other: np.ndarray = np.linspace(123, 133, 11)
+    plot_other2: np.ndarray = -1 * plot_process
+
+    # 切片・係数
+    a: int = 8
+    b: int = -41
+
+    # 目的変数
+    plot_call: np.ndarray = a * plot_process * plot_other + b
+
+    # DFの作成
+    columnNames: list[str] = ["process", "plot_other", "plot_other2", "plot_call"]
+    datumForDF: list[np.ndarray] = [plot_process, plot_other, plot_other2, plot_call]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 説明変数のカラム名のリスト
+    columnNamesForExp: list[str] = ["process", "plot_other", "plot_other2"]
+    # 目的変数のカラム名のリスト
+    columnNamesForRes: list[str] = ["plot_call"]
+
+    # 予測の実施
+    objectModel = Model_sqrtProcessTimesOtherExpElem_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+    )
+
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装できているかを確認
     mape: float = objectModel.returnMAPE()
     assert 0 <= mape < 1, f"mape = {mape}"
