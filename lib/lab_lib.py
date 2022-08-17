@@ -4686,7 +4686,7 @@ class Models:
             )
         if "modelSquareRootTimesOtherElems" in self.modelNames:
             self.objectModelSquareRootTimesOtherElems = (
-                Model_squareRootOfProcess_ForMultipleRegression(
+                Model_sqrtProcessTimesOtherExpElem_ForMultipleRegression(
                     inputDF,
                     explanatoryVariableColumnNames=expVarColNames,
                     responseVariableColumnNames=resVarColNames,
