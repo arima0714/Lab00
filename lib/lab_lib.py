@@ -4693,6 +4693,15 @@ class Models:
                     targetDF=targetDF,
                 )
             )
+        if "modelObeyOneParameter" in self.modelNames:
+            self.objectModelObeyOneParameter = (
+                Model_obeyOneParameter_ForMultipleRegression(
+                    inputDF,
+                    explanatoryVariableColumnNames=expVarColNames,
+                    responseVariableColumnNames=resVarColNames,
+                    targetDF=targetDF,
+                )
+            )
 
     def setUpDataBeforeCalcLr(self):
         """setUpDataBeforeCalcLr(self)
@@ -4780,6 +4789,8 @@ class Models:
             self.objectModelSquareRootOfProcess.build_model()
         if "modelSquareRootTimesOtherElems" in self.modelNames:
             self.objectModelSquareRootTimesOtherElems.build_model()
+        if "modelObeyOneParameter" in self.modelNames:
+            self.objectModelObeyOneParameter.build_model()
 
     # inputDF：__init__()でのinputDFとDF構成は同じ
     def predict(self, inputDF):
@@ -4934,6 +4945,10 @@ class Models:
             MAPEatTrain[
                 "modelSquareRootTimesOtherElems"
             ] = self.objectModelSquareRootTimesOtherElems.returnMAPE()
+        if "modelObeyOneParameter" in self.modelNames:
+            MAPEatTrain[
+                "modelObeyOneParameter"
+            ] = self.objectModelObeyOneParameter.returnMAPE()
 
         self.MAPEatTrain = MAPEatTrain
 
