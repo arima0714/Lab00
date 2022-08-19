@@ -9085,3 +9085,134 @@ def test_Model_sqrtProcessTimesOtherExpElem_ForMultipleRegression():
     # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装できているかを確認
     mape: float = objectModel.returnMAPE()
     assert 0 <= mape < 1, f"mape = {mape}"
+
+
+# In[ ]:
+
+
+"""
+関数コール回数と初期変数の値が完全に一致していることがある。（ベンチマークプログラムCGのSPRNVC,VECSETなど）
+
+これを満たすモデルを作成する
+
+"""
+
+
+class Model_obeyOneParameter_ForMultipleRegression(ModelBaseForMultipleRegression):
+    """一つの説明変数に完全に従うモデル
+
+    Y = X（パラメータはXだけではないがXのみに従っている）
+
+    Attributes:
+        explanatoryVariableColumnNames (list[str]): 説明変数の列名のリスト
+        rawExplanatoryVariable (pd.DataFrame): 説明変数のデータフレーム
+        rawExplanatoryVariableForTest (pd.DataFrame): テスト用の説明変数のデータフレーム。説明変数のデータフレームと同様の値が入っている(?)
+        rawResponseVariable (pd.DataFrame): 目的変数のデータフレーム
+        rawResponseVariableForTest (pd.DataFrame): テスト用の目的変数のデータフレーム。目的変数のデータフレームと同様の値が入っている(?)
+        responseVariableColumnNames (list[str]): 目的変数の列名のリスト
+    """
+
+    def build_model(self) -> bool:
+        """build_model(self) -> bool
+
+        オブジェクトの初期化時に生成された、インスタンスの説明変数およびインスタンスの目的変数からモデルを構築する
+        """
+
+        self.oneParam = ""
+
+        _resVar: np.ndarray = self.rawResponseVariable.values.reshape(-1)
+        for expColName in self.explanatoryVariableColumnNames:
+            _expVar: np.ndarra = self.rawExplanaoryVariable[expColName].values
+            if (_resVar == _expVar).all():
+                self.oneParam = expColName
+                continue
+        if self.oneParam == "":
+            self.lr = LinearRegression()
+            self.lr.fit(self.rawExplanaoryVariable, self.rawResponseVariable)
+
+        return True
+
+    def predict(self, inputDF: pd.DataFrame) -> np.ndarray:
+        """predict(self, inputDF: pd.DataFrame)->np.ndarray
+
+        構築したモデルを用いて予測をする
+
+        Args:
+            self: ___
+            inputDF (pd.DataFrame) :構築されたモデルを用いて予測を行うDF
+
+        Returns:
+            np.ndarray
+        """
+
+        inputDFonlyExpVarCol: pd.DataFrame = inputDF[
+            self.explanatoryVariableColumnNames
+        ]
+        if self.oneParam == "":
+            predicted_result: np.ndarray = self.lr.predict(inputDFonlyExpVarCol)
+        else:
+            predicted_result: np.ndarray = inputDFonlyExpVarCol[self.oneParam]
+
+        return predicted_result
+
+    def returnMAPE(self) -> float:
+        """returnMAPE() -> float
+
+        モデル構築のための学習用データからMAPEを算出する。
+
+        Args:
+            self: none
+
+        Returns:
+            float: 「モデルの構築に用いたデータから予測された値」と「実際の値」から算出されたMAPE
+            int: 失敗した場合,-1
+
+        """
+
+        return_expect: np.ndarray = self.rawResponseVariable[
+            self.responseVariableColumnNames
+        ].values
+        return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
+
+        return returnMapeScore(return_expect, return_actually)
+
+
+def test_Model_obeyOneParameter_ForMultipleRegression():
+    """test_Model_obeyOneParameter_ForMultipleRegression()
+
+    クラス Model_obeyOneParameter_ForMultipleRegression のテスト
+    """
+
+    # 説明変数
+    plot_process: np.ndarray = np.linspace(10, 20, 11)
+    plot_other: np.ndarray = 1000 * np.random.random_sample(11)
+    plot_other2: np.ndarray = -3 * plot_process
+
+    # 目的変数
+    plot_call: np.ndarray = plot_other
+
+    # DFの作成
+    columnNames: list[str] = ["process", "plot_other", "plot_other2", "plot_call"]
+    datumForDF: list[np.ndarray] = [plot_process, plot_other, plot_other2, plot_call]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
+    inputDFForTest["functionName"] = "functionName"
+
+    # 説明変数のカラム名のリスト
+    columnNamesForExp: list[str] = ["process", "plot_other", "plot_other2"]
+    # 目的変数のカラム名のリスト
+    columnNamesForRes: list[str] = ["plot_call"]
+
+    # 予測の実施
+    objectModel = Model_obeyOneParameter_ForMultipleRegression(
+        inputDF=inputDFForTest,
+        explanatoryVariableColumnNames=columnNamesForExp,
+        responseVariableColumnNames=columnNamesForRes,
+        conditionDictForTest={},
+    )
+
+    # モデルの構築
+    objectModel.build_model()
+    # モデル構築に用いたデータと予測されたデータとのMAPEを比較して、実装できているかを確認
+    mape: float = objectModel.returnMAPE()
+
+    assert 0 <= mape < 0.01, f"mape = {mape}"
