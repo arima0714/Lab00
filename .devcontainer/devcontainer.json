@@ -24,6 +24,7 @@
 		"editor.formatOnSave": true,
 		"editor.formatOnType": true,
 		"notebook.lineNumbers": "on",
+		"notebook.output.textLineLimit": 300,
 		"editor.wordWrap": "on"
 	},
 	// Add the IDs of extensions you want installed when the container is created.
