@@ -5645,7 +5645,7 @@ class Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
         list_p0: list[float] = [1] * (len(list_exp) + 1)
 
         self.popt, self.pcov = curve_fit(
-            processesDevidedByProblemSize, list_exp, list_res, list_p0
+            processesDevidedByProblemSize, list_exp, list_res, list_p0, maxfev=1000000
         )
 
         return True
@@ -6095,7 +6095,7 @@ class Model_ProblemSizeDevidedByProcesses_ForMultipleRegression(
         list_p0: list[float] = [1] * (len(list_exp) + 1)
 
         self.popt, self.pcov = curve_fit(
-            problemSizeDevidedByProcesses, list_exp, list_res, list_p0
+            problemSizeDevidedByProcesses, list_exp, list_res, list_p0, maxfev=1000000
         )
 
         return True
@@ -6668,6 +6668,7 @@ class Model_InfiniteProductOfProblemSizeMultipliedByProcesses_ForMultipleRegress
             list_exp,
             list_res,
             list_p0,
+            maxfev=1000000,
         )
         return True
 
@@ -6805,7 +6806,11 @@ class Model_InfiniteProductOfProblemSizeDividedByProcesses_ForMultipleRegression
         list_p0: list[float] = [1] * 2
 
         self.popt, self.pcov = curve_fit(
-            infiniteProductOfProblemSizeDividedByProcesses, list_exp, list_res, list_p0
+            infiniteProductOfProblemSizeDividedByProcesses,
+            list_exp,
+            list_res,
+            list_p0,
+            maxfev=1000000,
         )
 
         return True
@@ -6865,8 +6870,6 @@ class Model_InfiniteProductOfProblemSizeDividedByProcesses_ForMultipleRegression
 
         predicted_result: list[float] = self.predict(self.rawExplanaoryVariable)
         real_data: np.ndarray = self.rawResponseVariable.to_numpy().ravel()
-
-        # print(f"predicted_result = {predicted_result}, \nreal_data = {real_data}")
 
         if len(predicted_result) != len(real_data):
             warnings.warn(
@@ -7950,7 +7953,6 @@ def test_calcWeightedMAPEscore():
     actually_result = calcWeightedMAPEscore(
         inputDF=inputDF, inputColumnDict=inputColumnDict
     )
-    # print(inputDF)
     assert (
         expected_result == actually_result
     ), f"expected_result={expected_result},actually_result={actually_result}"
@@ -7964,7 +7966,6 @@ def test_calcWeightedMAPEscore():
     actually_result = calcWeightedMAPEscore(
         inputDF=inputDF, inputColumnDict=inputColumnDict
     )
-    # print(inputDF)
     assert (
         expected_result == actually_result
     ), f"expected_result={expected_result},actually_result={actually_result}"
@@ -7978,7 +7979,6 @@ def test_calcWeightedMAPEscore():
     actually_result = calcWeightedMAPEscore(
         inputDF=inputDF, inputColumnDict=inputColumnDict
     )
-    # print(inputDF)
     assert (
         expected_result == actually_result
     ), f"expected_result={expected_result},actually_result={actually_result}"
@@ -9192,7 +9192,6 @@ class Model_obeyOneParameter_ForMultipleRegression(ModelBaseForMultipleRegressio
             self.responseVariableColumnNames
         ].values
         return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
-        print(f"return_expect=\n{return_expect}\nreturn_actuall=\n{return_actually}")
         return returnMapeScore(return_expect, return_actually)
 
 
