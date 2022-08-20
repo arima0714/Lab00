@@ -9164,9 +9164,13 @@ class Model_obeyOneParameter_ForMultipleRegression(ModelBaseForMultipleRegressio
             self.explanatoryVariableColumnNames
         ]
         if self.oneParam == "":
-            predicted_result: np.ndarray = self.lr.predict(inputDFonlyExpVarCol)
+            predicted_result: np.ndarray = self.lr.predict(
+                inputDFonlyExpVarCol
+            ).reshape(-1)
         else:
-            predicted_result: np.ndarray = inputDFonlyExpVarCol[self.oneParam]
+            predicted_result: np.ndarray = np.reshape(
+                inputDFonlyExpVarCol[self.oneParam].values, (-1, 1)
+            )
 
         return predicted_result
 
@@ -9188,7 +9192,7 @@ class Model_obeyOneParameter_ForMultipleRegression(ModelBaseForMultipleRegressio
             self.responseVariableColumnNames
         ].values
         return_actually: np.ndarray = self.predict(self.rawExplanaoryVariable)
-
+        print(f"return_expect=\n{return_expect}\nreturn_actuall=\n{return_actually}")
         return returnMapeScore(return_expect, return_actually)
 
 
