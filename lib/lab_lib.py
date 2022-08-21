@@ -5243,6 +5243,12 @@ class Models:
             return (
                 self.objectModelLinearSumOf2elementCombinationWithSquaredWithoutProcess
             )
+        if "modelSquareRootOfProcess" == modelName:
+            return self.objectModelSquareRootOfProcess
+        if "modelSquareRootTimesOtherElems" == modelName:
+            return self.objectModelSquareRootTimesOtherElems
+        if "modelObeyOneParameter" == modelName:
+            return self.objectModelObeyOneParameter
 
     def returnRelativeErrorRateDict(self):
         """returnRelativeErrorRateDict(self)
