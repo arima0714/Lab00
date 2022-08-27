@@ -9240,3 +9240,81 @@ def test_Model_obeyOneParameter_ForMultipleRegression():
     mape: float = objectModel.returnMAPE()
 
     assert 0 <= mape < 0.01, f"mape = {mape}"
+
+
+# In[ ]:
+
+
+def convertPprofTime(input: str) -> float:
+    """TAUで取得しpprofで集計したプロファイルの'Inclusive～', 'Exclusive～'列の時刻を文字列(string)として取得して、数値(float)として返す関数。単位は秒
+
+    Args:
+        input (str) : 文字列となっているpprofで集計したプロファイルの'Inclusive～'もしくは'Exclusive～'列の時刻
+
+    Returns:
+        float : inputを秒単位にした値
+    """
+
+    # ',' を削除
+    input = input.replace(",", "")
+    # ':' の有無を確認
+    # ':' のインデックスを探す
+    index_colon: int = input.find(":")
+    # '.' の有無を確認
+    # '.' のインデックスを探す
+    index_period: int = input.find(".")
+
+    ret_seconds: float = 0
+    minutes: int = 0
+    seconds: float = 0
+
+    if index_colon == -1:
+        seconds = float(input) / 1000
+    else:
+        minutes = int(input[:index_colon])
+        seconds = float(input[index_colon + 1 :])
+
+    # print(f"colon = {index_colon}, period = {index_period}\ninput = {input}\nminutes={minutes}, seconds={seconds}")
+
+    ret_seconds = 60 * minutes + seconds
+
+    return ret_seconds
+
+
+def test_convertPprofTime():
+    """convertPprofTime(input :str) -> float のテスト関数"""
+
+    test_case_00_input: str = "1:44.607"
+    test_case_00_output_actually: float = 1 * 60 + 44 + 0.607
+    test_case_00_output_expect: float = convertPprofTime(test_case_00_input)
+    assert (
+        test_case_00_output_actually == test_case_00_output_expect
+    ), f"actually = {test_case_00_output_actually}, expect = {test_case_00_output_expect}"
+
+    test_case_01_input: str = "33,350"
+    test_case_01_output_actually: float = 33.350
+    test_case_01_output_expect: float = convertPprofTime(test_case_01_input)
+    assert (
+        test_case_01_output_actually == test_case_01_output_expect
+    ), f"actually = {test_case_01_output_actually}, expect = {test_case_01_output_expect}"
+
+    test_case_02_input: str = "111:111"
+    test_case_02_output_actually: float = 111 * 60 + 111
+    test_case_02_output_expect: float = convertPprofTime(test_case_02_input)
+    assert (
+        test_case_02_output_actually == test_case_02_output_expect
+    ), f"actually = {test_case_02_output_actually}, expect = {test_case_02_output_expect}"
+
+    test_case_03_input: str = "0:123"
+    test_case_03_output_actually: float = 123
+    test_case_03_output_expect: float = convertPprofTime(test_case_03_input)
+    assert (
+        test_case_03_output_actually == test_case_03_output_expect
+    ), f"actually = {test_case_03_output_actually}, expect = {test_case_03_output_expect}"
+
+    test_case_04_input: str = "0.0269"
+    test_case_04_output_actually: float = 0.0269 / 1000
+    test_case_04_output_expect: float = convertPprofTime(test_case_04_input)
+    assert (
+        test_case_04_output_actually == test_case_04_output_expect
+    ), f"actually = {test_case_04_output_actually}, expect = {test_case_04_output_expect}"
