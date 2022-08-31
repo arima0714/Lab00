@@ -9354,3 +9354,62 @@ def get_execTime(benchmarkName: str, condition: dict[str, int], csvDir: str):
     else:
         warnings.warn(f"there no process for {benchmarkName}(condition = {condition})")
         return -1
+
+
+# In[ ]:
+
+
+def ret_relativeCost(
+    base_DFs: list[pd.DataFrame], target_DFs: list[pd.DataFrame]
+) -> float:
+    """相対コストを算出する関数
+
+    Args:
+        base_DFs (list[pd.DataFrame]) : モデルの構築に利用したDFのリスト
+        targetDFs (list[pd.DataFrame]) : 予測対象のDFのリスト
+        上記の2つのDFは下記のDFの要素を満たす
+
+        | Exclusive | #Name |
+        |-----------|-------|
+        |           |       |
+
+    Returns:
+        float : 相対コスト（％）
+    """
+
+    base_DF: pd.DataFrame = pd.concat(base_DFs)
+    base_num: float = sum(base_DF[base_DF["Name"] == ".TAU_application"]["Exclusive"])
+
+    target_DF: ps.DataFrame = pd.concat(target_DFs)
+    target_num: float = sum(
+        target_DF[target_DF["Name"] == ".TAU_application"]["Exclusive"]
+    )
+
+    return base_num / target_num * 100
+
+
+def test_ret_relativeCost():
+    """ret_relativeCost()のテスト"""
+
+    base_01_DF: pd.DataFrame = pd.DataFrame(
+        {"Exclusive": [1], "Name": [".TAU_application"]}
+    )
+    base_02_DF: pd.DataFrame = pd.DataFrame(
+        {"Exclusive": [2], "Name": [".TAU_application"]}
+    )
+    base_03_DF: pd.DataFrame = pd.DataFrame(
+        {"Exclusive": [3], "Name": [".TAU_application"]}
+    )
+
+    target_DF: pd.DataFrame = pd.DataFrame(
+        {"Exclusive": [17], "Name": [".TAU_application"]}
+    )
+
+    result_expected: float = (1 + 2 + 3) / 17 * 100
+    result_actually: float = ret_relativeCost(
+        base_DFs=[base_01_DF, base_02_DF, base_03_DF], target_DFs=[target_DF]
+    )
+
+    assert (
+        result_expected == result_actually
+    ), f"expected={result_expected}, actually={result_actually}"
