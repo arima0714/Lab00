@@ -9413,3 +9413,52 @@ def test_ret_relativeCost():
     assert (
         result_expected == result_actually
     ), f"expected={result_expected}, actually={result_actually}"
+
+
+# In[ ]:
+
+
+def gen_ExtraPinputData(
+    benchmarkName: str, conditions: dict[str, list[int]], csvDir: str = "./csv_files/"
+) -> str:
+    if benchmarkName == "cg":
+        target_rawDF_cg: pd.DataFrame = return_rawDF_cg(
+            list_process=conditions["process"],
+            list_na=conditions["na"],
+            list_nonzer=conditions["nonzer"],
+            list_niter=conditions["niter"],
+            list_shift=conditions["shift"],
+            csvDir=csvDir,
+        )
+        target_rawDF_cg = target_rawDF_cg[target_rawDF_cg["Name"] == ".TAU_application"]
+        target_rawDF_cg["convertedInclusive"] = target_rawDF_cg["Inclusive"].map(
+            convertPprofTime
+        )
+
+        # めも：conditionsのキーがパラメータになっている
+        # PARAMETER
+        ss_PARAMETER: str = ""
+        list_conditions_keys = sorted(list(conditions.keys()))
+        for key in list_conditions_keys:
+            ss_PARAMETER += f"PARAMETER {key}\n"
+        # POINTS
+        ss_POINTS: str = "\n"
+        # REGION & METRIC
+        ss_REGIONandMETRIC: str = "\nREGION reg\nMETRIC time\n"
+        # DATA
+        ss_DATA: str = "\n"
+
+        for i, sr in target_rawDF_cg.iterrows():
+            ss_POINTS += "POINTS ("
+            for key in list_conditions_keys:
+                ss_POINTS += f" {sr[key]}"
+            ss_POINTS += " )\n"
+            ss_DATA += f"DATA ( {sr['convertedInclusive']} )\n"
+
+        # print(target_rawDF_cg)
+
+        return ss_PARAMETER + ss_POINTS + ss_REGIONandMETRIC + ss_DATA
+
+    else:
+        warnings.warn(f"benchmarkName={benchmarkName} は非対応です")
+        return ""
