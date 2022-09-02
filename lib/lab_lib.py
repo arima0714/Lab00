@@ -9419,46 +9419,98 @@ def test_ret_relativeCost():
 
 
 def gen_ExtraPinputData(
-    benchmarkName: str, conditions: dict[str, list[int]], csvDir: str = "./csv_files/"
+    benchmarkName: str,
+    conditions: dict[str, list[int]],
+    csvDir: str = "./csv_files/",
+    version: int = 1,
+    timeColumnName: str = "Inclusive",
 ) -> str:
-    if benchmarkName == "cg":
-        target_rawDF_cg: pd.DataFrame = return_rawDF_cg(
-            list_process=conditions["process"],
-            list_na=conditions["na"],
-            list_nonzer=conditions["nonzer"],
-            list_niter=conditions["niter"],
-            list_shift=conditions["shift"],
-            csvDir=csvDir,
-        )
-        target_rawDF_cg = target_rawDF_cg[target_rawDF_cg["Name"] == ".TAU_application"]
-        target_rawDF_cg["convertedInclusive"] = target_rawDF_cg["Inclusive"].map(
-            convertPprofTime
-        )
+    if version == 1:
+        if benchmarkName == "cg":
+            target_rawDF_cg: pd.DataFrame = return_rawDF_cg(
+                list_process=conditions["process"],
+                list_na=conditions["na"],
+                list_nonzer=conditions["nonzer"],
+                list_niter=conditions["niter"],
+                list_shift=conditions["shift"],
+                csvDir=csvDir,
+            )
+            target_rawDF_cg = target_rawDF_cg[
+                target_rawDF_cg["Name"] == ".TAU_application"
+            ]
+            target_rawDF_cg["convertedInclusive"] = target_rawDF_cg["Inclusive"].map(
+                convertPprofTime
+            )
 
-        # めも：conditionsのキーがパラメータになっている
-        # PARAMETER
-        ss_PARAMETER: str = ""
-        list_conditions_keys = sorted(list(conditions.keys()))
-        for key in list_conditions_keys:
-            ss_PARAMETER += f"PARAMETER {key}\n"
-        # POINTS
-        ss_POINTS: str = "\n"
-        # REGION & METRIC
-        ss_REGIONandMETRIC: str = "\nREGION reg\nMETRIC time\n"
-        # DATA
-        ss_DATA: str = "\n"
-
-        for i, sr in target_rawDF_cg.iterrows():
-            ss_POINTS += "POINTS ("
+            # めも：conditionsのキーがパラメータになっている
+            # PARAMETER
+            ss_PARAMETER: str = ""
+            list_conditions_keys = sorted(list(conditions.keys()))
             for key in list_conditions_keys:
-                ss_POINTS += f" {sr[key]}"
-            ss_POINTS += " )\n"
-            ss_DATA += f"DATA ( {sr['convertedInclusive']} )\n"
+                ss_PARAMETER += f"PARAMETER {key}\n"
+            # POINTS
+            ss_POINTS: str = "\n"
+            # REGION & METRIC
+            ss_REGIONandMETRIC: str = "\nREGION reg\nMETRIC time\n"
+            # DATA
+            ss_DATA: str = "\n"
 
-        # print(target_rawDF_cg)
+            for i, sr in target_rawDF_cg.iterrows():
+                ss_POINTS += "POINTS ("
+                for key in list_conditions_keys:
+                    ss_POINTS += f" {sr[key]}"
+                ss_POINTS += " )\n"
+                ss_DATA += f"DATA ( {sr['convertedInclusive']} )\n"
 
-        return ss_PARAMETER + ss_POINTS + ss_REGIONandMETRIC + ss_DATA
+            # print(target_rawDF_cg)
 
+            return ss_PARAMETER + ss_POINTS + ss_REGIONandMETRIC + ss_DATA
+
+        else:
+            warnings.warn(f"benchmarkName={benchmarkName} は非対応です")
+            return ""
     else:
-        warnings.warn(f"benchmarkName={benchmarkName} は非対応です")
-        return ""
+        timeColumnName_converted: str = f"converted{timeColumnName}"
+        if benchmarkName == "cg":
+            target_rawDF_cg: pd.DataFrame = return_rawDF_cg(
+                list_process=conditions["process"],
+                list_na=conditions["na"],
+                list_nonzer=conditions["nonzer"],
+                list_niter=conditions["niter"],
+                list_shift=conditions["shift"],
+                csvDir=csvDir,
+            )
+            target_rawDF_cg = target_rawDF_cg[
+                target_rawDF_cg["Name"] == ".TAU_application"
+            ]
+            target_rawDF_cg[timeColumnName_converted] = target_rawDF_cg[
+                timeColumnName
+            ].map(convertPprofTime)
+
+            # めも：conditionsのキーがパラメータになっている
+            # PARAMETER
+            ss_PARAMETER: str = ""
+            list_conditions_keys = sorted(list(conditions.keys()))
+            for key in list_conditions_keys:
+                ss_PARAMETER += f"PARAMETER {key}\n"
+            # POINTS
+            ss_POINTS: str = "\n"
+            # REGION & METRIC
+            ss_REGIONandMETRIC: str = "\nREGION reg\nMETRIC time\n"
+            # DATA
+            ss_DATA: str = "\n"
+
+            for i, sr in target_rawDF_cg.iterrows():
+                ss_POINTS += "POINTS ("
+                for key in list_conditions_keys:
+                    ss_POINTS += f" {sr[key]}"
+                ss_POINTS += " )\n"
+                ss_DATA += f"DATA ( {sr[timeColumnName_converted]} )\n"
+
+            # print(target_rawDF_cg)
+
+            return ss_PARAMETER + ss_POINTS + ss_REGIONandMETRIC + ss_DATA
+
+        else:
+            warnings.warn(f"benchmarkName={benchmarkName} は非対応です")
+            return ""
