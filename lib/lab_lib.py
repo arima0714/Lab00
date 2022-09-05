@@ -9512,16 +9512,16 @@ def gen_ExtraPinputData(
             return ss_PARAMETER + ss_POINTS + ss_REGIONandMETRIC + ss_DATA
 
         elif benchmarkName == "lulesh":
-            target_rawDF_lulesh: pd.DataFrame = return_rawDFinLULESH(
-                processes=conditions["process"],
-                iterations=conditions["iterations"],
-                sizes=conditions["sizes"],
-                csvDirPath=csvDir,
+            target_rawDF_lulesh: pd.DataFrame = return_rawDF_lulesh(
+                list_process=conditions["process"],
+                list_iteration=conditions["iteration"],
+                list_size=conditions["size"],
+                csvDir=csvDir,
             )
             target_rawDF_lulesh = target_rawDF_lulesh[
                 target_rawDF_lulesh["Name"] == ".TAU_application"
             ]
-            target_rawDF_cg[timeColumnName_converted] = target_rawDF_lulesh[
+            target_rawDF_lulesh[timeColumnName_converted] = target_rawDF_lulesh[
                 timeColumnName
             ].map(convertPprofTime)
 
@@ -9537,15 +9537,59 @@ def gen_ExtraPinputData(
             # DATA
             ss_DATA: str = "\n"
 
-            for i, sr in target_rawDF_lulesh.iterrow():
+            for i, sr in target_rawDF_lulesh.iterrows():
                 ss_POINTS += "POINTS ("
                 for key in list_conditions_keys:
                     ss_POINTS += f" {sr[key]}"
                 ss_POINTS += " )\n"
-                ss_DATA += f"DATA ( {st[timeColumnName_converted]} )\n"
+                ss_DATA += f"DATA ( {sr[timeColumnName_converted]} )\n"
 
             return ss_PARAMETER + ss_POINTS + ss_REGIONandMETRIC + ss_DATA
 
         else:
             warnings.warn(f"benchmarkName={benchmarkName} は非対応です")
             return ""
+
+
+# In[ ]:
+
+
+def return_rawDF_lulesh(
+    list_process: list[int],
+    list_iteration: list[int],
+    list_size: list[int],
+    csvDir: str,
+):
+    """ベンチマークプログラムLULESHのプロファイルを取得する関数
+
+    Args:
+        list_process(list[int]):プロセス数のリスト
+        list_iteration(list[int]):初期変数iterationのリスト
+        list_size(list[int]):初期変数sizeのリスト
+        csvDir(str):CSVファイルを格納したディレクトリのパスを表す文字列
+
+    Returns:
+        pd.DataFrame
+
+    """
+
+    list_before_concat_DF: list[pd.DataFrame] = []
+    for elem_process in list_process:
+        for elem_iteration in list_iteration:
+            for elem_size in list_size:
+                filePath: str = (
+                    f"{csvDir}lulesh_p{elem_process}i{elem_iteration}s{elem_size}.csv"
+                )
+                DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+                if os.path.isfile(filePath):
+                    try:
+                        DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+                        DF_read_raw["process"] = elem_process
+                        DF_read_raw["iteration"] = elem_iteration
+                        DF_read_raw["size"] = elem_size
+                        list_before_concat_DF.append(DF_read_raw)
+                    except:
+                        warnings.warn(f"{filePath} is empty.")
+                else:
+                    warnings.warn(f"{filePath} doesn't exist")
+    return pd.concat(objs=list_before_concat_DF, axis=0)
