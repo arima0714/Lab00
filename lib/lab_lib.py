@@ -9511,6 +9511,41 @@ def gen_ExtraPinputData(
 
             return ss_PARAMETER + ss_POINTS + ss_REGIONandMETRIC + ss_DATA
 
+        elif benchmarkName == "lulesh":
+            target_rawDF_lulesh: pd.DataFrame = return_rawDFinLULESH(
+                processes=conditions["process"],
+                iterations=conditions["iterations"],
+                sizes=conditions["sizes"],
+                csvDirPath=csvDir,
+            )
+            target_rawDF_lulesh = target_rawDF_lulesh[
+                target_rawDF_lulesh["Name"] == ".TAU_application"
+            ]
+            target_rawDF_cg[timeColumnName_converted] = target_rawDF_lulesh[
+                timeColumnName
+            ].map(convertPprofTime)
+
+            # PARAMETER
+            ss_PARAMETER: str = ""
+            list_conditions_keys: list[str] = sorted(list(conditions.keys()))
+            for key in list_conditions_keys:
+                ss_PARAMETER += f"PARAMETER {key}\n"
+            # POINTS
+            ss_POINTS: str = "\n"
+            # REGION & METRIC
+            ss_REGIONandMETRIC: str = "\nREGION reg\nMETRIC time\n"
+            # DATA
+            ss_DATA: str = "\n"
+
+            for i, sr in target_rawDF_lulesh.iterrow():
+                ss_POINTS += "POINTS ("
+                for key in list_conditions_keys:
+                    ss_POINTS += f" {sr[key]}"
+                ss_POINTS += " )\n"
+                ss_DATA += f"DATA ( {st[timeColumnName_converted]} )\n"
+
+            return ss_PARAMETER + ss_POINTS + ss_REGIONandMETRIC + ss_DATA
+
         else:
             warnings.warn(f"benchmarkName={benchmarkName} は非対応です")
             return ""
