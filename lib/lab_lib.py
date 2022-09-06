@@ -9593,3 +9593,79 @@ def return_rawDF_lulesh(
                 else:
                     warnings.warn(f"{filePath} doesn't exist")
     return pd.concat(objs=list_before_concat_DF, axis=0)
+
+
+# In[ ]:
+
+
+def gen_ExtraPinputDataFromDF(
+    inputDF: pd.DataFrame,
+    expVar: list[str],
+    resVar: str,
+) -> str:
+
+    # PARAMETER
+    ss_PARAMETER: str = ""
+    sorted_expVar: str = sorted(expVar)
+    for exp in sorted_expVar:
+        ss_PARAMETER += f"PARAMETER {exp}\n"
+    # POINTS
+    ss_POINTS: str = "\n"
+    # REGION & METRIC
+    ss_REGINONandMETRIC: str = "\nREGION reg\nMETRIC time\n"
+    # DATA
+    ss_DATA: str = "\n"
+
+    for i, sr in inputDF.iterrows():
+        ss_POINTS += "POINTS ("
+        for exp in sorted_expVar:
+            ss_POINTS += f" {sr[exp]}"
+        ss_POINTS += " )\n"
+        ss_DATA += f"DATA {sr[resVar]} {sr[resVar]} {sr[resVar]}\n"
+
+    return ss_PARAMETER + ss_POINTS + ss_REGINONandMETRIC + ss_DATA
+
+
+def test_gen_ExtraPinputDataFromDF():
+    sequence_1: list[int] = [1, 2, 3, 4, 5]
+    sequence_2: list[int] = [6, 7, 8, 9, 10]
+    sequence_3: list[int] = [11, 12, 13, 14, 15]
+    sequence_4: list[int] = [16, 17, 18, 19, 20]
+
+    columnNames: list[str] = ["sq1", "sq2", "sq3", "sq4"]
+    datumForDF: list[list[int]] = [sequence_1, sequence_2, sequence_3, sequence_4]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=columnNames, data=datumForDF).T
+
+    expVar = ["sq1", "sq2", "sq3"]
+    resVar = "sq4"
+
+    # sq1, sq2, sq3 を説明変数、sq4 を目的変数とする
+    ss_parameter = """PARAMETER sq1
+PARAMETER sq2
+PARAMETER sq3
+
+"""
+    ss_points = """POINTS ( 1 6 11 )
+POINTS ( 2 7 12 )
+POINTS ( 3 8 13 )
+POINTS ( 4 9 14 )
+POINTS ( 5 10 15 )
+
+"""
+    ss_region_and_metric = """REGION reg
+METRIC time
+
+"""
+    ss_data = """DATA 16 16 16
+DATA 17 17 17
+DATA 18 18 18
+DATA 19 19 19
+DATA 20 20 20
+"""
+
+    expected = ss_parameter + ss_points + ss_region_and_metric + ss_data
+    actually = gen_ExtraPinputDataFromDF(
+        inputDF=inputDFForTest, expVar=expVar, resVar=resVar
+    )
+
+    assert expected == actually, f"expected={expected}__actually={actually}__"
