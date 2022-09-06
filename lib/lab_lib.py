@@ -9542,7 +9542,7 @@ def gen_ExtraPinputData(
                 for key in list_conditions_keys:
                     ss_POINTS += f" {sr[key]}"
                 ss_POINTS += " )\n"
-                ss_DATA += f"DATA ( {sr[timeColumnName_converted]} )\n"
+                ss_DATA += f"DATA {sr[timeColumnName_converted]} {sr[timeColumnName_converted]} {sr[timeColumnName_converted]}\n"
 
             return ss_PARAMETER + ss_POINTS + ss_REGIONandMETRIC + ss_DATA
 
