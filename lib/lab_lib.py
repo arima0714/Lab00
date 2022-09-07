@@ -9323,7 +9323,12 @@ def test_convertPprofTime():
 # In[ ]:
 
 
-def get_execTime(benchmarkName: str, condition: dict[str, int], csvDir: str):
+def get_execTime(
+    benchmarkName: str,
+    condition: dict[str, int],
+    csvDir: str,
+    columnName: str = "Inclusive",
+):
     """TAUで取得し、pprofで整形したcsvから実行時間を取得する関数
 
     Args:
@@ -9348,9 +9353,20 @@ def get_execTime(benchmarkName: str, condition: dict[str, int], csvDir: str):
         target_function_DF: pd.DataFrame = target_rawDF_cg[
             target_rawDF_cg["Name"] == ".TAU_application"
         ]
-        target_num: str = target_function_DF.loc[0, "Inclusive"]
+        target_num: str = target_function_DF.loc[0, columnName]
         return convertPprofTime(target_num)
-
+    elif benchmarkName == "lulesh":
+        target_rawDF_lulesh: pd.DataFrame = return_rawDF_lulesh(
+            list_process=[condition["process"]],
+            list_iteration=[condition["iteration"]],
+            list_size=[condition["size"]],
+            csvDir=csvDir,
+        )
+        target_function_DF: pd.DataFrame = target_rawDF_cg[
+            target_rawDF_cg["Name"] == ".TAU_application"
+        ]
+        target_num: str = target_function_df.loc[0, columnName]
+        return convertPprofTime(target_num)
     else:
         warnings.warn(f"there no process for {benchmarkName}(condition = {condition})")
         return -1
