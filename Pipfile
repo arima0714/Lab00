@@ -28,6 +28,7 @@ graphviz = "*"
 jupyter-server = "==1.16.0"
 extrap = "*"
 packaging = "*"
+sympy = "*"
 
 [dev-packages]
 
