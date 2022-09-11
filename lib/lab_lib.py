@@ -31,6 +31,7 @@ import plotly.graph_objects as go
 import pprint
 import pytest
 import random
+import re
 import sys
 from scipy.optimize import curve_fit
 from sklearn import linear_model
@@ -42,6 +43,9 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from statistics import median_low
+import subprocess
+from sympy import sympify, pprint, symbols, log
+from sympy.parsing.sympy_parser import parse_expr
 from typing import Dict
 from unittest.mock import MagicMock
 import warnings
@@ -9619,6 +9623,14 @@ def gen_ExtraPinputDataFromDF(
     expVar: list[str],
     resVar: str,
 ) -> str:
+    """Extra-Pへの入力ファイルを文字列型で作成してそれを返す関数
+
+    Args:
+        inputDF(pd.DataFrame):データフレーム
+        expVar(list[str]):説明変数のカラム名のリスト
+        resVar(str):目的変数のカラム名
+
+    """
 
     # PARAMETER
     ss_PARAMETER: str = ""
@@ -9685,3 +9697,30 @@ DATA 20 20 20
     )
 
     assert expected == actually, f"expected={expected}__actually={actually}__"
+
+
+# In[ ]:
+
+
+def convert_log(inputStr: str) -> str:
+    """Extra-Pで出力されたモデル式の文字列のlogの形式をsympyで読み取れるように変換する関数
+
+    Args:
+        inputStr(str):Extra-Pで出力されたモデル式の文字列
+
+    """
+    pattern = re.compile(r"log(?P<base>\d{1,})")
+    result = pattern.sub(r"1/ln(\g<base>)*ln", inputStr)
+    return result
+
+
+def test_convert_log():
+    inputStr: str = """0.008938888890764687 + 0.0003391531590741526 * iteration^(1) + 2.645514630961448e-08 * iteration^(1) * size^(3) * log2(size)^(1)"""
+    expected: str = "0.008938888890764687 + 0.0003391531590741526 * iteration^(1) + 2.645514630961448e-08 * iteration^(1) * size^(3) * 1/ln(2)*ln(size)^(1)"
+    actually: str = convert_log(inputStr=inputStr)
+    assert expected == actually, f"expected = {expected}, actually = {actually}"
+
+    inputStr: str = """0.008938888890764687 + 0.0003391531590741526 * iteration^(1) + 2.645514630961448e-08 * iteration^(1) * size^(3) * log25(size)^(1)"""
+    expected: str = "0.008938888890764687 + 0.0003391531590741526 * iteration^(1) + 2.645514630961448e-08 * iteration^(1) * size^(3) * 1/ln(25)*ln(size)^(1)"
+    actually: str = convert_log(inputStr=inputStr)
+    assert expected == actually, f"expected = {expected}, actually = {actually}"
