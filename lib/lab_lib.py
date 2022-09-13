@@ -9260,7 +9260,7 @@ def convertPprofTime(input: str) -> float:
     """
 
     # ',' を削除
-    input = input.replace(",", "")
+    input = str(input).replace(",", "")
     # ':' の有無を確認
     # ':' のインデックスを探す
     index_colon: int = input.find(":")
