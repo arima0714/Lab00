@@ -9724,3 +9724,124 @@ def test_convert_log():
     expected: str = "0.008938888890764687 + 0.0003391531590741526 * iteration^(1) + 2.645514630961448e-08 * iteration^(1) * size^(3) * 1/ln(25)*ln(size)^(1)"
     actually: str = convert_log(inputStr=inputStr)
     assert expected == actually, f"expected = {expected}, actually = {actually}"
+
+
+# In[ ]:
+
+
+def add_relativeErrorRateCol(
+    inputDF: pd.DataFrame, real_colName: str, predicted_colName: str, targetColName: str
+) -> pd.DataFrame:
+    """入力DFに指定された列からなる相対誤差率を計算した列を追加する関数
+
+    Args:
+        inputDF(pd.DataFrame):入力DF
+        real_colName(str):実測値を保持した列名
+        predicted_colName(str):予測値を保持した列名
+        targetColName(str):相対誤差率を保持した列名
+    """
+
+    returnDF: pd.DataFrame = inputDF.copy(deep=True)
+
+    real_col: list(float) = list(returnDF.loc[:, real_colName])
+    predicted_col: list(float) = list(returnDF.loc[:, predicted_colName])
+
+    target_col: list(float) = returnRawRelativeErrorRateList(
+        real=real_col, predicted=predicted_col
+    )
+
+    returnDF[targetColName] = target_col
+
+    return returnDF
+
+
+def test_add_relativeErrorRateCol():
+    """add_relativeErrorRateCol()のテスト"""
+    sq1: list[float] = [1.0, 2.0, 3.0, 4.0, 5.0]
+    sq2: list[float] = [6.0, 7.0, 8.0, 9.0, 10.0]
+    colNames: list[str] = ["sq1", "sq2"]
+    datumForDF: list[list[int]] = [sq1, sq2]
+    inputDFForTest: pd.DataFrame = pd.DataFrame(index=colNames, data=datumForDF).T
+
+    real_colName: str = colNames[0]
+    predicted_colName: str = colNames[1]
+    targetColName: str = "targetColName"
+    targetCol: list[float] = [
+        (6 - 1) / 1 * 100,
+        (7 - 2) / 2 * 100,
+        (8 - 3) / 3 * 100,
+        (9 - 4) / 4 * 100,
+        (10 - 5) / 5 * 100,
+    ]
+
+    expected: pd.DataFrame = pd.DataFrame(
+        index=["sq1", "sq2", "targetColName"], data=[sq1, sq2, targetCol]
+    ).T
+    actually: pd.DataFrame = add_relativeErrorRateCol(
+        inputDF=inputDFForTest,
+        real_colName=real_colName,
+        predicted_colName=predicted_colName,
+        targetColName=targetColName,
+    )
+
+    assert actually.equals(
+        expected
+    ), f"actually.head() = \n{actually.head()}expected.head() = \n{expected.head()}"
+
+
+def returnRawRelativeErrorRate(real: float | int, predicted: float | int) -> float:
+    """相対誤差率を算出する関数
+
+    Args:
+        real(float|int):実測値
+        predicted(float|int):予測値
+
+    Return:
+        float: 相対誤差率（単位：％）
+    """
+
+    return abs(real - predicted) / real * 100
+
+
+def returnRawRelativeErrorRateList(
+    real: list[float | int], predicted: list[float | int]
+) -> list[float]:
+    """相対誤差率のリストを算出する関数
+
+    Args:
+        real(list[float|int]):実測値のリスト
+        predicted(list[float|int]):予測値のリスト
+
+    Return:
+        list[float]: 相対誤差率（単位：％）のリスト
+    """
+
+    if len(real) != len(predicted):
+        warnings.warn("引数のリストの長さが異なります")
+    else:
+        return_list: list[float] = []
+        for i in range(len(real)):
+            real_num: float | int = real[i]
+            predicted_num: float | int = predicted[i]
+            relativeErrorRate: float = returnRawRelativeErrorRate(
+                real=real_num, predicted=predicted_num
+            )
+            return_list.append(relativeErrorRate)
+    return return_list
+
+
+def test_returnRawRelativeErrorRateList():
+    """returnRawRelativeErrorRateList()のテスト"""
+
+    sq1: list[int] = [1, 2, 3, 4, 5]
+    sq2: list[int] = [6, 7, 8, 9, 10]
+    expected: list[float] = [
+        abs((1 - 6) / 6 * 100),
+        abs((2 - 7) / 7 * 100),
+        abs((3 - 8) / 8 * 100),
+        abs((4 - 9) / 9 * 100),
+        abs((5 - 10) / 10 * 100),
+    ]
+    actually: list[float] = returnRawRelativeErrorRateList(real=sq2, predicted=sq1)
+
+    assert expected == actually, f"expected=\n{expected}\nactually=\n{actually}"
