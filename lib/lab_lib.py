@@ -9845,3 +9845,92 @@ def test_returnRawRelativeErrorRateList():
     actually: list[float] = returnRawRelativeErrorRateList(real=sq2, predicted=sq1)
 
     assert expected == actually, f"expected=\n{expected}\nactually=\n{actually}"
+
+
+# In[ ]:
+
+
+def ret_averagedDF(
+    inputDFs: list[pd.DataFrame], expVar: list[str], resVar: str
+) -> pd.DataFrame:
+    """入力されたDFのリストをまとめる。キーはexpVarで指定したカラム名、まとめる対象はresVarで指定したカラム名
+
+    # データ取得
+    # 1. 複数のDF
+    # 2. 平均値を出す
+    # 3. データがなければ、それを除いて平均値を算出
+
+    Args
+        inputDFs(list[pd.DataFrame]):入力DFのリスト
+        expVar(list[str]):まとめるキーとなるカラム名のリスト
+        resVar(str):まとめる対象となるカラム名
+
+    Returns
+        pd.DataFrame:概要通りの処理がなされたDF
+    """
+
+    if len(inputDFs) == 0:
+        warning.warn("len(inputDFs) == 0")
+        return -1
+
+    set_index_size = set()
+    set_column_size = set()
+    for i in range(len(inputDFs)):
+        set_index_size.add(len(inputDFs[i]))
+        set_column_size.add(len(inputDFs[i].columns))
+    if len(set_index_size) != 1 or len(set_column_size) != 1:
+        warning.warn("some DF in inputDFs is different size")
+        return -1
+
+    list_res_series: list[pd.Series] = []
+    res_series_col: list[int] = []
+    for i in range(len(inputDFs)):
+        list_res_series.append(inputDFs[i][resVar])
+        res_series_col.append(i)
+
+    averaged_res_series: pd.Series = pd.DataFrame(
+        index=res_series_col, data=list_res_series
+    ).mean()
+
+    returnDF = inputDFs[0].copy(deep=True)
+    returnDF[resVar] = averaged_res_series
+
+    return returnDF
+
+
+def test_ret_averagedDF():
+    sq1: list[float] = [0.0, 1.0, 2.0, 3.0, 4.0]
+    sq2: list[float] = [5.0, 6.0, 7.0, 8.0, 9.0]
+    sq3: list[float] = [10.0, 11.0, 12.0, 13.0, 14.0]
+
+    sq_datum1: list[int] = [20, 21, 22, 23, 24]
+    sq_datum2: list[int] = [30, 31, 32, 33, 34]
+    sq_datum3: list[int] = [40, 41, 42, 43, 44]
+
+    colNames: list[str] = ["sq1", "sq2", "sq3", "data"]
+
+    datumList: list[list[int]] = [sq1, sq2, sq3, sq_datum1]
+    inputDF1: pd.DataFrame = pd.DataFrame(index=colNames, data=datumList).T
+    datumList: list[list[int]] = [sq1, sq2, sq3, sq_datum2]
+    inputDF2: pd.DataFrame = pd.DataFrame(index=colNames, data=datumList).T
+    datumList: list[list[int]] = [sq1, sq2, sq3, sq_datum3]
+    inputDF3: pd.DataFrame = pd.DataFrame(index=colNames, data=datumList).T
+
+    expVar: list[str] = ["sq1", "sq2", "sq3"]
+    resVar: str = "data"
+
+    expected_datum: list[float] = [
+        (20 + 30 + 40) / 3,
+        (21 + 31 + 41) / 3,
+        (22 + 32 + 42) / 3,
+        (23 + 33 + 43) / 3,
+        (24 + 34 + 44) / 3,
+    ]
+    datumList = [sq1, sq2, sq3, expected_datum]
+    expected: pd.DataFrame = pd.DataFrame(index=colNames, data=datumList).T
+
+    actually: pd.DataFrame = ret_averagedDF(
+        inputDFs=[inputDF1, inputDF2, inputDF3], expVar=expVar, resVar=resVar
+    )
+
+    assert expected.equals(actually), f"expected=\n{expected}\nactually=\n{actually}"
