@@ -9249,6 +9249,9 @@ def test_Model_obeyOneParameter_ForMultipleRegression():
 # In[ ]:
 
 
+from operator import index
+
+
 def convertPprofTime(input: str) -> float:
     """TAUで取得しpprofで集計したプロファイルの'Inclusive～', 'Exclusive～'列の時刻を文字列(string)として取得して、数値(float)として返す関数。単位は秒
 
@@ -9263,24 +9266,33 @@ def convertPprofTime(input: str) -> float:
     input = str(input).replace(",", "")
     # ':' の有無を確認
     # ':' のインデックスを探す
-    index_colon: int = input.find(":")
+    index_colon_first: int = input.find(":")
+    index_colon_last: int = input.rfind(":")
     # '.' の有無を確認
     # '.' のインデックスを探す
     index_period: int = input.find(".")
 
     ret_seconds: float = 0
+    hours: int = 0
     minutes: int = 0
     seconds: float = 0
 
-    if index_colon == -1:
+    if index_colon_first == -1 and index_colon_last == -1:
+        # 秒のみ
         seconds = float(input) / 1000
-    else:
-        minutes = int(input[:index_colon])
-        seconds = float(input[index_colon + 1 :])
+    elif index_colon_first == index_colon_last:
+        # 分,秒のみ
+        minutes = int(input[:index_colon_first])
+        seconds = float(input[index_colon_first + 1 :])
+    elif index_colon_first != index_colon_last:
+        # 時,分,秒
+        hours = int(input[:index_colon_first])
+        minutes = int(input[index_colon_first + 1 : index_colon_last])
+        seconds = float(input[index_colon_last + 1 :])
 
     # print(f"colon = {index_colon}, period = {index_period}\ninput = {input}\nminutes={minutes}, seconds={seconds}")
 
-    ret_seconds = 60 * minutes + seconds
+    ret_seconds = 3600 * hours + 60 * minutes + seconds
 
     return ret_seconds
 
@@ -9322,6 +9334,13 @@ def test_convertPprofTime():
     assert (
         test_case_04_output_actually == test_case_04_output_expect
     ), f"actually = {test_case_04_output_actually}, expect = {test_case_04_output_expect}"
+
+    test_case_05_input: str = "1:16:15.802"
+    test_case_05_output_expect: float = 1 * 3600 + 16 * 60 + 15.802
+    test_case_05_output_actually: float = convertPprofTime(test_case_05_input)
+    assert (
+        test_case_05_output_expect == test_case_05_output_actually
+    ), f"actually = {test_case_05_output_actually}, expect = {test_case_05_output_expect}"
 
 
 # In[ ]:
