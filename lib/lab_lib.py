@@ -9850,19 +9850,11 @@ def test_returnRawRelativeErrorRateList():
 # In[ ]:
 
 
-def ret_averagedDF(
-    inputDFs: list[pd.DataFrame], expVar: list[str], resVar: str
-) -> pd.DataFrame:
-    """入力されたDFのリストをまとめる。キーはexpVarで指定したカラム名、まとめる対象はresVarで指定したカラム名
-
-    # データ取得
-    # 1. 複数のDF
-    # 2. 平均値を出す
-    # 3. データがなければ、それを除いて平均値を算出
+def ret_averagedDF(inputDFs: list[pd.DataFrame], resVar: str) -> pd.DataFrame:
+    """入力されたDFのリストをまとめる。まとめる対象はresVarで指定したカラム名
 
     Args
         inputDFs(list[pd.DataFrame]):入力DFのリスト
-        expVar(list[str]):まとめるキーとなるカラム名のリスト
         resVar(str):まとめる対象となるカラム名
 
     Returns
@@ -9930,7 +9922,68 @@ def test_ret_averagedDF():
     expected: pd.DataFrame = pd.DataFrame(index=colNames, data=datumList).T
 
     actually: pd.DataFrame = ret_averagedDF(
-        inputDFs=[inputDF1, inputDF2, inputDF3], expVar=expVar, resVar=resVar
+        inputDFs=[inputDF1, inputDF2, inputDF3], resVar=resVar
     )
 
     assert expected.equals(actually), f"expected=\n{expected}\nactually=\n{actually}"
+
+
+# In[ ]:
+
+
+def add_perCallColumn(
+    inputDF: pd.DataFrame,
+    dividendColName: str,
+    divisorColName: str,
+    targetColumnName: str,
+) -> pd.DataFrame:
+    """指定した列名にある列Aの値をある列Bの値で割った値を格納して、そのDFを返す関数
+
+    Args:
+        inputDF(pd.DataFrame):入力DF
+        divisorColName(str):割る値を保持した列
+        dividendColName(str):割られる値を保持した列
+        targetColumnName(str):計算結果を保持した列
+
+    Return:
+        pd.DataFrame:入力DFにtarfgetColumnName列が追加されたDF
+    """
+
+    returnDF: pd.DataFrame = inputDF.copy(deep=True)
+    returnDF[targetColumnName] = -1
+    for i, sr in returnDF.iterrows():
+        returnDF.at[i, targetColumnName] = sr[dividendColName] / float(
+            sr[divisorColName]
+        )
+
+    return returnDF
+
+
+def test_add_perCallColumn():
+    col1: list[float] = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+    col2: list[float] = [9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0]
+    expectedCol: list[float] = [
+        1 / 9,
+        2 / 8,
+        3 / 7,
+        4 / 6,
+        5 / 5,
+        6 / 4,
+        7 / 3,
+        8 / 2,
+        9 / 1,
+    ]
+    datumForDF: list[list[int]] = [col1, col2]
+    colName: list[str] = ["col1", "col2"]
+    test_inputDF: pd.DataFrame = pd.DataFrame(data=datumForDF, index=colName).T
+    datumForDF.append(expectedCol)
+    colName.append("target")
+    expected: pd.DataFrame = pd.DataFrame(data=datumForDF, index=colName).T
+    actually: pd.DataFrame = add_perCallColumn(
+        inputDF=test_inputDF,
+        dividendColName="col1",
+        divisorColName="col2",
+        targetColumnName="target",
+    )
+
+    assert expected.equals(actually), f"actually=\n{actually}\nexpected=\n{expected}"
