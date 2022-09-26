@@ -9987,3 +9987,45 @@ def test_add_perCallColumn():
     )
 
     assert expected.equals(actually), f"actually=\n{actually}\nexpected=\n{expected}"
+
+
+# In[ ]:
+
+
+def ret_averaged_rawDF_lulesh(
+    list_process: list[int],
+    list_iteration: list[int],
+    list_size: list[int],
+    list_csvDir: list[str],
+    resVar: str,
+):
+    list_DFs_for_return: list[pd.DataFrame] = []
+    for elem_process in list_process:
+        for elem_iteration in list_iteration:
+            for elem_size in list_size:
+                list_inputDFs_for_averaged: list[pd.DataFrame] = []
+                for elem_csvDir in list_csvDir:
+                    _raw_DF: pd.DataFrame = return_rawDF_lulesh(
+                        list_process=[elem_process],
+                        list_iteration=[elem_iteration],
+                        list_size=[elem_size],
+                        csvDir=elem_csvDir,
+                    )
+
+                    if resVar == "Inclusive" or resVar == "Exclusive":
+                        # resVar 列の整形
+                        _tmp_converted = map(convertPprofTime, list(_raw_DF[resVar]))
+                        _raw_DF[resVar] = list(_tmp_converted)
+                        # {resVar}PerCall 列の生成
+                        _raw_DF = add_perCallColumn(
+                            inputDF=_raw_DF,
+                            divisorColName="#Call",
+                            dividendColName=resVar,
+                            targetColumnName=f"{resVar}PerCall",
+                        )
+
+                    list_inputDFs_for_averaged.append(_raw_DF)
+                list_DFs_for_return.append(
+                    ret_averagedDF(inputDFs=list_inputDFs_for_averaged, resVar=resVar)
+                )
+    return pd.concat(objs=list_DFs_for_return, axis=0)
