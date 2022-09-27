@@ -10056,3 +10056,38 @@ def ret_averaged_rawDF_lulesh(
                     ret_averagedDF(inputDFs=list_inputDFs_for_averaged, resVar=resVar)
                 )
     return pd.concat(objs=list_DFs_for_return, axis=0)
+
+
+# In[ ]:
+
+
+def ret_relativeError_fromSumOfCol(
+    inputDF: pd.DataFrame, realCol: str, predictedCol: str
+) -> float:
+    """入力DFにおいて指定された列の総和の相対誤差率を返す関数
+
+    Args:
+        inputDF(pd.DataFrame):入力DF
+        realCol(str):実測値のカラム名
+        predictedCol(str):予測値のカラム名
+    """
+
+    sumReal: float = sum(inputDF[realCol])
+    sumPredicted: float = sum(inputDF[predictedCol])
+
+    return abs(sumReal - sumPredicted) / sumReal * 100
+
+
+def test_ret_relativeError_fromSumOfCol():
+    col1: list[float] = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]  # 実測値
+    col2: list[float] = [9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0]  # 予測値
+
+    colNames: list[str] = ["col1", "col2"]
+    inputDFforTest: pd.DataFrame = pd.DataFrame(index=colNames, data=[col1, col2]).T
+
+    expected: float = abs(sum(col1) - sum(col2)) / sum(col1) * 100
+    actually: float = ret_relativeError_fromSumOfCol(
+        inputDF=inputDFforTest, realCol="col1", predictedCol="col2"
+    )
+
+    assert expected == actually, f"expected = {expected}, actually = {actually}"
