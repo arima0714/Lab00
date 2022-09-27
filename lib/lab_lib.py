@@ -10018,6 +10018,14 @@ def ret_averaged_rawDF_lulesh(
     list_csvDir: list[str],
     resVar: str,
 ):
+    """複数のCSVからDFを取得する関数
+
+    引数resVarで指定された列がInclusiveもしくはExclusiveの場合はそれらが秒に変換され、InclusivePerCallもしくはExclusivePerCall列が生成されている
+
+    Args:
+        list_process(list[int]):プロセス数
+
+    """
     list_DFs_for_return: list[pd.DataFrame] = []
     for elem_process in list_process:
         for elem_iteration in list_iteration:
