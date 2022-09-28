@@ -10091,3 +10091,40 @@ def test_ret_relativeError_fromSumOfCol():
     )
 
     assert expected == actually, f"expected = {expected}, actually = {actually}"
+
+
+# In[ ]:
+
+
+def get_CostAtInputDF(
+    inputDF: pd.DataFrame, numOfProcess: int, targetColName: str = "Exclusive"
+) -> float:
+    """DFにおけるコストを算出する関数
+    Args:
+        inputDF(pd.DataFrame):入力
+        targetColName(str):inputDFにおける合計する列名
+        numOfProcess(int):プロセス数
+    """
+    sumOfTargetCol: float = sum(inputDF[targetColName])
+    return sumOfTargetCol * numOfProcess
+
+
+def test_get_CostAtInputDF():
+    col1: list[int] = [1, 2, 3, 4, 5]
+    col2: list[int] = [5, 6, 7, 8, 9]
+    colName: list[str] = ["col1", "col2"]
+    numOfProcess: int = 512
+
+    inputDFforTest: pd.DataFrame = pd.DataFrame(index=colName, data=[col1, col2]).T
+
+    expected: float = sum(col1) * numOfProcess
+    actually: float = get_CostAtInputDF(
+        inputDF=inputDFforTest, numOfProcess=numOfProcess, targetColName="col1"
+    )
+    assert expected == actually
+
+    expected: float = sum(col2) * numOfProcess
+    actually: float = get_CostAtInputDF(
+        inputDF=inputDFforTest, numOfProcess=numOfProcess, targetColName="col2"
+    )
+    assert expected == actually
