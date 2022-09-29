@@ -33,3 +33,5 @@ workspace.code-workspace
 __pycache__
 root_jupyter/lab/workspaces
 root_jupyter/migrated
+
+extra-p_docker/share/*txt
