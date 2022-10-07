@@ -17,7 +17,7 @@ yapf = "*"
 autopep8 = "*"
 jupyterlab-code-formatter = "*"
 plotly = "*"
-black = "*"
+black = {extras = ["jupyter"], version = "*"}
 importlib-resources = "*"
 jupyterlab-notifications = "*"
 jupyterlab-git = "*"
