@@ -34,4 +34,4 @@ __pycache__
 root_jupyter/lab/workspaces
 root_jupyter/migrated
 
-extra-p_docker/share/*txt
+extra-p_docker/share/*
