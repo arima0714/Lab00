@@ -10039,7 +10039,7 @@ def ret_averaged_rawDF_lulesh(
                         csvDir=elem_csvDir,
                     )
 
-                    if resVar == "Inclusive" or resVar == "Exclusive":
+                    if resVar in ["Exclusive", "Inclusive", "#Call", "#Subrs"]:
                         # resVar 列の整形
                         _tmp_converted = map(convertPprofTime, list(_raw_DF[resVar]))
                         _raw_DF[resVar] = list(_tmp_converted)
