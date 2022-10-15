@@ -10128,3 +10128,80 @@ def test_get_CostAtInputDF():
         inputDF=inputDFforTest, numOfProcess=numOfProcess, targetColName="col2"
     )
     assert expected == actually
+
+
+# In[ ]:
+
+
+def get_str_modelFromExtraP(
+    filePath: str,
+    modelerName: str,
+    modelerOption: str,
+    extraPinputData: str,
+):
+    """
+
+    引数からExtra-Pでのモデルを構築し、構築したモデルの文字列を返す関数
+
+    Args:
+        filePath(str) : モデル構築用ファイルのパス
+        modelerName(str) : Extra-Pのモデル名、'default' or 'multi-parameter'
+        modelerOption(str) : Extra-Pのオプション、'--options ~~~' の形式
+        extraPinputData(str) : モデル構築用ファイルの中身となる文字列
+
+    """
+
+    with open(file=filePath, mode="w") as f:
+        f.write(extraPinputData)
+
+    str_resFromExtraP: str = subprocess.run(
+        f"extrap --text {filePath} --modeler {modelerName} {modelerOption} 2>/dev/null | grep Model",
+        stdout=subprocess.PIPE,
+        text=True,
+        shell=True,
+    ).stdout
+    str_resFromExtraP = str_resFromExtraP.replace("Model: ", "")
+    str_resFromExtraP = convert_log(str_resFromExtraP)
+
+    return str_resFromExtraP
+
+
+def get_ExtraP_model(
+    inputDF_perFunc: pd.DataFrame,
+    expVar: list[str],
+    resVar: str,
+    functionName: str,
+    dict_symbols: dict[any, any],
+    benchmarkName: str,
+    modelerName: str,
+    modelerOption: str,
+):
+    """引数からExtra-Pによるモデルを構築し、それを返す関数
+
+    Args:
+        inputDF_perFunc(pd.DataFrame):入力DF
+        expVar()
+    """
+    str_ExtraPinputData: str = gen_ExtraPinputDataFromDF(
+        inputDF=inputDF_perFunc,
+        expVar=expVar,
+        resVar=resVar,
+    )
+
+    # Extra-Pへの入力ファイル作成
+    converted_functionName: str = re.sub(
+        r'[\\|/|:|?|.|"|<|>|\|\(|\)|]', "-", functionName
+    )
+    fileName: str = f"input_{benchmarkName}_{resVar}@{converted_functionName}.txt"
+    fileDir: str = f"./extra-p_docker/share/"
+    filePath: str = fileDir + fileName
+
+    str_resFromExtraP: str = get_str_modelFromExtraP(
+        filePath=filePath,
+        modelerName=modelerName,
+        modelerOption=modelerOption,
+        extraPinputData=str_ExtraPinputData,
+    )
+
+    model_fromExtraP = sympify(str_resFromExtraP, locals=dict_symbols)
+    return model_fromExtraP
