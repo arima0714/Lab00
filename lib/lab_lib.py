@@ -10041,8 +10041,11 @@ def ret_averaged_rawDF_lulesh(
 
                     if resVar in ["Exclusive", "Inclusive", "#Call", "#Subrs"]:
                         # resVar 列の整形
-                        _tmp_converted = map(convertPprofTime, list(_raw_DF[resVar]))
-                        _raw_DF[resVar] = list(_tmp_converted)
+                        if resVar in ["Exclusive", "Inclusive"]:
+                            _tmp_converted = map(
+                                convertPprofTime, list(_raw_DF[resVar])
+                            )
+                            _raw_DF[resVar] = list(_tmp_converted)
                         # {resVar}PerCall 列の生成
                         _raw_DF = add_perCallColumn(
                             inputDF=_raw_DF,
