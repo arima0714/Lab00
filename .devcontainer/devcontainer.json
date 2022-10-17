@@ -35,7 +35,8 @@
 		"ms-toolsai.jupyter-renderers",
 		"bierner.markdown-mermaid",
 		"janisdd.vscode-edit-csv",
-		"hediet.vscode-drawio"
+		"hediet.vscode-drawio",
+		"george-alisson.html-preview-vscode"
 	]
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
