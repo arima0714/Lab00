@@ -44,6 +44,7 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from statistics import median_low
 import subprocess
+import sympy
 from sympy import sympify, pprint, symbols, log
 from sympy.parsing.sympy_parser import parse_expr
 from typing import Dict
