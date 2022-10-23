@@ -21,3 +21,6 @@ RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 RUN pip install pipenv
 RUN pipenv install  --system --ignore-pipfile --deploy
+
+RUN echo "dash dash/sh boolean false" | debconf-set-selections
+RUN dpkg-reconfigure --frontend=noninteractive dash
