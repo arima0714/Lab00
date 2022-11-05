@@ -17,7 +17,6 @@
 import copy
 import glob
 import itertools
-import japanize_matplotlib
 import math
 import matplotlib as mpl
 import matplotlib.patches as mpatches
