@@ -10208,3 +10208,48 @@ def get_ExtraP_model(
 
     model_fromExtraP = sympify(str_resFromExtraP, locals=dict_symbols)
     return model_fromExtraP
+
+
+# In[ ]:
+
+
+# def return_rawDF_mg(
+#     list_process: list[int],
+#     list_nit: list[int],
+#     list_size: list[int],
+#     csvDir: str,
+# ) -> pd.DataFrame:
+
+#     """return_rawDF_mg()
+
+#     ベンチマークプログラムMGの手動で変更した初期変数におけるプロファイルを取得する関数
+
+#     Args:
+#         list_process(list[int]):プロセス数のリスト
+#         list_nit(list[int]):初期変数nitのリスト
+#         list_size(list[int]):初期変数sizeのリスト
+#         csvDir(str):CSVファイルを格納したディレクトリのパスを表す文字列
+
+#     Returns:
+#         pd.DataFrame
+
+#     """
+
+#     list_before_concat_DF: list[pd.DataFrame] = []
+
+#     for elem_process in list_process:
+#         for elem_nit in list_nit:
+#             for elem_size in list_size:
+#                 filePath: str = f"{csvDir}mg_problem_size{elem_size}_nit{elem_nit}_process{elem_process}.csv"
+#                 if os.path.isfile(filePath):
+#                     try:
+#                         DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+#                         DF_read_raw["process"] = elem_process
+#                         DF_read_raw["size"] = elem_size
+#                         DF_read_raw["nit"] = elem_nit
+#                         list_before_concat_DF.append(DF_read_raw)
+#                     except:
+#                         warnings.warn(f"{filePath} is empty.")
+#                 else:
+#                     warnings.warn(f"{filePath} doesn't exist")
+#     return pd.concat(objs=list_before_concat_DF, axis=0)
