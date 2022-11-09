@@ -9971,9 +9971,10 @@ def add_perCallColumn(
     returnDF: pd.DataFrame = inputDF.copy(deep=True)
     returnDF[targetColumnName] = -1
     for i, sr in returnDF.iterrows():
-        returnDF.at[i, targetColumnName] = sr[dividendColName] / float(
-            sr[divisorColName]
-        )
+        dividend: float = sr[dividendColName]
+        divisor: float = float(sr[divisorColName])
+        _tmp_num: float = dividend / divisor
+        returnDF.at[i, targetColumnName] = _tmp_num
 
     return returnDF
 
