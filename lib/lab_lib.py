@@ -10254,3 +10254,252 @@ def get_ExtraP_model(
 #                 else:
 #                     warnings.warn(f"{filePath} doesn't exist")
 #     return pd.concat(objs=list_before_concat_DF, axis=0)
+
+
+# In[ ]:
+
+
+def returnConvertedTargetPprofTimeDF(
+    inputDF: pd.DataFrame,
+    resVars: list[str],
+):
+    """
+    学習用データおよび予測対象用データの任意のデータ列を変換する関数
+
+    Args:
+        inputDF(pd.DataFrame) : 入力DF
+        resVars(list[str]) : 入力DFにおいて変換したい列名のリスト
+
+    Returns:
+        pd.DataFrame : 指定された列が変換されたデータフレーム
+    """
+    returnDF: pd.DataFrame = inputDF.copy(deep=True)
+
+    for resVar in resVars:
+        _tmp_series: pd.Series = returnDF[resVar]
+        returnDF[resVar] = _tmp_series.map(convertPprofTime)
+
+    return returnDF
+
+
+def test_returnConvertedTargetPprofTimeDF():
+
+    _tmp_dict: dict[str, list[str]] = {}
+
+    _tmp_dict["col1"] = ["1:44.607", "33,350"]
+    _tmp_dict["col2"] = ["111:111", "0:123"]
+    inputDF: pd.DataFrame = pd.DataFrame(data=_tmp_dict)
+
+    _tmp_dict["col1"] = [1 * 60 + 44 + 0.607, 33.350]
+    _tmp_dict["col2"] = [111 * 60 + 111.0, 123.0]
+    DF_expected: pd.DataFrame = pd.DataFrame(data=_tmp_dict)
+
+    DF_actually: pd.DataFrame = returnConvertedTargetPprofTimeDF(
+        inputDF=inputDF, resVars=["col1", "col2"]
+    )
+
+    assert DF_expected.equals(
+        DF_actually
+    ), f"expected=\n{DF_expected}\nactually=\n{DF_actually}"
+
+
+def addPerCallCol(
+    inputDF: pd.DataFrame,
+    targetColNames: list[str],
+    CallColName: str,
+) -> pd.DataFrame:
+
+    """
+    PerCall列を追加して返す関数
+
+    Args:
+        inputDF(pd.DataFrame):入力DF
+        targetColNames(list[str]):perCall列を作成したい列名のリスト
+        CallColName(str):関数コール回数が保持された列名
+    """
+
+    _tmp_list = []
+    for i, sr in inputDF.iterrows():
+        dividend: float
+        divisor: float
+        for targetColName in targetColNames:
+            divindend = sr[targetColName]
+            divisor = sr[CallColName]
+            sr[f"{targetColName}PerCall"] = divindend / divisor
+        _tmp_list.append(sr)
+    return pd.DataFrame(_tmp_list)
+
+
+def test_addPerCallCol():
+    _tmp_dict: dict[str, list[float]] = {}
+    _tmp_dict["col1"] = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]
+    _tmp_dict["col2"] = [9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0]
+    _tmp_dict["#Call"] = [2.0, 8.0, 38.0, 8.0, 8.0, 9.0, 10.0, 11.0]
+    inputDF = pd.DataFrame(data=_tmp_dict)
+    _tmp_dict["col1PerCall"] = []
+    _tmp_dict["col2PerCall"] = []
+    for i in range(len(_tmp_dict["#Call"])):
+        _tmp_dict["col1PerCall"].append(_tmp_dict["col1"][i] / _tmp_dict["#Call"][i])
+        _tmp_dict["col2PerCall"].append(_tmp_dict["col2"][i] / _tmp_dict["#Call"][i])
+
+    DF_actually: pd.DataFrame = addPerCallCol(
+        inputDF=inputDF,
+        targetColNames=["col1", "col2"],
+        CallColName="#Call",
+    )
+    DF_exptected: pd.DataFrame = pd.DataFrame(data=_tmp_dict)
+    assert DF_exptected.equals(
+        DF_actually
+    ), f"expected=\n{DF_exptected}\nactually=\n{DF_actually}"
+
+
+# In[2]:
+
+
+def ret_averaged_rawDF_mg(
+    list_process: list[int],
+    list_nit: list[int],
+    list_size: list[int],
+    list_csvDir: list[str],
+    resVar: str,
+):
+    """複数のCSVからDFを取得する関数
+
+    引数resVarで指定された列がInclusiveもしくはExclusiveの場合はそれらが秒に変換され、InclusivePerCallもしくはExclusivePerCall列が生成されている
+
+    Args:
+        list_process(list[int]):プロセス数
+
+    """
+    list_DFs_for_return: list[pd.DataFrame] = []
+    for elem_process in list_process:
+        for elem_nit in list_nit:
+            for elem_size in list_size:
+                list_inputDFs_for_averaged: list[pd.DataFrame] = []
+                for elem_csvDir in list_csvDir:
+                    _raw_DF: pd.DataFrame = return_rawDF_mg(
+                        list_process=[elem_process],
+                        list_nit=[elem_nit],
+                        list_problem_size=[elem_size],
+                        csvDir=elem_csvDir,
+                    )
+
+                    if resVar in ["Exclusive", "Inclusive", "#Call", "#Subrs"]:
+                        # resVar 列の整形
+                        if resVar in ["Exclusive", "Inclusive"]:
+                            _tmp_converted = map(
+                                convertPprofTime, list(_raw_DF[resVar])
+                            )
+                            _raw_DF[resVar] = list(_tmp_converted)
+                        # {resVar}PerCall 列の生成
+                        _raw_DF = add_perCallColumn(
+                            inputDF=_raw_DF,
+                            divisorColName="#Call",
+                            dividendColName=resVar,
+                            targetColumnName=f"{resVar}PerCall",
+                        )
+
+                    list_inputDFs_for_averaged.append(_raw_DF)
+                list_DFs_for_return.append(
+                    ret_averagedDF(inputDFs=list_inputDFs_for_averaged, resVar=resVar)
+                )
+    return pd.concat(objs=list_DFs_for_return, axis=0)
+
+
+# In[ ]:
+
+
+def return_rawDF_ft(
+    list_process: list[int],
+    list_grid_size: list[int],
+    list_nit: list[int],
+    csvDir: str,
+) -> pd.DataFrame:
+    """return_rawDF_ft()
+
+    ベンチマークプログラムFTの手動で変更した初期変数におけるプロファイルを取得する関数
+
+    Args:
+        list_process(list[int]):プロセス数のリスト
+        list_grid_size(list[int]):初期変数grid_sizeのリスト
+        list_nit(list[int]):初期変数nitのリスト
+
+    Returns:
+        pd.DataFrame
+
+    """
+
+    list_before_concat_DF: list[pd.DataFrame] = []
+
+    for elem_process in list_process:
+        for elem_grid_size in list_grid_size:
+            for elem_nit in list_nit:
+                filePath: str = f"{csvDir}ft_grid_size{elem_grid_size}_nit{elem_nit}_process{elem_process}.csv"
+                if os.path.isfile(filePath):
+                    try:
+                        DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+                        DF_read_raw["process"] = elem_process
+                        DF_read_raw["grid_size"] = elem_grid_size
+                        DF_read_raw["nit"] = elem_nit
+                        list_before_concat_DF.append(DF_read_raw)
+                    except:
+                        warnings.warn(f"{filePath} is empty.")
+                else:
+                    warnings.warn(f"{filePath} doesn't exist")
+                    continue
+    return pd.concat(objs=list_before_concat_DF, axis=0)
+
+
+def ret_averaged_rawDF_ft(
+    list_process: list[int],
+    list_grid_size: list[int],
+    list_nit: list[int],
+    list_csvDir: list[str],
+    resVar: str,
+):
+    """複数のCSVからDFを取得する関数（ベンチマークプログラムFT）
+
+    引数resVarで指定された列がInclusiveもしくはExclusiveの場合はそれらが秒に変換され、InclusivePerCallもしくはExclusivePerCall列が生成されている
+
+    Args:
+        list_process(list[int]):プロセス数のリスト
+        list_grid_size(list[int]):グリッドサイズのリスト
+        list_nit(list[int]):イテレーション数のリスト
+        list_csvDir(list[str]):CSVを保持したディレクトリ名のリスト
+        resVar(str):説明変数の文字列
+
+    """
+
+    list_DFs_for_return: list[pd.DataFrame] = []
+    for elem_process in list_process:
+        for elem_grid_size in list_grid_size:
+            for elem_nit in list_nit:
+                list_inputDFs_for_averaged: list[pd.DataFrame] = []
+                for elem_csvDir in list_csvDir:
+                    _raw_DF: pd.DataFrame = return_rawDF_ft(
+                        list_process=[elem_process],
+                        list_grid_size=[elem_grid_size],
+                        list_nit=[elem_nit],
+                        csvDir=elem_csvDir,
+                    )
+
+                    if resVar in ["Exclusive", "Inclusive", "#Call", "#Subrs"]:
+                        # resVar 列の整形
+                        if resVar in ["Exclusive", "Inclusive"]:
+                            _tmp_converted = map(
+                                convertPprofTime, list(_raw_DF[resVar])
+                            )
+                            _raw_DF[resVar] = list(_tmp_converted)
+                        # {resVar}PerCall 列の生成
+                        _raw_DF = add_perCallColumn(
+                            inputDF=_raw_DF,
+                            divisorColName="#Call",
+                            dividendColName=resVar,
+                            targetColumnName=f"{resVar}PerCall",
+                        )
+
+                    list_inputDFs_for_averaged.append(_raw_DF)
+                list_DFs_for_return.append(
+                    ret_averagedDF(inputDFs=list_inputDFs_for_averaged, resVar=resVar)
+                )
+    return pd.concat(objs=list_DFs_for_return, axis=0)
