@@ -9881,7 +9881,7 @@ def ret_averagedDF(inputDFs: list[pd.DataFrame], resVar: str) -> pd.DataFrame:
     """
 
     if len(inputDFs) == 0:
-        warning.warn("len(inputDFs) == 0")
+        warnings.warn("len(inputDFs) == 0")
         return -1
 
     set_index_size = set()
@@ -9890,7 +9890,7 @@ def ret_averagedDF(inputDFs: list[pd.DataFrame], resVar: str) -> pd.DataFrame:
         set_index_size.add(len(inputDFs[i]))
         set_column_size.add(len(inputDFs[i].columns))
     if len(set_index_size) != 1 or len(set_column_size) != 1:
-        warning.warn("some DF in inputDFs is different size")
+        warnings.warn("some DF in inputDFs is different size")
         return -1
 
     list_res_series: list[pd.Series] = []
@@ -10502,4 +10502,100 @@ def ret_averaged_rawDF_ft(
                 list_DFs_for_return.append(
                     ret_averagedDF(inputDFs=list_inputDFs_for_averaged, resVar=resVar)
                 )
+    return pd.concat(objs=list_DFs_for_return, axis=0)
+
+
+# In[ ]:
+
+
+def return_rawDF_ep(
+    list_process: list[int],
+    list_size: list[int],
+    csvDir: str,
+) -> pd.DataFrame:
+    """return_rawDF_ep()
+
+    ベンチマークプログラムEPの手動で変更した初期変数におけるプロファイルを取得する関数
+
+    Args:
+        list_process(list[int]):プロセス数のリスト
+        list_size(list[int]):初期変数sizeのリスト
+        csvDir(str):CSVファイルの保持されているディレクトリ
+
+    Returns:
+        pd.DataFrame
+
+    """
+
+    list_before_concat_DF: list[pd.DataFrame] = []
+
+    for elem_process in list_process:
+        for elem_size in list_size:
+            filePath: str = f"{csvDir}ft_grid_size{elem_size}_process{elem_process}.csv"
+            if os.path.isfile(filePath):
+                try:
+                    DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+                    DF_read_raw["process"] = elem_process
+                    DF_read_raw["size"] = elem_size
+                    list_before_concat_DF.append(DF_read_raw)
+                except:
+                    warnings.warn(f"{filePath} is empty.")
+            else:
+                warnings.warn(f"{filePath} doesn't exist")
+                continue
+    return pd.concat(objs=list_before_concat_DF, axis=0)
+
+
+def ret_averaged_rawDF_ep(
+    list_process: list[int],
+    list_size: list[int],
+    list_csvDir: list[str],
+    resVar: str,
+):
+    """複数のCSVからDFを取得する関数（ベンチマークプログラムEP）
+
+    列Inclusiveおよび列Exclusiveが秒に変換され、InclusivePerCallもしくはExclusivePerCall列が生成される。
+
+    Args:
+        list_process(list[int]):プロセス数のリスト
+        list_grid_size(list[int]):グリッドサイズのリスト
+        list_nit(list[int]):イテレーション数のリスト
+        list_csvDir(list[str]):CSVを保持したディレクトリ名のリスト
+        resVar(str):説明変数の文字列
+
+    """
+
+    list_DFs_for_return: list[pd.DataFrame] = []
+    for elem_process in list_process:
+        for elem_size in list_size:
+            list_inputDFs_for_averaged: list[pd.DataFrame] = []
+            for elem_csvDir in list_csvDir:
+                try:
+                    _raw_DF: pd.DataFrame = return_rawDF_ep(
+                        list_process=[elem_process],
+                        list_size=[elem_size],
+                        csvDir=elem_csvDir,
+                    )
+
+                    if resVar in ["Exclusive", "Inclusive", "#Call", "#Subrs"]:
+                        # resVar 列の整形
+                        if resVar in ["Exclusive", "Inclusive"]:
+                            _tmp_converted = map(
+                                convertPprofTime, list(_raw_DF[resVar])
+                            )
+                            _raw_DF[resVar] = list(_tmp_converted)
+                        # {resVar}PerCall 列の生成
+                        _raw_DF = add_perCallColumn(
+                            inputDF=_raw_DF,
+                            divisorColName="#Call",
+                            dividendColName=resVar,
+                            targetColumnName=f"{resVar}PerCall",
+                        )
+                except:
+                    continue
+
+                list_inputDFs_for_averaged.append(_raw_DF)
+            list_DFs_for_return.append(
+                ret_averagedDF(inputDFs=list_inputDFs_for_averaged, resVar=resVar)
+            )
     return pd.concat(objs=list_DFs_for_return, axis=0)
