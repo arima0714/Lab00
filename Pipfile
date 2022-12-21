@@ -25,6 +25,8 @@ jupyter-server = "==1.16.0"
 extrap = "*"
 sympy = "*"
 typing-extensions = "*"
+xlsxwriter = "*"
+odswriter = "*"
 
 [dev-packages]
 
