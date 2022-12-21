@@ -10531,7 +10531,7 @@ def return_rawDF_ep(
 
     for elem_process in list_process:
         for elem_size in list_size:
-            filePath: str = f"{csvDir}ft_grid_size{elem_size}_process{elem_process}.csv"
+            filePath: str = f"{csvDir}ep_size{elem_size}_process{elem_process}.csv"
             if os.path.isfile(filePath):
                 try:
                     DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
