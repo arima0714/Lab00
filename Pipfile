@@ -27,6 +27,7 @@ sympy = "*"
 typing-extensions = "*"
 xlsxwriter = "*"
 odswriter = "*"
+scipy = "*"
 
 [dev-packages]
 
