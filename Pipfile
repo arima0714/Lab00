@@ -28,6 +28,7 @@ typing-extensions = "*"
 xlsxwriter = "*"
 odswriter = "*"
 scipy = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
