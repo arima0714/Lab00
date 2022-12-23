@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 """ライブラリノート
@@ -11,10 +11,11 @@
 """
 
 
-# In[ ]:
+# In[2]:
 
 
 import copy
+import datetime
 import glob
 import itertools
 import math
@@ -59,7 +60,7 @@ from sklearn.datasets import fetch_california_housing
 import pydotplus
 
 
-# In[ ]:
+# In[3]:
 
 
 # ログ関連処理
@@ -72,7 +73,7 @@ logger = getLogger(__name__)
 logger.debug("hello")
 
 
-# In[ ]:
+# In[4]:
 
 
 class ExceptionInResearchLib(Exception):
@@ -119,7 +120,7 @@ def test_returnMapeScore():
     assert ansByFunc == ansByHand
 
 
-# In[ ]:
+# In[5]:
 
 
 # ベンチマークを指定して存在するファイル名のものを返す
@@ -168,7 +169,7 @@ def test_returnExistingFileNames():
     }
 
 
-# In[ ]:
+# In[6]:
 
 
 # ベンチマーク名・プロセス数・ベンチマーククラスをリストで渡して、実在するデータが集計されたDFを返す
@@ -237,7 +238,7 @@ def test_returnCollectedExistingData():
             assert targetData.iloc[0, functionCallNumIndex] == functionCallNum
 
 
-# In[ ]:
+# In[7]:
 
 
 # モデルの共通部分となるクラス
@@ -282,7 +283,7 @@ class ModelBase:
 # plotY = _modelLin.predict(plotX)
 
 
-# In[ ]:
+# In[8]:
 
 
 # 分岐モデル
@@ -374,7 +375,7 @@ def test_ModelBranch():
     ), f"{_modelBranch2.lr1.coef_}, {_modelBranch2.lr1.intercept_}, {_modelBranch2.lr2.coef_}, {_modelBranch2.lr2.intercept_}"
 
 
-# In[ ]:
+# In[9]:
 
 
 # # 分岐モデル2
@@ -492,7 +493,7 @@ def test_ModelBranch():
 #     ), f"{_modelBranch2.lr1.coef_}, {_modelBranch2.lr1.intercept_}, {_modelBranch2.lr2.coef_}, {_modelBranch2.lr2.intercept_}"
 
 
-# In[ ]:
+# In[10]:
 
 
 # 反比例モデル
@@ -546,7 +547,7 @@ def test_ModelIp():
     assert mapeScore < 1
 
 
-# In[ ]:
+# In[11]:
 
 
 # 線形モデル
@@ -593,7 +594,7 @@ def test_ModelLin():
     assert mapeScore < 1
 
 
-# In[ ]:
+# In[12]:
 
 
 # 対数モデル
@@ -649,7 +650,7 @@ def test_ModelLog10():
     assert mapeScore < 1
 
 
-# In[ ]:
+# In[13]:
 
 
 # 引数として渡されたDFに
@@ -711,7 +712,7 @@ def test_checkRawDFColumns():
     assert False == checkRawDFColumns(False02DF)
 
 
-# In[ ]:
+# In[14]:
 
 
 # 実験結果を集計するためのデータフレームのカラムの名称のリストを返す関数
@@ -836,7 +837,7 @@ def test_returnNumOfColumns():
     )
 
 
-# In[ ]:
+# In[15]:
 
 
 def returnSpecificDataFromCSV(
@@ -886,7 +887,7 @@ def test_returnSpecificDataFromCSV():
         )
 
 
-# In[ ]:
+# In[16]:
 
 
 def convertStrToInt_problemSizeInNPB(Alphabet: str):
@@ -985,7 +986,7 @@ def returnDictModelNames():
     return returnDict
 
 
-# In[ ]:
+# In[17]:
 
 
 # 結果を集計するためのDFに挿入するSeriesを作成する関数
@@ -1002,7 +1003,6 @@ def returnSeriesOfData(
     csvDirPath="./csv_files",
     modelNames=["ModelLin", "ModelIp", "ModelLog", "ModelBranch"],
 ):
-
     dataSeries = pd.Series(
         index=returnNumOfColumns(modelNames=modelNames), dtype=object
     )
@@ -1225,7 +1225,7 @@ def test_returnSeriesOfData(test_generateCSVFilesForReturnSeriesOfData):
     # 説明変数に対するMAPEが最小のモデルを用いて予測対象の関数コール回数を予測した時の絶対相対誤差率が非常に小さいことを確認
 
 
-# In[ ]:
+# In[18]:
 
 
 @pytest.fixture()
@@ -1251,7 +1251,7 @@ def test_generateAllBranchFunctionCSVData():
                     f.write(f"{functionName},{functionCallNum}")
 
 
-# In[ ]:
+# In[19]:
 
 
 # 論文などに載せる集計結果を作成するために用いるDFを作成するための関数
@@ -1362,7 +1362,7 @@ def test_returnDFSummarizedData():
             )
 
 
-# In[ ]:
+# In[20]:
 
 
 # 入力：returnSeriesOfDataを結合したDF（含むベンチマークの種類は1つ）
@@ -1508,13 +1508,14 @@ def test_returnSeriesOfDatumPerBenchmark():
         assert dictResult[benchmarkName][:2] == "25"
 
 
-# In[ ]:
+# In[21]:
 
 
 # 相対誤差率を返す関数
 # realNum：真値
 # predictedNum：予測値
 # decimalPlace：少数第n位までにするか
+
 
 # 返り値は相対誤差率[%]
 def returnRelativeErrorRate(realNum=1, predictedNum=1, decimalPlace=3):
@@ -1539,10 +1540,11 @@ def test_returnRelativeErrorRate():
     assert case03 == -1
 
 
-# In[ ]:
+# In[22]:
 
 
 # Multiple regression analysis （重回帰分析）
+
 
 # class baseModelForMultipleRegression
 # 重回帰分析用のモデルの共通部分となるクラス
@@ -1573,7 +1575,6 @@ class ModelBaseForMultipleRegression:
         conditionDictForTest: Dict[str, str] = {},
         targetDF: pd.DataFrame = None,
     ):
-
         # 関数名が複数種類ある場合は警告
         functionName = set(inputDF["functionName"].tolist())
         if len(functionName) != 1:
@@ -1693,7 +1694,7 @@ def test_ModelLinForMultipleRegression():
     assert relativeErrorRate < 1
 
 
-# In[ ]:
+# In[23]:
 
 
 class ModelIpForMultipleRegression(ModelBaseForMultipleRegression):
@@ -1896,7 +1897,7 @@ def test_ModelLogForMultipleRegression():
     assert relativeErrorRate < 1
 
 
-# In[ ]:
+# In[24]:
 
 
 def returnDFwithFunctionsExecUnderAllConditions(
@@ -1980,12 +1981,11 @@ def test_returnDFwithFunctionsExecUnderAllConditions(
     assert ("functionInvalid01" in functionNamesInDF) == False
 
 
-# In[ ]:
+# In[25]:
 
 
 # 最終的な集計に必要な情報を保持したDFのカラム名のリストもしくは各カラムのデータタイプを返す関数
 def returnListAboutInformation(dataType=False):
-
     returnListColumnDataType = []
     returnListColumnName = []
 
@@ -2027,7 +2027,7 @@ def test_returnListAboutInformation():
 # In[ ]:
 
 
-# In[ ]:
+# In[26]:
 
 
 # 引数として渡されたDFから、関数ごとに「関数名 | ベンチマーク名 | 説明変数 | 目的変数 | 集計結果」を保持したDFを作成する関数
@@ -2282,7 +2282,7 @@ def test_returnDFtoMakeSummary():
     assert relativeErrorRateLogResult["modelLog"] < 1.0
 
 
-# In[ ]:
+# In[27]:
 
 
 # 必要な変数などを事前に宣言するfixture
@@ -2463,7 +2463,7 @@ def returnDFSummarizeTheResultsOfTheFunctionReturnDFtoMakeSummary(
     return allDF
 
 
-# In[ ]:
+# In[28]:
 
 
 # returnDFtoMakeSummary()の返り値を縦に結合したDFを引数として受け、変換したデータをDFとして出力する関数
@@ -2471,7 +2471,6 @@ def returnDFSummarizeTheResultsOfTheFunctionReturnDFtoMakeSummary(
 def convertDictToMakeSummary(
     inputDF, modelAdoptionRate=False, averageRelativeError=False
 ):
-
     returnDict = {}
 
     benchmarkNames = list(set(inputDF["benchmarkName"].tolist()))
@@ -2556,7 +2555,7 @@ def test_convertDictToMakeSummary(
     pass
 
 
-# In[ ]:
+# In[29]:
 
 
 # 目的変数を構築するための関数
@@ -2602,14 +2601,13 @@ def test_returnListForBranchModel():
     assert returnedList == result
 
 
-# In[ ]:
+# In[30]:
 
 
 # 分岐点を見つける関数
 # 引数は分岐点を探るためのリスト
 # 分岐点を発見出来たら、そのインデックス値を返す。失敗もしくは存在しなければ-1を返す。
 def returnBranchIndexOfList(inputListX=[], inputListY=[]):
-
     # データを分割するための関数
     def returnProcessedList(inputList, elementQuantity=3):
         if len(inputList) < elementQuantity:
@@ -2662,7 +2660,6 @@ def returnBranchIndexOfList(inputListX=[], inputListY=[]):
 
 
 def test_returnBranchIndexOfList():
-
     # データを用意
     # データ１：分岐点以降はデータの変化なし
     branchIndex = 11
@@ -2697,7 +2694,7 @@ def test_returnBranchIndexOfList():
     assert result == -1
 
 
-# In[ ]:
+# In[31]:
 
 
 # Latex形式の表で出力する直前のDFを返す関数
@@ -2741,7 +2738,7 @@ def returnDFtoLatexWithMAPE(
     return DF
 
 
-# In[ ]:
+# In[32]:
 
 
 # 入力に該当する初期化データを返す関数
@@ -2929,7 +2926,6 @@ def returnInitVars(benchmarkName="", programSize=""):
 
 
 def test_returnInitVars00():
-
     benchmarkNames = ["cg", "ep", "ft", "is", "lu", "mg"]
     programSizes = ["A", "B", "C", "D"]
 
@@ -2951,7 +2947,7 @@ def test_returnInitVars01():
     assert ret == 0
 
 
-# In[ ]:
+# In[33]:
 
 
 # ベンチマーク名・問題サイズを受け取り、条件に合った変数群を辞書形式で返す関数, 引数のbenchmarkClassが''のときは負の値がバリューとなった辞書を返す関数
@@ -3436,7 +3432,7 @@ def test_addInitDataToRawDF():
     return rawDF
 
 
-# In[ ]:
+# In[34]:
 
 
 # 辞書:<キー1：バリュー1, キー2：バリュー2, ... , キーn：バリューn>のときに最低値のバリューのキーを返す関数
@@ -3471,7 +3467,7 @@ def test_retMinValsKey():
 test_retMinValsKey()
 
 
-# In[ ]:
+# In[35]:
 
 
 # 引数に該当するデータから説明変数として使用する列名のリストを返す関数
@@ -3585,7 +3581,7 @@ def test_returnExplanatoryVariablesList(csvDirPath="../csv_files/"):
     return 0
 
 
-# In[ ]:
+# In[36]:
 
 
 def addLowestMAPEColumn(
@@ -3697,7 +3693,7 @@ def test_addLowestMAPEColumn():
     assert result_DF_sample["最低値"].to_list() == result_DF["最低値"].to_list()
 
 
-# In[ ]:
+# In[37]:
 
 
 # 引数として渡された辞書からDFを返す関数
@@ -3706,7 +3702,6 @@ def test_addLowestMAPEColumn():
 
 
 def returnDFBenchmarkNameAndAverageLowestMAPE(inputDict):
-
     benchmarkNames = []
     lowestMAPEAverage = []
 
@@ -3722,7 +3717,6 @@ def returnDFBenchmarkNameAndAverageLowestMAPE(inputDict):
 
 
 def test_returnDFBenchmarkNameAndAverageLowestMAPE():
-
     function_names = ["func1", "func1", "func1"]
     lin_results = [1, 2, 2]
     ip_results = [2, 1, 3]
@@ -3762,7 +3756,7 @@ def test_returnDFBenchmarkNameAndAverageLowestMAPE():
     pd.testing.assert_frame_equal(returned_result, result_sample_DF)
 
 
-# In[ ]:
+# In[38]:
 
 
 # 引数に該当する生データを取得する関数
@@ -3852,7 +3846,7 @@ def test_return_rawDF_with_init_param():
         assert init_param_name in column_names_from_DF
 
 
-# In[ ]:
+# In[39]:
 
 
 # 引数として渡されたDFに最低MAPEのモデル名の列を追加する関数
@@ -3863,7 +3857,6 @@ def test_return_rawDF_with_init_param():
 
 
 def addLowestMAPEsModelNameColumn(inputDF, model_name_list=[], version=1):
-
     """addLowestMAPEsModelNameColumn()の説明
 
     引数として渡されたDFに最低MAPEのモデル名の列を追加する関数
@@ -3969,7 +3962,7 @@ def test_addLowestMAPEsModelNameColumn():
     assert input_DF["最適モデル"].to_list() == result_DF["最適モデル"].to_list()
 
 
-# In[ ]:
+# In[40]:
 
 
 # 引数に該当するデータからMAPE（学習データに対する一致度）を各モデルごとにまとめたデータフレームを返す関数
@@ -3993,7 +3986,6 @@ def returnDictAboutMAPETable(
     csvDirPath,
     modelNames=["modelLin", "modelIp", "modelLog"],
 ):
-
     """returnDictAboutMAPETable()の説明
 
     引数に該当するデータからMAPE（学習データに対する一致度）を各モデルごとにまとめたデータフレームを返す関数
@@ -4208,7 +4200,7 @@ def test_returnDictAboutMAPETable(csvDirPath="../csv_files/"):
     return 0
 
 
-# In[ ]:
+# In[41]:
 
 
 class ModelMultipleEquationForMultipleRegression(ModelBaseForMultipleRegression):
@@ -4281,7 +4273,6 @@ class ModelMultipleEquationForMultipleRegression(ModelBaseForMultipleRegression)
         return returnDF
 
     def setUpDataBeforeCalcLr(self):
-
         """setUpDataBeforeCalcLr(self)
 
         transformDataForModel()を使って学習用データを変換
@@ -4414,7 +4405,7 @@ def test_ModelMultipleEquationForMultipleRegression():
     assert relativeErrorRate < 1
 
 
-# In[ ]:
+# In[42]:
 
 
 # class Models
@@ -4735,7 +4726,6 @@ class Models:
             self.objectModelLogAndIp.setUpDataBeforeCalcLr()
 
     def calcLr(self):
-
         """calcLr(self)
 
         各モデルを構築する関数
@@ -4865,7 +4855,6 @@ class Models:
             )
             MAPEatTrain["modelLinAndIp"] = modelLinAndIpMAPEatTrain
         if "modelLinAndLog" in self.modelNames:
-
             predictedFromBuildDatum = (
                 self.objectModelLinAndLog.returnPredictedFromDataXForPredict()
             )
@@ -5196,7 +5185,6 @@ class Models:
         self.relativeErrorRateDict = relativeErrorRateDict
 
     def returnObject(self, modelName: str):
-
         """returnObject(self, modelName :str)
 
         構築したモデルオブジェクトを返す関数
@@ -5438,13 +5426,12 @@ def test_Models():
     )
 
 
-# In[ ]:
+# In[43]:
 
 
 def return_MAPE_Table_DF_from_rawDF(
     rawDF, exp_var_list=[], res_var_list=[], model_name_list=[]
 ):
-
     """return_MAPE_Table_DF_from_rawDF()の説明
 
     引数として渡された生データ入りDFから各モデルでのMAPEを記録したDFを返す関数
@@ -5589,7 +5576,7 @@ def test_return_MAPE_Table_DF_from_rawDF():
     return
 
 
-# In[ ]:
+# In[44]:
 
 
 class Model_ProcessesDevidedByProblemSize_ForMultipleRegression(
@@ -5907,7 +5894,7 @@ def test_Model_ProcessesDevidedByProblemSize_ForMultipleRegression():
     assert 0 <= mape < 1, f"mape(____test_case_02____) = {mape}"
 
 
-# In[ ]:
+# In[45]:
 
 
 def test_Model_BasicTree():
@@ -6039,7 +6026,7 @@ class Model_BasicTree(ModelBaseForMultipleRegression):
         return return_num
 
 
-# In[ ]:
+# In[46]:
 
 
 class Model_ProblemSizeDevidedByProcesses_ForMultipleRegression(
@@ -6357,7 +6344,7 @@ def test_Model_ProblemSizeDevidedByProcesses_ForMultipleRegression():
     assert 0 <= mape < 1, f"mape(____test_case_02____) = {mape}"
 
 
-# In[ ]:
+# In[47]:
 
 
 def test_Model_InfiniteProductOfProblemSizeMultipliedByProcesses_ForMultipleRegression():
@@ -6478,7 +6465,7 @@ def test_Model_InfiniteProductOfProblemSizeDividedByProcesses_ForMultipleRegress
     assert 0 <= mape < 1, f"mape = {mape}"
 
 
-# In[ ]:
+# In[48]:
 
 
 def test_infiniteProductOfProblemSizeMultipliedByProcesses():
@@ -6535,7 +6522,7 @@ def test_infiniteProductOfProblemSizeDividedByProcesses():
     ), f"expect={list_T_expect}, actually={list_T_actually}"
 
 
-# In[ ]:
+# In[49]:
 
 
 def infiniteProductOfProblemSizeMultipliedByProcesses(
@@ -6609,7 +6596,7 @@ def infiniteProductOfProblemSizeDividedByProcesses(
     return result
 
 
-# In[ ]:
+# In[50]:
 
 
 class Model_InfiniteProductOfProblemSizeMultipliedByProcesses_ForMultipleRegression(
@@ -6752,7 +6739,7 @@ class Model_InfiniteProductOfProblemSizeMultipliedByProcesses_ForMultipleRegress
         return mape
 
 
-# In[ ]:
+# In[51]:
 
 
 class Model_InfiniteProductOfProblemSizeDividedByProcesses_ForMultipleRegression(
@@ -6892,7 +6879,7 @@ class Model_InfiniteProductOfProblemSizeDividedByProcesses_ForMultipleRegression
         return mape
 
 
-# In[ ]:
+# In[52]:
 
 
 def returnAverageMAPEfromConditions(
@@ -6960,7 +6947,7 @@ def returnAverageMAPEfromConditions(
     return pd.DataFrame(data=dict_resultForDF)
 
 
-# In[ ]:
+# In[53]:
 
 
 def returnAverageMAPEfromDF(input_DF: pd.DataFrame) -> float:
@@ -7070,7 +7057,7 @@ def returnMAPEDFFromRawDF(
     return returnDF
 
 
-# In[ ]:
+# In[54]:
 
 
 class Model_LinearSumOf2elementCombination_ForMultipleRegression(
@@ -7202,7 +7189,7 @@ class Model_LinearSumOf2elementCombination_ForMultipleRegression(
         return returnDF
 
 
-# In[ ]:
+# In[55]:
 
 
 def test_Model_LinearSumOf2elementCombination_ForMultipleRegression():
@@ -7260,7 +7247,7 @@ def test_Model_LinearSumOf2elementCombination_ForMultipleRegression():
     assert 0 <= mape < 1, f"mape = {mape}"
 
 
-# In[ ]:
+# In[56]:
 
 
 def test_returnDFaboutDifferenceBetweenInput2DFs():
@@ -7399,7 +7386,7 @@ def returnDFaboutDifferenceBetweenInput2DFs(
     return retDF
 
 
-# In[ ]:
+# In[57]:
 
 
 def test_Model_LinearSumOfElementCombinations_ForMultipleRegression():
@@ -7725,7 +7712,7 @@ class Model_LinearSumOfElementCombinations_ForMultipleRegression(
         return sorted(return_list)
 
 
-# In[ ]:
+# In[58]:
 
 
 def returnWeightedMapeScore(real: list[float], predicted: list[float]) -> float:
@@ -7781,7 +7768,7 @@ def test_returnWeightedMapeScore():
     assert expected == actually, f"expected = {expected}, actually = {actually}"
 
 
-# In[ ]:
+# In[59]:
 
 
 def return_rawDFinLULESH(
@@ -7840,7 +7827,7 @@ def return_rawDFinLULESH(
     return returnDF
 
 
-# In[ ]:
+# In[60]:
 
 
 def returnMAPEtableInLULESH(
@@ -7913,7 +7900,7 @@ def returnMAPEtableInLULESH(
     return resultDF
 
 
-# In[ ]:
+# In[61]:
 
 
 def calcWeightedMAPEscore(
@@ -7994,7 +7981,7 @@ def test_calcWeightedMAPEscore():
     ), f"expected_result={expected_result},actually_result={actually_result}"
 
 
-# In[ ]:
+# In[62]:
 
 
 def return_bestModelObject(
@@ -8042,7 +8029,6 @@ def return_bestModelObject(
 
 
 def test_return_bestModelObject():
-
     exp_1: np.ndarray = np.linspace(1, 10, 10)
     exp_2: np.ndarray = np.linspace(10, 1, 10)
     exp_3: np.ndarray = np.linspace(20, 10, 10)
@@ -8118,7 +8104,7 @@ def test_return_bestModelObject():
     assert retDict["object"] != None
 
 
-# In[ ]:
+# In[63]:
 
 
 def returnWeightedMAPEScoreFromDF(
@@ -8235,7 +8221,7 @@ def returnWeightedMapeScoreFromCondition(
     return retNum
 
 
-# In[ ]:
+# In[64]:
 
 
 class Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression(
@@ -8509,7 +8495,7 @@ def test_Model_LinearSumOfElementCombinationWithPower_ForMultipleRegression():
     assert 0 <= mape < 1, f"mape = {mape}"
 
 
-# In[ ]:
+# In[65]:
 
 
 class Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleRegression(
@@ -8734,7 +8720,7 @@ def test_Model_LinearSumOfElementCombinationWithPowerWithoutProcess_ForMultipleR
     assert 0 <= mape < 1, f"mape = {mape}"
 
 
-# In[ ]:
+# In[66]:
 
 
 def return_rawDF_cg(
@@ -8788,7 +8774,7 @@ def return_rawDF_cg(
     return pd.concat(objs=list_before_concat_DF, axis=0)
 
 
-# In[ ]:
+# In[67]:
 
 
 def return_rawDF_mg(
@@ -8831,7 +8817,7 @@ def return_rawDF_mg(
     return pd.concat(objs=list_before_concat_DF, axis=0)
 
 
-# In[ ]:
+# In[68]:
 
 
 class Model_squareRootOfProcess_ForMultipleRegression(ModelBaseForMultipleRegression):
@@ -8963,7 +8949,7 @@ def test_Model_squareRootOfProcess_ForMultipleRegression():
     assert 0 <= mape < 1, f"mape = {mape}"
 
 
-# In[ ]:
+# In[69]:
 
 
 class Model_sqrtProcessTimesOtherExpElem_ForMultipleRegression(
@@ -9112,7 +9098,7 @@ def test_Model_sqrtProcessTimesOtherExpElem_ForMultipleRegression():
     assert 0 <= mape < 1, f"mape = {mape}"
 
 
-# In[ ]:
+# In[70]:
 
 
 """
@@ -9246,7 +9232,7 @@ def test_Model_obeyOneParameter_ForMultipleRegression():
     assert 0 <= mape < 0.01, f"mape = {mape}"
 
 
-# In[ ]:
+# In[71]:
 
 
 from operator import index
@@ -9343,7 +9329,7 @@ def test_convertPprofTime():
     ), f"actually = {test_case_05_output_actually}, expect = {test_case_05_output_expect}"
 
 
-# In[ ]:
+# In[72]:
 
 
 def get_execTime(
@@ -9395,7 +9381,7 @@ def get_execTime(
         return -1
 
 
-# In[ ]:
+# In[73]:
 
 
 def ret_relativeCost(
@@ -9454,7 +9440,7 @@ def test_ret_relativeCost():
     ), f"expected={result_expected}, actually={result_actually}"
 
 
-# In[ ]:
+# In[74]:
 
 
 def gen_ExtraPinputData(
@@ -9590,7 +9576,7 @@ def gen_ExtraPinputData(
             return ""
 
 
-# In[ ]:
+# In[75]:
 
 
 def return_rawDF_lulesh(
@@ -9634,7 +9620,7 @@ def return_rawDF_lulesh(
     return pd.concat(objs=list_before_concat_DF, axis=0)
 
 
-# In[ ]:
+# In[76]:
 
 
 def gen_ExtraPinputDataFromDF(
@@ -9718,7 +9704,7 @@ DATA 20 20 20
     assert expected == actually, f"expected={expected}__actually={actually}__"
 
 
-# In[ ]:
+# In[77]:
 
 
 def convert_log(inputStr: str) -> str:
@@ -9745,7 +9731,7 @@ def test_convert_log():
     assert expected == actually, f"expected = {expected}, actually = {actually}"
 
 
-# In[ ]:
+# In[78]:
 
 
 def add_relativeErrorRateCol(
@@ -9866,7 +9852,7 @@ def test_returnRawRelativeErrorRateList():
     assert expected == actually, f"expected=\n{expected}\nactually=\n{actually}"
 
 
-# In[ ]:
+# In[79]:
 
 
 def ret_averagedDF(inputDFs: list[pd.DataFrame], resVar: str) -> pd.DataFrame:
@@ -9947,7 +9933,7 @@ def test_ret_averagedDF():
     assert expected.equals(actually), f"expected=\n{expected}\nactually=\n{actually}"
 
 
-# In[ ]:
+# In[80]:
 
 
 def add_perCallColumn(
@@ -10009,7 +9995,7 @@ def test_add_perCallColumn():
     assert expected.equals(actually), f"actually=\n{actually}\nexpected=\n{expected}"
 
 
-# In[ ]:
+# In[81]:
 
 
 def ret_averaged_rawDF_lulesh(
@@ -10062,7 +10048,7 @@ def ret_averaged_rawDF_lulesh(
     return pd.concat(objs=list_DFs_for_return, axis=0)
 
 
-# In[ ]:
+# In[82]:
 
 
 def ret_relativeError_fromSumOfCol(
@@ -10097,7 +10083,7 @@ def test_ret_relativeError_fromSumOfCol():
     assert expected == actually, f"expected = {expected}, actually = {actually}"
 
 
-# In[ ]:
+# In[83]:
 
 
 def get_CostAtInputDF(
@@ -10134,7 +10120,7 @@ def test_get_CostAtInputDF():
     assert expected == actually
 
 
-# In[ ]:
+# In[84]:
 
 
 def get_str_modelFromExtraP(
@@ -10211,7 +10197,7 @@ def get_ExtraP_model(
     return model_fromExtraP
 
 
-# In[ ]:
+# In[85]:
 
 
 # def return_rawDF_mg(
@@ -10256,7 +10242,7 @@ def get_ExtraP_model(
 #     return pd.concat(objs=list_before_concat_DF, axis=0)
 
 
-# In[ ]:
+# In[86]:
 
 
 def returnConvertedTargetPprofTimeDF(
@@ -10283,7 +10269,6 @@ def returnConvertedTargetPprofTimeDF(
 
 
 def test_returnConvertedTargetPprofTimeDF():
-
     _tmp_dict: dict[str, list[str]] = {}
 
     _tmp_dict["col1"] = ["1:44.607", "33,350"]
@@ -10308,7 +10293,6 @@ def addPerCallCol(
     targetColNames: list[str],
     CallColName: str,
 ) -> pd.DataFrame:
-
     """
     PerCall列を追加して返す関数
 
@@ -10353,7 +10337,7 @@ def test_addPerCallCol():
     ), f"expected=\n{DF_exptected}\nactually=\n{DF_actually}"
 
 
-# In[2]:
+# In[87]:
 
 
 def ret_averaged_rawDF_mg(
@@ -10406,7 +10390,7 @@ def ret_averaged_rawDF_mg(
     return pd.concat(objs=list_DFs_for_return, axis=0)
 
 
-# In[ ]:
+# In[88]:
 
 
 def return_rawDF_ft(
@@ -10505,7 +10489,7 @@ def ret_averaged_rawDF_ft(
     return pd.concat(objs=list_DFs_for_return, axis=0)
 
 
-# In[ ]:
+# In[89]:
 
 
 def return_rawDF_ep(
