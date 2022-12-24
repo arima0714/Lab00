@@ -9804,8 +9804,12 @@ def returnRawRelativeErrorRate(real: float | int, predicted: float | int) -> flo
     Return:
         float: 相対誤差率（単位：％）
     """
-
-    return abs(real - predicted) / real * 100
+    retNum: float
+    try:
+        retNum = abs(real - predicted) / real * 100
+    except:
+        retNum = np.nan
+    return retNum
 
 
 def returnRawRelativeErrorRateList(
