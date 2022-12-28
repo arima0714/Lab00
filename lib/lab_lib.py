@@ -9755,6 +9755,11 @@ def add_relativeErrorRateCol(
         real=real_col, predicted=predicted_col
     )
 
+    try:
+        returnDF = returnDF.astype({f"{targetColName}": float})
+    except:
+        pass
+
     returnDF[targetColName] = target_col
 
     return returnDF
