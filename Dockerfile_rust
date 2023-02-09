@@ -1,0 +1,24 @@
+FROM ubuntu:22.04
+
+RUN apt update && \
+    apt -y install curl less locales vim && \
+    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:jp
+ENV LC_ALL ja_JP.UTF-8
+ENV TZ JST-9
+ENV TERM xterm
+
+ENV RUST_HOME /usr/local/lib/rust
+ENV RUSTUP_HOME ${RUST_HOME}/rustup
+ENV CARGO_HOME ${RUST_HOME}/cargo
+RUN mkdir /usr/local/lib/rust && \
+    chmod 0755 ${RUST_HOME}
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${RUST_HOME}/rustup.sh \
+    && chmod +x ${RUST_HOME}/rustup.sh \
+    && ${RUST_HOME}/rustup.sh -y --default-toolchain nightly --no-modify-path
+ENV PATH $PATH:$CARGO_HOME/bin
+
+RUN mkdir -p /root/src
+WORKDIR /root/src

@@ -2,7 +2,9 @@ version: '3'
 services:
         jupyter:
                 restart: always
-                build: .
+                build:
+                        context: .
+                        dockerfile: Dockerfile_jupyter
                 container_name: 'jupyter'
                 working_dir: '/root/src'
                 tty: true
@@ -12,3 +14,16 @@ services:
                 ports:
                         - "8787:8080"
                 command: jupyter-lab --ip 0.0.0.0 --port=8080 --allow-root --no-browser --NotebookApp.token=''
+
+        rust:
+                restart: always
+                build:
+                        context: .
+                        dockerfile: Dockerfile_rust
+                container_name: 'rust'
+                working_dir: '/root/src'
+                tty: true
+                volumes:
+                        - ${SRC_PATH}:/root/src
+                ports:
+                        - "5656:8080"
