@@ -16,28 +16,32 @@
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
 	"workspaceFolder": "/workspace",
 	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"python.formatting.provider": "black",
-		"python.languageServer": "Pylance",
-		"python.analysis.typeCheckingMode": "strict",
-		"editor.formatOnPaste": true,
-		"editor.formatOnSave": true,
-		"editor.formatOnType": true,
-		"notebook.lineNumbers": "on",
-		"notebook.output.textLineLimit": 300,
-		"editor.wordWrap": "on"
-	},
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"ms-python.python",
-		"ms-toolsai.jupyter",
-		"ms-python.vscode-pylance",
-		"ms-toolsai.jupyter-renderers",
-		"bierner.markdown-mermaid",
-		"janisdd.vscode-edit-csv",
-		"hediet.vscode-drawio",
-		"george-alisson.html-preview-vscode"
-	]
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"python.formatting.provider": "black",
+				"python.languageServer": "Pylance",
+				"python.analysis.typeCheckingMode": "strict",
+				"editor.formatOnPaste": true,
+				"editor.formatOnSave": true,
+				"editor.formatOnType": true,
+				"notebook.lineNumbers": "on",
+				"notebook.output.textLineLimit": 300,
+				"editor.wordWrap": "on"
+			},
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"ms-python.python",
+				"ms-toolsai.jupyter",
+				"ms-python.vscode-pylance",
+				"ms-toolsai.jupyter-renderers",
+				"bierner.markdown-mermaid",
+				"janisdd.vscode-edit-csv",
+				"hediet.vscode-drawio",
+				"george-alisson.html-preview-vscode"
+			]
+		}
+	}
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Uncomment the next line if you want start specific services in your Docker Compose config.
