@@ -58,6 +58,7 @@ from sklearn import tree
 from IPython.display import Image
 from sklearn.datasets import fetch_california_housing
 import pydotplus
+import hashlib
 
 
 # In[3]:
