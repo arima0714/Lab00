@@ -10592,3 +10592,602 @@ def ret_averaged_rawDF_ep(
                 ret_averagedDF(inputDFs=list_inputDFs_for_averaged, resVar=resVar)
             )
     return pd.concat(objs=list_DFs_for_return, axis=0)
+
+
+# In[ ]:
+
+
+def return_rawDF_is(
+    list_process: list[int],
+    list_no_of_keys: list[int],
+    list_key_max_value: list[int],
+    csvDir: str,
+) -> pd.DataFrame:
+    """return_rawDF_is()
+
+    ベンチマークプログラムISの手動で変更した初期変数におけるプロファイルを取得する関数
+
+    Args:
+        list_process(list[int]):プロセス数のリスト
+        list_no_of_keys(list[int]):初期変数no_of_keysのリスト
+        list_key_max_value(list[int]):初期変数key_max_valueのリスト
+        csvDir(str):CSVファイルの保持されているディレクトリ
+
+    Returns:
+        pd.DataFrame
+
+    """
+
+    list_before_concat_DF: list[pd.DataFrame] = []
+
+    for elem_process in list_process:
+        for elem_no_of_keys in list_no_of_keys:
+            for elem_key_max_value in list_key_max_value:
+                filePath: str = f"{csvDir}is_no_of_keys{elem_no_of_keys}_key_max_value{elem_key_max_value}_process{elem_process}.csv"
+                if os.path.isfile(filePath):
+                    try:
+                        DF_read_raw: pd.DataFrame = pd.read_csv(filePath)
+                        DF_read_raw["process"] = elem_process
+                        DF_read_raw["no_of_keys"] = elem_no_of_keys
+                        DF_read_raw["key_max_value"] = elem_key_max_value
+                        list_before_concat_DF.append(DF_read_raw)
+                    except:
+                        warnings.warn(f"{filePath} is empty.")
+                else:
+                    warnings.warn(f"{filePath} doesn't exist")
+                    continue
+    return pd.concat(objs=list_before_concat_DF, axis=0)
+
+
+def ret_averaged_rawDF_is(
+    list_process: list[int],
+    list_no_of_keys: list[int],
+    list_key_max_value: list[int],
+    list_csvDir: list[str],
+    resVar: str,
+):
+    """複数のCSVからDFを取得する関数（ベンチマークプログラムEP）
+
+    列Inclusiveおよび列Exclusiveが秒に変換され、InclusivePerCallもしくはExclusivePerCall列が生成される。
+
+    Args:
+        list_process(list[int]):プロセス数のリスト
+        list_no_of_keys(list[int]):初期変数no_of_keysのリスト
+        list_key_max_value(list[int]):初期変数key_max_valueのリスト
+        list_csvDir(list[str]):CSVを保持したディレクトリ名のリスト
+        resVar(str):説明変数の文字列
+
+    """
+
+    list_DFs_for_return: list[pd.DataFrame] = []
+    for elem_process in list_process:
+        for elem_no_of_keys in list_no_of_keys:
+            for elem_key_max_value in list_key_max_value:
+                list_inputDFs_for_averaged: list[pd.DataFrame] = []
+                for elem_csvDir in list_csvDir:
+                    try:
+                        _raw_DF: pd.DataFrame = return_rawDF_is(
+                            list_process=[elem_process],
+                            list_no_of_keys=[elem_no_of_keys],
+                            list_key_max_value=[elem_key_max_value],
+                            csvDir=elem_csvDir,
+                        )
+
+                        if resVar in ["Exclusive", "Inclusive", "#Call", "#Subrs"]:
+                            # resVar 列の整形
+                            if resVar in ["Exclusive", "Inclusive"]:
+                                _tmp_converted = map(
+                                    convertPprofTime, list(_raw_DF[resVar])
+                                )
+                                _raw_DF[resVar] = list(_tmp_converted)
+                            # {resVar}PerCall 列の生成
+                            _raw_DF = add_perCallColumn(
+                                inputDF=_raw_DF,
+                                divisorColName="#Call",
+                                dividendColName=resVar,
+                                targetColumnName=f"{resVar}PerCall",
+                            )
+                    except:
+                        continue
+
+                    list_inputDFs_for_averaged.append(_raw_DF)
+                list_DFs_for_return.append(
+                    ret_averagedDF(inputDFs=list_inputDFs_for_averaged, resVar=resVar)
+                )
+    return pd.concat(objs=list_DFs_for_return, axis=0)
+
+
+# In[ ]:
+
+
+def ret_query(list_expVar: list[str], list_product: list[int]) -> str:
+    retStr: str = ""
+    for i_expVar in range(len(list_expVar)):
+        retStr += f"{list_expVar[i_expVar]}=={list_product[i_expVar]}"
+        if i_expVar != len(list_expVar) - 1:
+            retStr += " & "
+    return retStr
+
+
+class ContentsForExtraP:
+    """class ContentsForExtraP
+
+    ExtraPによるモデルの生成
+
+    生成されるモデルは次の通り。
+
+    * 関数コール回数の予測モデル
+    * 関数の総実行時間の予測モデル
+    * 1コール当たりの関数の総実行時間の予測モデル
+
+    """
+
+    def __init__(
+        self,
+        trainDF: pd.DataFrame,
+        testDF: pd.DataFrame,
+        expVars: list[str],
+        resVar: str,
+        resVarPerCall: str,
+        benchmarkName: str,
+        modelerName: str = "multi-parameter",
+        modelerOption: str = """ --options \#spm=Basic \#spo=poly_exponents=-1,0,1,2,3,log_exponents=0,1,force_combination_exponents=1,allow_negative_exponents=True""",
+    ):
+        """__init__()
+
+        初期化変数
+
+        Args:
+            trainDF(pd.DataFrame):モデル構築用データ
+            testDF(pd.DataFrame):予測対象用データ
+            expVars(list[str]):説明変数を格納したリスト
+            resVar(str):目的変数を示した文字列
+            resVarsPerCall(str):1コール当たりの目的変数を示した文字列
+
+        """
+        self.trainDF = trainDF.reset_index()
+        self.testDF = testDF.reset_index()
+        self.expVars = expVars
+        self.resVar = resVar
+        self.resVarPerCall = resVarPerCall
+        self.functionNames: list[str] = sorted(list(set(trainDF["Name"].to_list())))
+        self.benchmarkName: str = benchmarkName
+        self.modelerName: str = modelerName
+        self.modelerOption: str = modelerOption
+        self.dict_symbols: dict[str, str] = {}
+        for elem in expVars:
+            self.dict_symbols[elem] = symbols(elem, real=True)
+
+        self.dict_resVar = {}
+        self.dict_resVarPerCall = {}
+        self.dict_call = {}
+
+    def build_all_models(self):
+        """build_all_models()
+
+        モデルを構築する関数。目的変数はself.resVars, self.resVarsPerCallを利用。
+
+        """
+
+        for functionName in self.functionNames:
+            trainDF_perFunc: pd.DataFrame = self.trainDF[
+                self.trainDF["Name"] == functionName
+            ]
+
+            model_resVar: str = get_ExtraP_model(
+                inputDF_perFunc=trainDF_perFunc,
+                expVar=self.expVars,
+                resVar=self.resVar,
+                functionName=functionName,
+                dict_symbols=self.dict_symbols,
+                benchmarkName=self.benchmarkName,
+                modelerName=self.modelerName,
+                modelerOption=self.modelerOption,
+            )
+
+            model_resVarPerCall: str = get_ExtraP_model(
+                inputDF_perFunc=trainDF_perFunc,
+                expVar=self.expVars,
+                resVar=self.resVarPerCall,
+                functionName=functionName,
+                dict_symbols=self.dict_symbols,
+                benchmarkName=self.benchmarkName,
+                modelerName=self.modelerName,
+                modelerOption=self.modelerOption,
+            )
+
+            model_call: str = get_ExtraP_model(
+                inputDF_perFunc=trainDF_perFunc,
+                expVar=self.expVars,
+                resVar="#Call",
+                functionName=functionName,
+                dict_symbols=self.dict_symbols,
+                benchmarkName=self.benchmarkName,
+                modelerName=self.modelerName,
+                modelerOption=self.modelerOption,
+            )
+
+            self.dict_resVar[functionName] = model_resVar
+            self.dict_resVarPerCall[functionName] = model_resVarPerCall
+            self.dict_call[functionName] = model_call
+
+    def predict_train(self):
+        """predict_train(self)
+
+        学習データに対して予測を実施する関数
+
+        列構成は下記の通り
+
+        |<expVar>|Name(関数名)|#Call(コール回数実測値)|predicted_resVar（）|predicted_ExclusivePerCall	predicted_#Call>|<>|
+
+        """
+
+        _list_series: list[pd.Series] = []
+        for index, _sr in self.trainDF.iterrows():
+            _series: pd.Series = pd.Series(dtype="object")
+            functionName: str = _sr["Name"]
+
+            _target_env: list[set[any]] = []
+            for _expVar in self.expVars:
+                _series[_expVar] = _sr[_expVar]
+                _target_env.append((self.dict_symbols[_expVar], _sr[_expVar]))
+
+            _series["Name"] = _sr["Name"]
+            _series["#Call"] = _sr["#Call"]
+            _series[f"{self.resVar}"] = _sr[f"{self.resVar}"]
+
+            _predicted_resVar: float
+            _predicted_resVarPerCall: float
+            _predicted_call: float
+
+            _predicted_resVar = self.dict_resVar[functionName].subs(_target_env).evalf()
+            _predicted_resVarPerCall = (
+                self.dict_resVarPerCall[functionName].subs(_target_env).evalf()
+            )
+            _predicted_call = self.dict_call[functionName].subs(_target_env).evalf()
+
+            _series[f"predicted_{self.resVar}"] = _predicted_resVar
+            _series[f"predicted_{self.resVarPerCall}"] = _predicted_resVarPerCall
+            _series[f"predicted_#Call"] = _predicted_call
+            _series[f"predicted_{self.resVar}_indirectly"] = (
+                _predicted_resVarPerCall * _predicted_call
+            )
+
+            _list_series.append(_series)
+
+        self.DF_predicted_by_train: pd.DataFrame = pd.DataFrame(
+            data=_list_series
+        ).astype(
+            {
+                f"predicted_{self.resVar}": float,
+                f"predicted_{self.resVarPerCall}": float,
+                f"predicted_#Call": float,
+                f"predicted_{self.resVar}_indirectly": float,
+            }
+        )
+
+    def predict_test(self):
+        """predict_test(self)
+
+        予測対象データに対して予測を実施する関数
+        """
+
+        _list_series: list[pd.Series] = []
+
+        for index, _sr in self.testDF.iterrows():
+            _series: pd.Series = pd.Series(dtype="object")
+            functionName: str = _sr["Name"]
+
+            _target_env: list[set[any]] = []
+            for _expVar in self.expVars:
+                _series[_expVar] = _sr[_expVar]
+                _target_env.append((self.dict_symbols[_expVar], _sr[_expVar]))
+
+            _series["Name"] = functionName
+            _series["#Call"] = _sr["#Call"]
+            _series[f"{self.resVar}"] = _sr[f"{self.resVar}"]
+
+            _predicted_resVar: float = (
+                self.dict_resVar[functionName].subs(_target_env).evalf()
+            )
+            _predicted_resVarPerCall: float = (
+                self.dict_resVarPerCall[functionName].subs(_target_env).evalf()
+            )
+            _predicted_call: float = (
+                self.dict_call[functionName].subs(_target_env).evalf()
+            )
+
+            _series[f"predicted_{self.resVar}"] = _predicted_resVar
+            _series[f"predicted_{self.resVarPerCall}"] = _predicted_resVarPerCall
+            _series[f"predicted_#Call"] = _predicted_call
+            _series[f"predicted_{self.resVar}_indirectly"] = (
+                _predicted_resVarPerCall * _predicted_call
+            )
+
+            _list_series.append(_series)
+
+        self.DF_predicted_by_test: pd.DataFrame = pd.DataFrame(data=_list_series)
+
+        self.DF_predicted_by_test: pd.DataFrame = add_relativeErrorRateCol(
+            inputDF=self.DF_predicted_by_test,
+            real_colName="#Call",
+            predicted_colName="predicted_#Call",
+            targetColName="APE_#Call",
+        )
+        self.DF_predicted_by_test = add_relativeErrorRateCol(
+            inputDF=self.DF_predicted_by_test,
+            real_colName=f"{self.resVar}",
+            predicted_colName=f"predicted_{self.resVar}",
+            targetColName=f"APE_{self.resVar}",
+        )
+        self.DF_predicted_by_test = add_relativeErrorRateCol(
+            inputDF=self.DF_predicted_by_test,
+            real_colName=f"{self.resVar}",
+            predicted_colName=f"predicted_{self.resVar}_indirectly",
+            targetColName=f"APE_{self.resVarPerCall}",
+        )
+
+    def get_result_of_predict_train(self):
+        return self.DF_predicted_by_train
+
+    def get_result_of_predict_test(self):
+        return self.DF_predicted_by_test
+
+    def get_DF_all_fitness_with_relativeErrorRate(self) -> pd.DataFrame:
+        """get_DF_all_fitness_with_relativeErrorRate()
+
+        モデル適合度のテーブルを返す関数
+
+        列APE～の平均をとるとMAPEになる。
+
+        """
+
+        _returnDF: pd.DataFrame = add_relativeErrorRateCol(
+            inputDF=self.DF_predicted_by_train,
+            real_colName="#Call",
+            predicted_colName="predicted_#Call",
+            targetColName="APE_#Call",
+        )
+        _returnDF = add_relativeErrorRateCol(
+            inputDF=_returnDF,
+            real_colName=f"{self.resVar}",
+            predicted_colName=f"predicted_{self.resVar}",
+            targetColName=f"APE_{self.resVar}",
+        )
+        _returnDF = add_relativeErrorRateCol(
+            inputDF=_returnDF,
+            real_colName=f"{self.resVar}",
+            predicted_colName=f"predicted_{self.resVar}_indirectly",
+            targetColName=f"APE_{self.resVarPerCall}",
+        )
+
+        return _returnDF
+
+    def return_products(self):
+        """return_products()
+
+        予測対象の組合せを返す関数
+
+        """
+        _dict_expVar_set: dict[str, set[int]] = {}
+        for _expVar in self.expVars:
+            _dict_expVar_set[_expVar] = set(sorted(self.testDF[_expVar]))
+
+        if len(self.expVars) == 2:
+            _product = itertools.product(
+                _dict_expVar_set[self.expVars[0]], _dict_expVar_set[self.expVars[1]]
+            )
+        elif len(self.expVars) == 3:
+            _product = itertools.product(
+                _dict_expVar_set[self.expVars[0]],
+                _dict_expVar_set[self.expVars[1]],
+                _dict_expVar_set[self.expVars[2]],
+            )
+        else:
+            warnings.warn(f"self.expVars == {len(self.expVars)}")
+            return -1
+
+        return _product
+
+    def get_DF_weightedMAPE(self) -> pd.DataFrame:
+        """get_DF_all_fitness_with_weightedMAPE()
+
+        予測対象環境における重み付きMAPEをまとめたDFを返す関数
+
+        """
+
+        _product = self.return_products()
+
+        _list_series: pd.Series = []
+        for _elem_product in _product:
+            _query: str = ret_query(
+                list_expVar=self.expVars, list_product=list(_elem_product)
+            )
+
+            _targetDF: pd.DataFrame = self.testDF.query(_query)
+            _target_env: list[set[any]] = []
+
+            _series: pd.Series = pd.Series(dtype="object")
+
+            for i_expVar in range(len(self.expVars)):
+                _target_env.append(
+                    (self.dict_symbols[self.expVars[i_expVar]], _elem_product[i_expVar])
+                )
+                _series[self.expVars[i_expVar]] = _elem_product[i_expVar]
+
+            _c_sum: float = sum(_targetDF["#Call"].tolist())
+            _target_weightedMAPE_resVar: float = 0.0
+            _target_weightedMAPE_resVarPerCall: float = 0.0
+            _target_weightedMAPE_call: float = 0.0
+            for i, sr in _targetDF.iterrows():
+                _c_t: float = sr["#Call"]
+                functionName: str = sr["Name"]
+
+                _A_t_resVar: float = sr[self.resVar]
+                _A_t_resVarPerCall: float = sr[self.resVarPerCall]
+                _A_t_call: float = sr["#Call"]
+
+                _F_t_resVar: float = (
+                    self.dict_resVar[functionName].subs(_target_env).evalf()
+                )
+                _F_t_resVarPerCall: float = (
+                    self.dict_resVarPerCall[functionName].subs(_target_env).evalf()
+                )
+                _F_t_call: float = (
+                    self.dict_call[functionName].subs(_target_env).evalf()
+                )
+
+                if _A_t_resVar == 0.0:
+                    warnings.warn(f"{sr['Name'] = }, {sr[self.resVar] = }")
+                    continue
+                elif _A_t_resVarPerCall == 0.0:
+                    warnings.warn(f"{sr['Name'] = }, {sr[self.resVarPerCall] = }")
+                    continue
+
+                _target_weightedMAPE_resVar += (
+                    abs(_A_t_resVar - _F_t_resVar) / _A_t_resVar
+                )
+                _target_weightedMAPE_resVarPerCall += (
+                    abs(_A_t_resVarPerCall - _F_t_resVarPerCall) / _A_t_resVarPerCall
+                )
+                _target_weightedMAPE_call += abs(_A_t_call - _F_t_call) / _A_t_call
+
+            _target_weightedMAPE_resVar *= 100 / _c_sum
+            _target_weightedMAPE_resVarPerCall *= 100 / _c_sum
+            _target_weightedMAPE_call *= 100 / _c_sum
+
+            _series[f"weightedMAPE_{self.resVar}"] = _target_weightedMAPE_resVar
+            _series[
+                f"weightedMAPE_{self.resVarPerCall}"
+            ] = _target_weightedMAPE_resVarPerCall
+            _series[f"weightedMAPE_#Call"] = _target_weightedMAPE_call
+
+            _list_series.append(_series)
+        self.DF_weightedMAPE: pd.DataFrame = pd.DataFrame(data=_list_series)
+        # self.DF_weightedMAPE :pd.DataFrame = pd.DataFrame(data=_list_series).astype({f"weightedMAPE_{self.resVar}": float, f"weightedMAPE_{self.resVarPerCall}": float, f"weightedMAPE_call": float})
+        return self.DF_weightedMAPE
+
+    def get_DF_MAPE(self) -> pd.DataFrame:
+        """get_DF_MAPE()
+
+        予測対象環境におけるMAPEをまとめたDFを返す関数
+
+        """
+
+        _product = self.return_products()
+
+        _list_series: pd.Series = []
+        for _elem_product in _product:
+            _query: str = ret_query(
+                list_expVar=self.expVars, list_product=list(_elem_product)
+            )
+
+            _targetDF: pd.DataFrame = self.get_result_of_predict_test().query(_query)
+
+            _targetDF: pd.DataFrame = add_relativeErrorRateCol(
+                inputDF=_targetDF,
+                real_colName="#Call",
+                predicted_colName="predicted_#Call",
+                targetColName="APE_#Call",
+            )
+            _targetDF = add_relativeErrorRateCol(
+                inputDF=_targetDF,
+                real_colName=f"{self.resVar}",
+                predicted_colName=f"predicted_{self.resVar}",
+                targetColName=f"APE_{self.resVar}",
+            )
+            _targetDF = add_relativeErrorRateCol(
+                inputDF=_targetDF,
+                real_colName=f"{self.resVar}",
+                predicted_colName=f"predicted_{self.resVar}_indirectly",
+                targetColName=f"APE_{self.resVarPerCall}",
+            )
+
+            _series: pd.Series = pd.Series(dtype="object")
+
+            for i_expVar in range(len(self.expVars)):
+                _series[self.expVars[i_expVar]] = _elem_product[i_expVar]
+            _series[f"MAPE_{self.resVar}"] = np.mean(
+                _targetDF[f"APE_{self.resVar}"].to_list()
+            )
+            _series[f"MAPE_{self.resVarPerCall}"] = np.mean(
+                _targetDF[f"APE_{self.resVarPerCall}"].to_list()
+            )
+            _series[f"MAPE_#Call"] = np.mean(_targetDF[f"APE_#Call"].to_list())
+
+            _list_series.append(_series)
+
+        return pd.DataFrame(data=_list_series)
+
+    def exec_all(self) -> dict[str, pd.DataFrame]:
+        """exec_all()
+
+        個別で実施していた
+        1. モデルの構築
+        2. 学習データへの予測
+        3. 予測対象データへの予測
+        4. 各種表への整形
+        一貫して行う関数
+
+        """
+
+        self.build_all_models()
+        self.predict_train()
+        self.predict_test()
+
+        _適合度: pd.DataFrame = self.get_DF_all_fitness_with_relativeErrorRate()
+        _重み付きMAPE: pd.DataFrame = self.get_DF_weightedMAPE()
+        _MAPE: pd.DataFrame = self.get_DF_MAPE()
+        _予測精度: pd.DataFrame = self.get_result_of_predict_test()
+        _関数ごとのMAPE: pd.DataFrame = return_summarizedDF_on_functionName(
+            inputDF=_適合度, resVar=self.resVar
+        )
+
+        returnDict: dict[str, pd.DataFrame] = {
+            "適合度": _適合度,
+            "重み付きMAPE": _重み付きMAPE,
+            "MAPE": _MAPE,
+            "予測精度": _予測精度,
+            "関数ごとのMAPE": _関数ごとのMAPE,
+        }
+
+        return returnDict
+
+
+def return_summarizedDF_on_functionName(
+    inputDF: pd.DataFrame,
+    resVar: str,
+) -> pd.DataFrame:
+    """return_summarizedDF_on_functionName()
+
+    入力されたDFを関数ごとにまとめ、各数値を平均値化し、そのDFを返す関数
+
+    Args:
+        inputDF(pd.DataFrame): 入力DF
+        resVar(string): 目的変数名
+
+    """
+
+    functionNames: list[str] = list(set(inputDF["Name"].to_list()))
+    _list_series: list[pd.Series] = []
+    for functionName in functionNames:
+        inputDF_perFunc: pd.DataFrame = inputDF[inputDF["Name"] == functionName]
+        list_APE_resVar: list[float] = inputDF_perFunc[f"APE_{resVar}"].to_list()
+        list_APE_resVarPerCall: list[float] = inputDF_perFunc[
+            f"APE_{resVar}PerCall"
+        ].to_list()
+        list_APE_call: list[float] = inputDF_perFunc[f"APE_#Call"].to_list()
+
+        float_MAPE_resVar: float = np.mean(list_APE_resVar)
+        float_MAPE_resVarPerCall: float = np.mean(list_APE_resVarPerCall)
+        float_MAPE_call: float = np.mean(list_APE_call)
+
+        _series: pd.Series = pd.Series(dtype="object")
+        _series["Name"] = functionName
+        _series[f"MAPE_#Call"] = float_MAPE_call
+        _series[f"MAPE_{resVar}"] = float_MAPE_resVar
+        _series[f"MAPE_{resVar}PerCall"] = float_MAPE_resVarPerCall
+
+        _list_series.append(_series)
+
+    return pd.DataFrame(data=_list_series)
