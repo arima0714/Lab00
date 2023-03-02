@@ -3,6 +3,8 @@
 1. トップディレクトリで `docker-compose up` を実行
 2. `localhost:8787` にアクセス
 
+* Visual Studio Code のリモート開発にも一応対応している（ふだんはVisual Studio Code で開発していたが、動作が不安定な部分もある。）。
+
 # 利用方法
 
 `testing.ipynb` を開く
